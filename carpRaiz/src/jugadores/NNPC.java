@@ -8,8 +8,19 @@ public abstract class NNPC {
 	//boolean de saber si han hecho algo
 	//boolean accion = false;
 	
+	//int con el numero de la sala
+	private int numSala;
+	
 	public NNPC() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public void setNumSala(int numSala) {
+		this.numSala = numSala;
+	}
+	public int getNumSala() {
+		return numSala;
+	}
 	public abstract int proximaAccion();
+	
 }

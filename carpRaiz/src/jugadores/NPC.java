@@ -2,16 +2,17 @@ package jugadores;
 
 public class NPC extends NNPC {
 
-	public NPC() {
+	public NPC(String nombre) {
 		// TODO Auto-generated constructor stub
-	}
-	public int proximaAccion(){
+		super(nombre);
+		}
+	public int dameAccion(){
 		
 		//Como no hay motor de juegos, se devuelve un random de todas las acciones que hay.
 		return (int)Math.random();
 	}
 	
-	//este es un metodo para elegir un lugar al que ir random de los posibles
+	//este metodo elige una habitación a la que ir aleatoria de las contiguas
 	@SuppressWarnings("unused")
 	private int decidirLugar(int lugaresPosibles[]){
 		return 1+1;

@@ -1,9 +1,11 @@
 package jugadores;
 
+import interfaces.Accionable;
+
 //Clase padre de ambos jugadores
-public abstract class NNPC {
+public abstract class NNPC implements Accionable {
 	//el objeto que tiene cada persona en posesión
-	//Cosa objeto = null; 
+	//Objeto objeto = null; 
 	
 	//boolean de saber si han hecho algo
 	//boolean accion = false;
@@ -11,8 +13,12 @@ public abstract class NNPC {
 	//int con el numero de la sala
 	private int numSala;
 	
-	public NNPC() {
+	//nombre del personaje
+	public String nombre;
+	
+	public NNPC(String nombre) {
 		// TODO Auto-generated constructor stub
+		this.nombre=nombre;
 	}
 	
 	public void setNumSala(int numSala) {
@@ -21,6 +27,6 @@ public abstract class NNPC {
 	public int getNumSala() {
 		return numSala;
 	}
-	public abstract int proximaAccion();
+	
 	
 }

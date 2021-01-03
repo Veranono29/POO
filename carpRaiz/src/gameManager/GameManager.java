@@ -9,7 +9,7 @@ public class GameManager {
 	}
 	//a esta funcion se le pasa un entero con el numero de sala y te dice las salas adyacentes
 	//se presupone que el programador hará un while(pepe[i]!=null)
-	public int[] lugaresAdyacentes(int lugOrigen){
+	private int[] lugaresAdyacentes(int lugOrigen){
 		int[] pepe = new int[10];
 		switch (lugOrigen){
 			case 0: 

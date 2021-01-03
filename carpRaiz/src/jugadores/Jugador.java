@@ -4,10 +4,11 @@ package jugadores;
 
 public class Jugador extends NNPC{
 
-	public Jugador() {
+	public Jugador(String nombre) {
 		// TODO Auto-generated constructor stub
+		super(nombre);
 	}
-	public int proximaAccion(){
+	public int dameAccion(){
 		return 0;
 		
 	}

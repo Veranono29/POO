@@ -8,9 +8,10 @@ public class GameManager {
 		// TODO Auto-generated constructor stub
 	}
 	//a esta funcion se le pasa un entero con el numero de sala y te dice las salas adyacentes
-	//se presupone que el programador har� un while(pepe[i]!=null)
+	//se presupone que el programador hará un while(pepe[i]!=null)
 	private int[] lugaresAdyacentes(int lugOrigen){
 		int[] pepe = new int[10];
+		//Los numeros son el ID de las habitaciones adyacentes (se presupone que para leerlo se hará un while(pepe[i]!=null) )
 		switch (lugOrigen){
 			case 0: 
 				pepe[0]=1;

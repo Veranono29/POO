@@ -43,12 +43,12 @@ public abstract class GameManager {
 		boolean bucleTurno = true;
 		String nombreJugador;
 		
-		rNombre();
+		//rNombre();
 		
 		while(bucleTurno) {
 			bucleTurno = false;
 			
-			for( Agente paco : agentes)
+			//for( Agente paco : agentes)
 		}
 	}
 }

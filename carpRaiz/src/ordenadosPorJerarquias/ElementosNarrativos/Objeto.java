@@ -1,6 +1,6 @@
 package ElementosNarrativos;
 
-public class Objeto {
+public class Objeto implements Nombrable {
 	//Nombre del Objeto. Sirve de ID.
 	private String nombre;
 	
@@ -9,6 +9,11 @@ public class Objeto {
 	}
 
 	public String getNombre() {
+		return nombre;
+	}
+	
+	@Override
+	public String toString() {
 		return nombre;
 	}
 }

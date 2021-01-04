@@ -6,8 +6,42 @@ import java.util.List;
 
 import Datos.Informacion;
 
-public abstract class TieneCreencia implements Creenciable {
+public abstract class TieneCreencia implements Creenciable, Objetable, Nombrable {
 	private List<Informacion> creencias = new ArrayList<Informacion>();
+	
+	//Nombre del objeto creenciable. Servira como ID.
+	private String nombre;
+	
+	public TieneCreencia(String nombre) {
+		this.nombre = nombre;
+	}
+	
+	@Override
+	public String toString() {
+		return nombre;
+	}
+	
+	public String getNombre() {
+		return nombre;
+	}
+	
+	@Override
+	public void addObjeto(Objeto objeto) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public Objeto dropObjeto(Objeto objeto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Object getObjeto() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	@Override
 	public List<Informacion> getCreencias() {

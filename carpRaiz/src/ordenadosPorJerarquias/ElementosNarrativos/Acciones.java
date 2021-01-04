@@ -55,6 +55,7 @@ public abstract class Acciones {
 		}
 		return persona.getYaObjetivos(1);
 	}
+	
 	//La accion null no llega aca, directamente es null. Nada. No se hace nada.
 }
 

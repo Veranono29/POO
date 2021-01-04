@@ -4,9 +4,6 @@ import Datos.Informacion;
 import Datos.Peticion;
 
 public abstract class Agente extends TieneCreencia implements Accionable {
-	//Nombre del Agente. Servira como ID.
-	private String nombre;
-	
 	//Tiempo de corte de volcado de creencias
 	private int tiempoAnterior;
 	//Lugar donde esta.
@@ -27,13 +24,9 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	private boolean[] yaObjetivos = {true,true};
 	
 	public Agente(String nombre) {
-		this.nombre = nombre;
+		super(nombre);
 		
 		//TODO Ver si mejor poner aca que yaObjetivos es true y true, o dejarlo como esta, ya que los array literales solo se puden usar en la declaracion.
-	}
-	
-	public String getNombre() {
-		return nombre;
 	}
 
 	public int getTiempoAnterior() {

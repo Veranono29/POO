@@ -1,6 +1,7 @@
 package ElementosNarrativos;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 //Extiende la clase abstracta intermedia TieneCreencia en vez de haber tenido otra de Lugarable, Objetable o Habitable respectivamente  ya que consideramos importante que extienda de TieneCreencia
@@ -68,6 +69,21 @@ public class Lugar extends TieneCreencia implements Lugarable, Habitable /*Objet
 	@Override
 	public void addAgente(Agente persona) {
 		agentes.add(persona);
+	}
+
+	@Override
+	public Iterator<Objeto> objetoIt() {
+		return objetos.iterator();
+	}
+
+	@Override
+	public Iterator<Agente> agenteIt() {
+		return agentes.iterator();
+	}
+
+	@Override
+	public Iterator<Lugar> lugarIt() {
+		return lugares.iterator();
 	}
 	
 	//Aca no hay el poder añadir otro set al set porque no vamos a necesitar eso.

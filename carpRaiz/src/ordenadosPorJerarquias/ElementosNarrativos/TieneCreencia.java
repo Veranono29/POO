@@ -2,6 +2,7 @@ package ElementosNarrativos;
 
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import Datos.Informacion;
@@ -57,6 +58,11 @@ public abstract class TieneCreencia implements Creenciable, Objetable, Nombrable
 	public Informacion dropCreencia(Informacion info) {
 		creencias.remove(info);
 		return info;
+	}
+	
+	@Override
+	public Iterator<Informacion> creenciaIt() {
+		return creencias.iterator();
 	}
 
 	/*public void setCreencias(List<Informacion> creencias) {

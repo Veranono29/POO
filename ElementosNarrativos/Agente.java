@@ -75,23 +75,14 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 		this.peticion = null;
 	}
 	
-	public boolean getYaObjetivos(int index) {
+	public boolean getYaObjetivo(int index) {
 		return yaObjetivos[index];
 	}
 	
-	//TODO sospecho que no lo vamos a usar. Esta pa simplificarnos la vida pero si no se usa borrarlo. No se porque lo digo en plural... Raúl, si no lo usas para el dameAccion, borralo. Tambien cambiale el nombre al metodo quitandole la s del final
-	public boolean[] getYaObjetivos() {
-		return yaObjetivos;
-	}
-	
-	public void setYaObjetivos(int index,boolean ya) {
+	public void setYaObjetivo(int index,boolean ya) {
 		this.yaObjetivos[index] = ya;
 	}
 	
-	//TODO sospecho que no lo vamos a usar. Esta pa simplificarnos la vida pero si no se usa borrarlo. No se porque lo digo en plural... Raúl, si no lo usas para el dameAccion, borralo. Tambien cambiale el nombre al metodo quitandole la s del final
-	public void setYaObjetivos(boolean[] yaObjetivos) {
-		this.yaObjetivos = yaObjetivos;
-	}
 
 	public Informacion getObjetivo() {
 		return objetivo;

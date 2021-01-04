@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 import ElementosNarrativos.Agente;
 
-public abstract class GameManager {
+public abstract class GameManager implements Lugarable, Habitable, Objetable{
 	//TODO hacedor();
 	//TODO volcado();
 	//TODO agentes[];
@@ -39,6 +39,10 @@ public abstract class GameManager {
 		leerInfo();
 	}*/
 	
+	protected Set<Agente> agentes = new HashSet<Agente>();
+	protected Set<Objeto> objetos = new HashSet<Objeto>();
+	protected Set<Lugar> lugar = new HashSet<Lugar>();
+
 	public static void main(String[] args) {	
 		boolean bucleTurno = true;
 		String nombreJugador;

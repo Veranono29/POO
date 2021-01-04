@@ -1,5 +1,7 @@
 package ElementosNarrativos;
 
+import Agente;
+
 public interface Accionable {
-	public int dameAccion();
+	public Acciones dameAccion();
 }

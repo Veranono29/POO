@@ -71,7 +71,7 @@ public class Lugar extends TieneCreencia implements Lugarable, Habitable /*Objet
 		agentes.add(persona);
 	}
 
-	@Override
+
 	public Iterator<Objeto> objetoIt() {
 		return objetos.iterator();
 	}

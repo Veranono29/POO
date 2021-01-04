@@ -1,8 +1,12 @@
 package ElementosNarrativos;
 
+import java.util.Iterator;
+
+import Datos.Informacion;
 import Datos.Peticion;
 
 public abstract class Acciones {
+	//Estas funciones alteraran los estados de los agentes.
 	
 	//Son metodos de clase, por ello llevan static.
 	
@@ -56,7 +60,36 @@ public abstract class Acciones {
 		return persona.getYaObjetivos(1);
 	}
 	
+	public static void verLugar(Agente persona) {
+		//Genera creencia acerca de quien esta.
+		Lugar lugar = persona.getLugar();
+		for(Agente paco: (Iterable<Agente>) () -> lugar.agenteIt())
+			persona.addCreencia(new Informacion(paco, null, lugar));
+		
+		//Genera creencia acerca de que hay.
+		for(Objeto cosa: (Iterable<Objeto>) () -> lugar.objetoIt())
+			persona.addCreencia(new Informacion(null, cosa, lugar));
+	}
+	
+	//TODO seria necesario esta cosa de aca???? No, no encaja aqui.
+	public static void sumaCreencia(Lugar lugar, Informacion creencia) {
+		lugar.addCreencia(creencia);
+	}
+	
+	//TODO el volcado de creencias debera ir dentro de dameAccion (justo antes de decidir nada, para tener los nuevos datos). Se declara aqui.
+	public static void volcadoCreencias(Agente persona) {
+		Iterator<Informacion> info = persona.creenciaIt();
+		for(int tiempo = persona.getTiempoAnterior(); tiempo >= 0; tiempo--) {
+			if(info.hasNext())
+				info.next();
+		}
+		for(Informacion dato: (Iterable<Informacion>) () -> info) {
+			persona.addCreencia(dato);
+		}
+	}
+	
 	//La accion null no llega aca, directamente es null. Nada. No se hace nada.
+	
 }
 
 //TODO aunque me repita. Elimminar metodos inecesarios de los sitios. no creo que haya, pero porsiacaso no se. Quitando los getter y setters que "se puedan llegar a usar" aunque no los usemos. Quitamos los getters y setters que realmente NO debamos poder cojerlos.

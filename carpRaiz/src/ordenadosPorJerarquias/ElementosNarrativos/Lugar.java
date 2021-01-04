@@ -4,31 +4,23 @@ import java.util.HashSet;
 import java.util.Set;
 
 //Extiende la clase abstracta intermedia TieneCreencia en vez de haber tenido otra de Lugarable, Objetable o Habitable respectivamente  ya que consideramos importante que extienda de TieneCreencia
-public class Lugar extends TieneCreencia implements Lugarable, Objetable, Habitable {
-	//Nombre del lugar. Sirve de ID.
-	private String nombre;
-	
+public class Lugar extends TieneCreencia implements Lugarable, Habitable /*Objetable ya lo implementa*/ {
 	//Agentes para la implementacion de Habitable.
-	private Set<Agente> agentes = new HashSet<Agente>();
+	private Set<Agente> agentes;
 	
 	//Objetos para la implementacion de Objetable.
-	private Set<Objeto> objetos = new HashSet<Objeto>();
+	private Set<Objeto> objetos;
 	
 	//Adjacencias para la implementacion de Lugarable.
-	private Set<Lugar> lugares = new HashSet<Lugar>();
+	private Set<Lugar> lugares;
 	
 	
 	public Lugar(String nombre) {
-		this.nombre = nombre;
+		super(nombre);
 		objetos = new HashSet<Objeto>();
+		agentes = new HashSet<Agente>();
+		lugares = new HashSet<Lugar>();
 	}
-
-	
-	public String getNombre() {
-		return nombre;
-	}
-	
-	
 	
 	@Override
 	public Objeto dropObjeto(Objeto objeto) {
@@ -55,7 +47,7 @@ public class Lugar extends TieneCreencia implements Lugarable, Objetable, Habita
 	}
 	
 	@Override
-	public Object getObjetos() {
+	public Object getObjeto() {
 		return ((HashSet<Objeto>)objetos).clone();
 	}
 	

@@ -4,6 +4,8 @@ import elementosNarrativos.ManejaDatos;
 
 import datos.Informacion;
 import elementosNarrativos.Agente;
+//TODO si quitar sumaCreencia. quita el import de abajo, el de Acciones.
+import elementosNarrativos.Acciones;
 import elementosNarrativos.Lugar;
 import elementosNarrativos.ManejaDatos;
 import elementosNarrativos.Objeto;
@@ -44,7 +46,9 @@ public abstract class GameManager extends ManejaDatos{
 	}*/
 	
 	public static boolean log(Agente agente) {
-		agente.getLugar().addCreencia(new Informacion(agente, null, null));
+		Acciones.sumaCreencia(agente.getLugar() , new Informacion(agente, null, null));
+		
+		//agente.getLugar().addCreencia(new Informacion(agente, null, null));
 		return false;
 	}
 	

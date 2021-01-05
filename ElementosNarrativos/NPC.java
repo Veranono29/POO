@@ -12,14 +12,16 @@ public class NPC extends Agente {
 				return cogerObjeto;
 			}
 			else {
-				if(this.lugar.agent) {
-					return pedirObjeto;
+				Informacion ultimaInfo = null;
+				for(int index = this.creencias.size()-1 ; index >=0 ; index--) {
+					if (this.creencias.get(index).getObjeto() != this.objetivo.objeto) {
+						ultimaInfo = this.creencias.get(index);
+						return pedirObjeto;
+					}
 				}
-				
 			}
 		}
 		else {
-			//la parte repetida
 			if(getYaObjetivo(0)) {
 				if(creencias) == getObjetivo(Lugar)){
 					relocalizar(this, ir mirando adyacencias para volver*/)
@@ -38,7 +40,7 @@ private void limpiarCreenciasObjeto() {
 	
 	//Se saca la ultima info que se tiene de un objeto.
 	
-	Informacion ultimaInfo = null;
+	
 		for(int index = this.creencias.size()-1 ; index >=0 ; index--) {
 			if (this.creencias.get(index).getLugar() == LugarNoLugar) {
 				ultimaInfo = this.creencias.get(index);

@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 public class ManejaDatos extends TieneCreencia implements Lugarable, Habitable {
-	//Agentes para la implementacion de Habitable.
+		//Agentes para la implementacion de Habitable.
 		private Set<Agente> agentes;
 		
 		//Objetos para la implementacion de Objetable.
@@ -84,5 +84,5 @@ public class ManejaDatos extends TieneCreencia implements Lugarable, Habitable {
 			return lugares.iterator();
 		}
 		
-		//Aca no hay el poder añadir otro set al set porque no vamos a necesitar eso.
+		//Aca no hay el poder aÃ±adir otro set al set porque no vamos a necesitar eso.
 }

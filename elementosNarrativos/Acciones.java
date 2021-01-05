@@ -80,7 +80,7 @@ public abstract class Acciones {
 	
 	//TODO el volcado de creencias debera ir dentro de dameAccion (justo antes de decidir nada, para tener los nuevos datos). Se declara aqui.
 	public static void volcadoCreencias(Agente persona) {
-		Iterator<Informacion> info = persona.creenciaIt();
+		Iterator<Informacion> info = persona.getLugar().creenciaIt();
 		for(int tiempo = persona.getTiempoAnterior(); tiempo > 0; tiempo--) {
 			if(info.hasNext())
 				info.next();

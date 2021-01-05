@@ -37,6 +37,15 @@ public abstract class GameManager extends ManejaDatos{
 		leerInfo();
 	}*/
 	
+	public boolean log(Agente agente) {
+		agente.getLugar().addCreencia(new Informacion(agente, null, null));
+		return false;
+	}
+	
+	public boolean log(Agente agente, Objeto objeto, Lugar lugar) {
+		agente.getLugar().addCreencia(new Informacion(agente, null, null));
+		return true;
+	}
 
 	public GameManager(String nombre) {
 		super(nombre);

@@ -29,7 +29,9 @@ public abstract class Acciones {
 	}
 	
 	public static void relocalizar (Agente jugadorTransladado, Lugar lugar) {
+		jugadorTransladado.getLugar().dropAgente(jugadorTransladado);
 		jugadorTransladado.setLugar(lugar);
+		jugadorTransladado.getLugar().addAgente(jugadorTransladado);
 	}
 	
 	public static void cogerObjeto (Agente jugador, Objeto objeto) {
@@ -79,11 +81,13 @@ public abstract class Acciones {
 	//TODO el volcado de creencias debera ir dentro de dameAccion (justo antes de decidir nada, para tener los nuevos datos). Se declara aqui.
 	public static void volcadoCreencias(Agente persona) {
 		Iterator<Informacion> info = persona.creenciaIt();
-		for(int tiempo = persona.getTiempoAnterior(); tiempo >= 0; tiempo--) {
+		for(int tiempo = persona.getTiempoAnterior(); tiempo > 0; tiempo--) {
 			if(info.hasNext())
 				info.next();
 		}
 		for(Informacion dato: (Iterable<Informacion>) () -> info) {
+			//TODO el random simulando la olvidasion
+			//TODO decidir si al crear la creencia se le mete lugar, o es al salir de lugar. De momento, se guarda.
 			persona.addCreencia(dato);
 		}
 	}

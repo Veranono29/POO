@@ -1,51 +1,63 @@
 package ElementosNarrativos;
 
-public class NPC extends Agente {
-	
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import Datos.Informacion;
+import Datos.Peticion;
+
+
+public class NPC extends Agente {	
 	public NPC(String nombre) {
 		super(nombre);
 	}
+
+	@SuppressWarnings("unchecked")
 	@Override
-	public Acciones dameAccion() {
-		if (getYaObjetivo(1)) {
-			if(this.lugar.getObjeto().contains(this.objetivo.objeto)) {
-				return cogerObjeto;
-			}
-			else {
-				Informacion ultimaInfo = null;
-				for(int index = this.creencias.size()-1 ; index >=0 ; index--) {
-					if (this.creencias.get(index).getObjeto() != this.objetivo.objeto) {
-						ultimaInfo = this.creencias.get(index);
-						return pedirObjeto;
+	public boolean dameAccion() {
+		Informacion ultimaInfo = null;
+		List<Lugar> opciones = new ArrayList<Lugar>();
+		if(getYaObjetivo(0)) {
+			for(int index = this.getCreencias().size()-1 ; index >=0 ; index--){
+				if (this.getCreencias().get(index).getLugar() == this.getObjetivo().getLugar()){			//Lo siento
+					for(Lugar siguienteLugar: (Iterable<Lugar>) () -> this.getLugar().lugarIt()){
+						if(this.getCreencias().get(index).getLugar() == siguienteLugar)
+							opciones.add(siguienteLugar);
 					}
+					Acciones.relocalizar(this, opciones.get((int)Math.floor(Math.random() * (opciones.size()-1))));
+					return true;
 				}
+			}	
+			for(Lugar siguienteLugar: (Iterable<Lugar>) () -> this.getLugar().lugarIt()){
+				opciones.add(siguienteLugar);
+				for(int index = this.getCreencias().size()-1 ; index >=0 ; index--){
+					if(this.getCreencias().get(index).getLugar() == siguienteLugar) {
+							opciones.remove(siguienteLugar);
+					}
+				}				
 			}
+			Acciones.relocalizar(this, opciones.get((int) Math.floor(Math.random() * (opciones.size()-1))));
+			return true;
 		}
 		else {
-			if(getYaObjetivo(0)) {
-				if(creencias) == getObjetivo(Lugar)){
-					relocalizar(this, ir mirando adyacencias para volver*/)
-				}
-				else {
-					relocalizar(this, /*otra habitacion que no sea la anterior a no ser que no haya otra opcion*/);
-				}
+			if(((HashSet<Objeto>)(this.getLugar().getObjeto())).contains(this.getObjetivo().getObjeto())){
+				Acciones.cogerObjeto(this, this.getObjetivo().getObjeto());
 			}
 			else {
-			//Lo otro (0,0)
+				ultimaInfo = null;
+				for(int index = this.getCreencias().size()-1 ; index >=0 ; index--) {
+					if ((ultimaInfo = this.getCreencias().get(index)).getObjeto() == this.getObjetivo().getObjeto() && ultimaInfo.getAgente() != null){
+						for(Agente npc: (Iterable<Agente>) () -> this.getLugar().agenteIt()){  
+							if (ultimaInfo.getAgente() == npc){
+								 Acciones.pedirObjeto(npc, new Peticion(this, this.getObjetivo().getObjeto()));	//Lo siento mucho
+								 return true;
+							}
+						}
+					}
+				}
+				/*Acciones.relocalizar("otra puta funcion que hare mañana");*/
 			}
 		}
+		return false;
 	}
 }
-private void limpiarCreenciasObjeto() {
-	
-	//Se saca la ultima info que se tiene de un objeto.
-	
-	
-		for(int index = this.creencias.size()-1 ; index >=0 ; index--) {
-			if (this.creencias.get(index).getLugar() == LugarNoLugar) {
-				ultimaInfo = this.creencias.get(index);
-				break;
-			}
-		}
-}
-

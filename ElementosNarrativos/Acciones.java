@@ -42,22 +42,22 @@ public abstract class Acciones {
 	
 	//Comprobar persona comprueba si el agente ya ha cumplido sus objetivos en la partida. True significa que esta incumplido, y false que esta cumplido, como persona.yaObjetivos. Aplicable tambien a compLugar y compObjeto.
 	public static boolean compPersona (Agente persona) {
-		if( (persona.getYaObjetivos(0) && compLugar(persona)) || (persona.getYaObjetivos(1) && compObjeto(persona)) ) {
+		if( (persona.getYaObjetivo(0) && compLugar(persona)) || (persona.getYaObjetivo(1) && compObjeto(persona)) ) {
 			return true;
 		}
 		return false;
 	}
 	public static boolean compLugar(Agente persona) {
 		if(persona.getLugar() == persona.getObjetivo().getLugar() || persona.getObjetivo().getLugar() == null) {
-			persona.setYaObjetivos(0,false);
+			persona.setYaObjetivo(0,false);
 		}
-		return persona.getYaObjetivos(0);
+		return persona.getYaObjetivo(0);
 	}
 	public static boolean compObjeto(Agente persona) {
 		if(persona.getObjeto() == persona.getObjetivo().getObjeto() || persona.getObjetivo().getObjeto() == null) {
-			persona.setYaObjetivos(1,false);
+			persona.setYaObjetivo(1,false);
 		}
-		return persona.getYaObjetivos(1);
+		return persona.getYaObjetivo(1);
 	}
 	
 	public static void verLugar(Agente persona) {

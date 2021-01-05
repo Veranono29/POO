@@ -22,7 +22,7 @@ public abstract class Acciones {
 	
 	//Dar objeto a una persona.
 	public static void darObjeto (Agente jugadorPeticionado) {
-		//TODO raul ten en cuenta tambien si recibió una peticion en el dameAccion.
+		//TODO raul ten en cuenta tambien si recibiÃ³ una peticion en el dameAccion.
 		jugadorPeticionado.getPeticion().getAgente().setObjeto(jugadorPeticionado.dropObjeto());
 		//Siempre que decida darlo dropeara la peticion, se cumpla o no. Asi dejamos libre la peticion de ese objeto para otras personas.
 		jugadorPeticionado.dropPeticion();
@@ -73,6 +73,7 @@ public abstract class Acciones {
 	}
 	
 	//TODO seria necesario esta cosa de aca???? No, no encaja aqui.
+	//TODO preguntarselo al JJ
 	public static void sumaCreencia(Lugar lugar, Informacion creencia) {
 		lugar.addCreencia(creencia);
 	}

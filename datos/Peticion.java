@@ -1,8 +1,7 @@
-package Datos;
+package datos;
 
-import ElementosNarrativos.Agente;
-import ElementosNarrativos.Lugar;
-import ElementosNarrativos.Objeto;
+import elementosNarrativos.Agente;
+import elementosNarrativos.Objeto;
 
 public class Peticion extends Informacion {
 	public Peticion(Agente agente, Objeto objeto) {

@@ -1,10 +1,8 @@
 package gestionJuego;
 
-import java.util.HashSet;
+import elementosNarrativos.ManejaDatos;
 
-import ElementosNarrativos.Agente;
-
-public abstract class GameManager implements Lugarable, Habitable, Objetable{
+public abstract class GameManager extends ManejaDatos{
 	//TODO hacedor();
 	//TODO volcado();
 	//TODO agentes[];
@@ -39,9 +37,11 @@ public abstract class GameManager implements Lugarable, Habitable, Objetable{
 		leerInfo();
 	}*/
 	
-	protected Set<Agente> agentes = new HashSet<Agente>();
-	protected Set<Objeto> objetos = new HashSet<Objeto>();
-	protected Set<Lugar> lugar = new HashSet<Lugar>();
+
+	public GameManager(String nombre) {
+		super(nombre);
+		// TODO Borrad esto al final. Si no se pone java se enfada y no te dice nada mas
+	}
 
 	public static void main(String[] args) {	
 		boolean bucleTurno = true;

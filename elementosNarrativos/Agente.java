@@ -1,7 +1,6 @@
-package ElementosNarrativos;
+package elementosNarrativos;
 
-import Datos.Informacion;
-import Datos.Peticion;
+import datos.Informacion;
 
 public abstract class Agente extends TieneCreencia implements Accionable {
 	//Tiempo de corte de volcado de creencias
@@ -13,7 +12,7 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	private Objeto objeto;
 	
 	//Peticion de un objeto de parte de una persona.
-	private Peticion peticion;
+	private Informacion peticion;
 	
 	//Informacion sobre sus objetivos. No necesita getter ya que no lo va a necesitar otra clase diferente. Si necesita setter ya que la clase en si se instancia solo con el String nombre. El resto de informacion se le añade despues.
 	//TODO si se puede añadir directamente mejor, quitamos muchos setters.
@@ -62,11 +61,11 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 		return objeto;
 	}
 
-	public Peticion getPeticion() {
+	public Informacion getPeticion() {
 		return peticion;
 	}
 
-	public void setPeticion(Peticion peticion) {
+	public void setPeticion(Informacion peticion) {
 		this.peticion = peticion;
 	}
 

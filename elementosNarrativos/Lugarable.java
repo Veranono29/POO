@@ -1,4 +1,4 @@
-package ElementosNarrativos;
+package elementosNarrativos;
 
 import java.util.Iterator;
 

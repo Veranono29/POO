@@ -1,8 +1,8 @@
-package Datos;
+package datos;
 
-import ElementosNarrativos.Agente;
-import ElementosNarrativos.Lugar;
-import ElementosNarrativos.Objeto;
+import elementosNarrativos.Agente;
+import elementosNarrativos.Lugar;
+import elementosNarrativos.Objeto;
 
 public class Informacion {
 	private Agente agente;

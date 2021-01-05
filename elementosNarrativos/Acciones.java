@@ -1,9 +1,9 @@
-package ElementosNarrativos;
+package elementosNarrativos;
 
 import java.util.Iterator;
 
-import Datos.Informacion;
-import Datos.Peticion;
+import datos.Informacion;
+import datos.Peticion;
 
 public abstract class Acciones {
 	//Estas funciones alteraran los estados de los agentes.

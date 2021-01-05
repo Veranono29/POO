@@ -1,9 +1,9 @@
-package ElementosNarrativos;
+package elementosNarrativos;
 
 import java.util.Iterator;
 import java.util.List;
 
-import Datos.Informacion;
+import datos.Informacion;
 
 public interface Creenciable {
 	public List<Informacion> getCreencias();

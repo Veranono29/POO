@@ -1,10 +1,10 @@
-package ElementosNarrativos;
+package elementosNarrativos;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import Datos.Informacion;
-import Datos.Peticion;
+import datos.Informacion;
+import datos.Peticion;
 
 
 public class NPC extends Agente {	

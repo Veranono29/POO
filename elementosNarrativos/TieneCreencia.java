@@ -1,11 +1,11 @@
-package ElementosNarrativos;
+package elementosNarrativos;
 
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import Datos.Informacion;
+import datos.Informacion;
 
 public abstract class TieneCreencia implements Creenciable, Objetable, Nombrable {
 	private List<Informacion> creencias = new ArrayList<Informacion>();

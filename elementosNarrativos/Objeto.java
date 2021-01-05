@@ -1,4 +1,4 @@
-package ElementosNarrativos;
+package elementosNarrativos;
 
 public class Objeto implements Nombrable {
 	//Nombre del Objeto. Sirve de ID.

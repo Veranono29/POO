@@ -1,4 +1,4 @@
-package ElementosNarrativos;
+package elementosNarrativos;
 
 public interface Nombrable {
 	//getNombre devuelve lo mismo que toString, pero se implementan ambos para mayor comodidad al usarlo.

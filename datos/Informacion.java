@@ -6,8 +6,8 @@ import elementosNarrativos.Objeto;
 
 public class Informacion {
 	private Agente agente;
-	private Objeto objeto;
-	private Lugar lugar;
+	protected Objeto objeto;
+	protected Lugar lugar;
 	
 	public Informacion(Agente agente, Objeto objeto, Lugar lugar) {
 		this.agente = agente;

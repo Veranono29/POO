@@ -14,8 +14,8 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	//Peticion de un objeto de parte de una persona.
 	private Informacion peticion;
 	
-	//Informacion sobre sus objetivos. No necesita getter ya que no lo va a necesitar otra clase diferente. Si necesita setter ya que la clase en si se instancia solo con el String nombre. El resto de informacion se le añade despues.
-	//TODO si se puede añadir directamente mejor, quitamos muchos setters.
+	//Informacion sobre sus objetivos. No necesita getter ya que no lo va a necesitar otra clase diferente. Si necesita setter ya que la clase en si se instancia solo con el String nombre. El resto de informacion se le aÃ±ade despues.
+	//TODO si se puede aÃ±adir directamente mejor, quitamos muchos setters.
 	//TODO si veis que un getter o setter no se va a usar, quitadlo, siempre que no sea uno que si podriamos usar pero que no lo usamos.
 	private Informacion objetivo;
 	
@@ -24,7 +24,7 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	
 	public Agente(String nombre) {
 		super(nombre);
-		
+		objetivo = null;
 		//TODO Ver si mejor poner aca que yaObjetivos es true y true, o dejarlo como esta, ya que los array literales solo se puden usar en la declaracion.
 	}
 
@@ -88,6 +88,7 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	}
 	
 	public void setObjetivo(Informacion objetivos) {
-		this.objetivo = objetivos;
+		if(this.objetivo == null)
+			this.objetivo = objetivo;
 	}
 }

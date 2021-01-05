@@ -2,6 +2,12 @@ package gestionJuego;
 
 import elementosNarrativos.ManejaDatos;
 
+import datos.Informacion;
+import elementosNarrativos.Agente;
+import elementosNarrativos.Lugar;
+import elementosNarrativos.ManejaDatos;
+import elementosNarrativos.Objeto;
+
 public abstract class GameManager extends ManejaDatos{
 	//TODO hacedor();
 	//TODO volcado();
@@ -37,12 +43,12 @@ public abstract class GameManager extends ManejaDatos{
 		leerInfo();
 	}*/
 	
-	public boolean log(Agente agente) {
+	public static boolean log(Agente agente) {
 		agente.getLugar().addCreencia(new Informacion(agente, null, null));
 		return false;
 	}
 	
-	public boolean log(Agente agente, Objeto objeto, Lugar lugar) {
+	public static boolean log(Agente agente, Objeto objeto, Lugar lugar) {
 		agente.getLugar().addCreencia(new Informacion(agente, null, null));
 		return true;
 	}

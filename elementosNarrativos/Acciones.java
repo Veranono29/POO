@@ -29,9 +29,8 @@ public abstract class Acciones {
 	}
 	
 	public static void relocalizar (Agente jugadorTransladado, Lugar lugar) {
-		jugadorTransladado.getLugar().dropAgente(jugadorTransladado);
+		lugar.addAgente((Agente) jugadorTransladado.getLugar().dropAgente(jugadorTransladado));
 		jugadorTransladado.setLugar(lugar);
-		jugadorTransladado.getLugar().addAgente(jugadorTransladado);
 	}
 	
 	public static void cogerObjeto (Agente jugador, Objeto objeto) {

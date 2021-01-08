@@ -27,22 +27,13 @@ public abstract class TieneCreencia implements Creenciable, Objetable, Nombrable
 	}
 	
 	@Override
-	public void addObjeto(Objeto objeto) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void addObjeto(Objeto objeto);
 	
 	@Override
-	public Objeto dropObjeto(Objeto objeto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract Objeto dropObjeto(Objeto objeto);
 	
 	@Override
-	public Object getObjeto() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public abstract Object getObjeto();
 	
 	@Override
 	public List<Informacion> getCreencias() {

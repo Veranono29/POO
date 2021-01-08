@@ -26,12 +26,13 @@ public abstract class TieneCreencia implements Creenciable, Objetable, Nombrable
 		return nombre;
 	}
 	
+	//TODO esto es necesario ponerlo? o con que lo implementen las clases hijas sirve?
 	/*
 	@Override
 	public abstract void addObjeto(Objeto objeto);
 	
 	@Override
-	public abstract Objeto dropObjeto(Objeto objeto);
+	public abstract Objeto dropObjeto();
 	
 	@Override
 	public abstract Object getObjeto();
@@ -56,6 +57,11 @@ public abstract class TieneCreencia implements Creenciable, Objetable, Nombrable
 	@Override
 	public Iterator<Informacion> creenciaIt() {
 		return creencias.iterator();
+	}
+
+	public Objeto dropObjeto(Objeto objeto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/*public void setCreencias(List<Informacion> creencias) {

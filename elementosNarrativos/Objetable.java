@@ -1,8 +1,11 @@
 package elementosNarrativos;
 
 public interface Objetable {	
-	//TODO a ver, en estas interfaces tengo el problema de que se "repetiria" el codigo en Agente, pero realemente no se repite. Pero un poco si. Ponemos lo de Agente a Set de cosas y que implemente Lugarable y Objetable?
+	//TODO hace falta meterle abstracto, o si no se pone default se da por hecho que es abstracto.
 	public Object getObjeto();
+	
+	//TODO como hago para que me deje cambiar los parametros en las distintas implementaciones?
 	public Objeto dropObjeto(Objeto objeto);
 	public void addObjeto(Objeto objeto);
+	
 }

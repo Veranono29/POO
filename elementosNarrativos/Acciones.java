@@ -23,7 +23,7 @@ public abstract class Acciones {
 	//Dar objeto a una persona.
 	public static void darObjeto (Agente jugadorPeticionado) {
 		//TODO raul ten en cuenta tambien si recibió una peticion en el dameAccion.
-		jugadorPeticionado.getPeticion().getAgente().setObjeto(jugadorPeticionado.dropObjeto());
+		jugadorPeticionado.getPeticion().getAgente().addObjeto(jugadorPeticionado.dropObjeto());
 		//Siempre que decida darlo dropeara la peticion, se cumpla o no. Asi dejamos libre la peticion de ese objeto para otras personas.
 		jugadorPeticionado.dropPeticion();
 	}
@@ -34,7 +34,7 @@ public abstract class Acciones {
 	}
 	
 	public static void cogerObjeto (Agente jugador, Objeto objeto) {
-		jugador.setObjeto(jugador.getLugar().dropObjeto(objeto));
+		jugador.addObjeto(jugador.getLugar().dropObjeto(objeto));
 	}
 	
 	public static void dejarObjeto (Agente jugador) {

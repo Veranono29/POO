@@ -29,7 +29,7 @@ public class NPC extends Agente {
 				if (this.getCreencias().get(index).getLugar() == this.getObjetivo().getLugar()){	//Y buscamos en ellas nuestro lugar objetivo(Para saber si hemos estado)
 					for(Lugar siguienteLugar: (Iterable<Lugar>) () -> this.getLugar().lugarIt()){	//Iteramos sobre las adyacencias de nuestra habitación
 						for(int index2 = this.getCreencias().size()-1 ; index2 >=0 ; index2--){		//Iteramos de nuevo...
-							if(this.getObjetivo().getLugar() == siguienteLugar) {					//Si estamos adyacentes a nuestra habitación objetivo, nos movemos a ella
+							if(this.getObjetivo().getLugar() == siguienteLugar){					//Si estamos adyacentes a nuestra habitación objetivo, nos movemos a ella
 								Acciones.relocalizar(this, siguienteLugar);
 								return gestionJuego.GameManager.log(this, null, this.getLugar());	
 							}																			
@@ -60,7 +60,7 @@ public class NPC extends Agente {
 						for(Agente npc: (Iterable<Agente>) () -> this.getLugar().agenteIt()){  					//hemos visto nuestro objeto en posesión de algun otro jugador
 							if (ultimaInfo.getAgente() == npc){													//y comparamos los agentes de la habitación con los de las creencias
 								 Acciones.pedirObjeto(npc, new Peticion(this, this.getObjetivo().getObjeto()));	//Si hay una coincidencia, le mandamos una petición
-								 return gestionJuego.GameManager.log(this); 							
+								 return gestionJuego.GameManager.log(this.getPeticion().getObjeto(), this.getPeticion().getLugar()); 							
 							}
 						}
 					}

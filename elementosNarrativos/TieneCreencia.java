@@ -26,6 +26,7 @@ public abstract class TieneCreencia implements Creenciable, Objetable, Nombrable
 		return nombre;
 	}
 	
+	/*
 	@Override
 	public abstract void addObjeto(Objeto objeto);
 	
@@ -34,6 +35,7 @@ public abstract class TieneCreencia implements Creenciable, Objetable, Nombrable
 	
 	@Override
 	public abstract Object getObjeto();
+	*/
 	
 	@Override
 	public List<Informacion> getCreencias() {

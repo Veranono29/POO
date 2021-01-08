@@ -1,4 +1,4 @@
-package teoria;
+package cosasInterfaz;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;

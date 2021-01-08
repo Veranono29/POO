@@ -87,7 +87,7 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 		return objetivo;
 	}
 	
-	public void setObjetivo(Informacion objetivos) {
+	public void setObjetivo(Informacion objetivo) {
 		if(this.objetivo == null)
 			this.objetivo = objetivo;
 	}

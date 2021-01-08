@@ -42,7 +42,7 @@ public class PruebaDinamica extends JFrame {
 	//private Agente jugador; 
 	
 	//Botones de personas
-	JButton[] botonPer;
+	JButton[] botonPer=null;
 	
 	/**
 	 * Launch the application.
@@ -65,7 +65,7 @@ public class PruebaDinamica extends JFrame {
 	 */
 	public PruebaDinamica(/*Agente jugador*/) {
 		//this.jugador=jugador;
-		setTitle("Ekaitz, Raùl, Gerardo, Daniel");
+		setTitle("Ekaitz, RaÃ¹l, Gerardo, Daniel");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(MARCO_X, MARCO_Y, ANCHO_MARCO,ALTO_MARCO);
 		contentPane = new JPanel();
@@ -123,7 +123,7 @@ public class PruebaDinamica extends JFrame {
 		//BOTON VOLVER
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 		JButton botonVolver = new JButton("Volver");
-		botonPedir.addActionListener(new ActionListener(){
+		botonVolver.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				volverASeleccionAccion();
 			}
@@ -185,7 +185,7 @@ public class PruebaDinamica extends JFrame {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			//esto se debe cargar con el nombre del jugador
 		String nombreProta="PEPE";
-		String[] adyacentes=jugadoresAdyacentes(nombreProta); //esto debería devolver un String[] con el nombre/ID de los jugaodres adyacentes/de la misma habitacion
+		String[] adyacentes=jugadoresAdyacentes(nombreProta); //esto deberÃ­a devolver un String[] con el nombre/ID de los jugaodres adyacentes/de la misma habitacion
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		int maxPorFila= 3,numJugadores=adyacentes.length,numFilas=(numJugadores/maxPorFila)+1;
 		int posActualX=SUBZONA_TOP_IZ_X;	//variables temporales para almecenar las X/Y de cada boton
@@ -194,7 +194,7 @@ public class PruebaDinamica extends JFrame {
 		IncY=(SUBZONA_BOT_DER_Y-SUBZONA_TOP_IZ_Y)/(numFilas); //Calculamos el NumDeFilas y lo usamo como denominador para dividir la altura maxima
 		IncX = (SUBZONA_BOT_DER_X-SUBZONA_TOP_IZ_X)/maxPorFila;
 		//preparacion
-		//Calcular cuantos botones hay que mostrar y por ende cuanto espacio tiene cada botón
+		//Calcular cuantos botones hay que mostrar y por ende cuanto espacio tiene cada botÃ³n
 		
 		//botones
 		botonPer=new JButton[numJugadores];
@@ -218,18 +218,18 @@ public class PruebaDinamica extends JFrame {
 			
 			
 		}
-		//Se podrían juntar ambos bucles con un if, pero como el momento en el que
+		//Se podrÃ­an juntar ambos bucles con un if, pero como el momento en el que
 		//se cumple ese if es constante pues es mejor separarlos en 2 contiguos
 		try {
-			IncX=(SUBZONA_BOT_DER_X-SUBZONA_TOP_IZ_X)/(numJugadores-i);		//me siento sucio sí, al ser multiplo de 3 numJug e i se igualarían
+			IncX=(SUBZONA_BOT_DER_X-SUBZONA_TOP_IZ_X)/(numJugadores-i);		//me siento sucio sÃ­, al ser multiplo de 3 numJug e i se igualarÃ­an
 		} catch (Exception e) {
 			
 		}
 			
 		for(;i<numJugadores;++i){
-			JButton boton = botonCrear(adyacentes[i],posActualX,posActualY,IncX,IncY);
-			boton.setVisible(true);
-			contentPane.add(boton);
+			botonPer[i] = botonCrear(adyacentes[i],posActualX,posActualY,IncX,IncY);
+			botonPer[i].setVisible(true);
+			contentPane.add(botonPer[i]);
 			posActualX+=IncX;
 		}	
 		
@@ -237,15 +237,15 @@ public class PruebaDinamica extends JFrame {
 		
 	}
 	
-	//solo para probar que funciona, luego habrá qeu sustituirlo con una funcion del GameManager que devuelva quien está en la misma sala que tu
+	//solo para probar que funciona, luego habrÃ¡ qeu sustituirlo con una funcion del GameManager que devuelva quien estÃ¡ en la misma sala que tu
 	private String[] jugadoresAdyacentes(String nombre){
-		String[] pepe = {"Manuel","Rodrigo","jorge","maria"};
+		String[] pepe = {"Manuel","Rodrigo","jorge","maria","al","al","DEl"};
 		return pepe;
 		
 	}
 	private void volverASeleccionAccion() {
 		ocultarPersonas();//volver invisibles a lso jugadores y sus botones 
-		//mostrarBotonesAccion();//mostrar los botones de accion 
+		mostrarBotonesAccion();//mostrar los botones de accion 
 	}
 	private void ocultarBotonesAccion(){
 		botonRecoger.setVisible(false);
@@ -254,12 +254,10 @@ public class PruebaDinamica extends JFrame {
 		botonPedir.setVisible(false);
 	}
 	private void ocultarPersonas(){	//ERROR DE NULLPOINTER EXCEPTION
-		for (int i = 1;i< (botonPer.length-1);++i){
-			botonPer[i].setVisible(false);
+		for(JButton a : botonPer){
+			a.setVisible(false);
+			contentPane.remove(a);
 		}
-		//for(JButton a : botonPer){
-			//a.setVisible(false);
-		//}
 	}
 	private JButton botonCrear(String nombre,int x, int y,int ancho, int alto){
 		JButton boton = new JButton(nombre);

@@ -11,4 +11,8 @@ public class Jugador extends Agente {
 		// TODO dameAccion de jugador jugable
 		return false;
 	}
+	
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 }

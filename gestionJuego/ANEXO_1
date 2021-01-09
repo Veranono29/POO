@@ -1,0 +1,15 @@
+<Localizaciones> //Adyacencia entre parentesis
+Jardin(Comedor, Dormitorio)
+Comedor(Jardin, Cocina, Dormitorio)
+Cocina(Comedor)
+Dormitorio(Comedor, Jardin)
+<Personajes> //Entre parentesis la localizacion inicial
+Jorge(Comedor)
+PEPE(Cocina)
+Esther(Dormitorio)
+Maria(Jardin)
+<Objetos> //Entre parentesis la localizacion inicial o quien lo posee inicialmente
+Llave(Cocina)
+Ordenador(Comedor)
+Cartera(Jardin)
+Pan(Jorge)

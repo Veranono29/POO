@@ -8,10 +8,11 @@ import java.util.List;
 import datos.Informacion;
 
 public abstract class TieneCreencia implements Creenciable, Objetable, Nombrable {
-	private List<Informacion> creencias = new ArrayList<Informacion>();
+	//TODO deberia ir private??
+	protected List<Informacion> creencias = new ArrayList<Informacion>();
 	
 	//Nombre del objeto creenciable. Servira como ID.
-	private String nombre;
+	protected String nombre;
 	
 	public TieneCreencia(String nombre) {
 		this.nombre = nombre;
@@ -58,12 +59,13 @@ public abstract class TieneCreencia implements Creenciable, Objetable, Nombrable
 	public Iterator<Informacion> creenciaIt() {
 		return creencias.iterator();
 	}
-
-	public Objeto dropObjeto(Objeto objeto) {
+	
+	//TODO revisa esto
+	/*public Objeto dropObjeto(Objeto objeto) {
 		// TODO Auto-generated method stub
 		return null;
-	}
-
+	}*/
+	
 	/*public void setCreencias(List<Informacion> creencias) {
 		this.creencias = creencias;
 	}*/

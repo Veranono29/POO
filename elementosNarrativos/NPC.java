@@ -22,7 +22,7 @@ public class NPC extends Agente {
 		Informacion ultimaInfo = null;																//Usaremos una variable para seleccionar información relevante
 		List<Lugar> opciones = new ArrayList<Lugar>();												//Y un arraylist de opciones a las que nos podemos mover
 		
-		if(getYaObjetivo(0)) {																	//En el caso en el que ya estamos en posesión del objeto
+		if(getYaObjetivo(0)) {																		//En el caso en el que ya estamos en posesión del objeto
 			
 			for(int index = this.getCreencias().size()-1 ; index >=0 ; index--){					//Iteramos sobre las creencias del personaje
 				if (this.getCreencias().get(index).getLugar() == this.getObjetivo().getLugar()){	//Y buscamos en ellas nuestro lugar objetivo(Para saber si hemos estado)
@@ -39,7 +39,7 @@ public class NPC extends Agente {
 					return relocalizador(opciones);													//Relocalizador explicado abajo
 				}
 			}	
-			for(Lugar siguienteLugar: (Iterable<Lugar>) () -> this.getLugar().lugarIt()){			//Si no hemos estado en el lugar objetivo anteriormente
+			for(Lugar siguienteLugar: this.getLugar().getLugares()){			//Si no hemos estado en el lugar objetivo anteriormente
 				opciones.add(siguienteLugar);														//Hacemos lo contrario y priorizamos las habitaciones no visitadas
 				for(int index = this.getCreencias().size()-1 ; index >=0 ; index--){
 					if(this.getCreencias().get(index).getLugar() == siguienteLugar)

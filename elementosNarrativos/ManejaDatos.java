@@ -1,26 +1,30 @@
 package elementosNarrativos;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
 public class ManejaDatos extends TieneCreencia implements Lugarable, Habitable {
+		//TODO como hacer para que pueda usarlos en las clase hija?
 		//Agentes para la implementacion de Habitable.
-		private Set<Agente> agentes;
+		protected Set<Agente> agentes;
 		
 		//Objetos para la implementacion de Objetable.
-		private Set<Objeto> objetos;
+		protected Set<Objeto> objetos;
 		
 		//Adjacencias para la implementacion de Lugarable.
-		private Set<Lugar> lugares;
+		protected Set<Lugar> lugares;
 		
 		public ManejaDatos(String nombre) {
 			super(nombre);
+			//TODO Si todos van a tener que inicializarse, mejor lo dejamos en el constructor.
 			objetos = new HashSet<Objeto>();
 			agentes = new HashSet<Agente>();
 			lugares = new HashSet<Lugar>();
 		}
 		
+		//TODO estos public deberian ir como protected?
 		@Override
 		public Objeto dropObjeto(Objeto objeto) {
 			objetos.remove(objeto);
@@ -40,18 +44,18 @@ public class ManejaDatos extends TieneCreencia implements Lugarable, Habitable {
 		}
 		
 		@Override
-		public Object getLugares() {
-			return ((HashSet<Lugar>)lugares).clone();
+		public Iterable<Lugar> getLugares() {
+			return lugares;
 		}
 		
 		@Override
-		public Object getObjeto() {
-			return ((HashSet<Objeto>)objetos).clone();
+		public Iterable<Objeto> getObjeto() {
+			return objetos;
 		}
 		
 		@Override
-		public Object getAgentes() {
-			return ((HashSet<Agente>)agentes).clone();
+		public Iterable<Agente> getAgentes() {
+			return agentes;
 		}	
 		@Override
 		public void addLugar(Lugar lugar) {
@@ -68,7 +72,26 @@ public class ManejaDatos extends TieneCreencia implements Lugarable, Habitable {
 			agentes.add(persona);
 		}
 
+		//TODO si estas 3 no se usan, se eliminan que nos deja en evidencia una microfalla del esquema.
+		public void impLugares(Collection<Lugar> conjunto) {
+			//if(this.lugares == null) {
+				lugares.addAll(conjunto);
+			//}
+		}
+		
+		public void impObjetos(Collection<Objeto> conjunto) {
+			//if(this.objetos == null) {
+				objetos.addAll(conjunto);
+			//}
+		}
 
+		public void impAgentes(Collection<Agente> conjunto) {
+			//if(this.agentes == null) {
+				agentes.addAll(conjunto);
+			//}
+		}
+
+		
 		public Iterator<Objeto> objetoIt() {
 			return objetos.iterator();
 		}
@@ -81,6 +104,12 @@ public class ManejaDatos extends TieneCreencia implements Lugarable, Habitable {
 		@Override
 		public Iterator<Lugar> lugarIt() {
 			return lugares.iterator();
+		}
+
+		
+		@Override
+		public boolean siSoy(String nombre) {
+			return (this.nombre == nombre);
 		}
 		
 		//Aca no hay el poder añadir otro set al set porque no vamos a necesitar eso.

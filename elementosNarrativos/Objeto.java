@@ -16,4 +16,9 @@ public class Objeto implements Nombrable {
 	public String toString() {
 		return nombre;
 	}
+
+	@Override
+	public boolean siSoy(String nombre) {
+		return (this.nombre == nombre);
+	}
 }

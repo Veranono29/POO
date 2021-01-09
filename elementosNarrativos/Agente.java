@@ -28,6 +28,11 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 		//TODO Ver si mejor poner aca que yaObjetivos es true y true, o dejarlo como esta, ya que los array literales solo se puden usar en la declaracion.
 	}
 
+	@Override
+	public boolean siSoy(String nombre) {
+		return (this.nombre == nombre);
+	}
+	
 	public int getTiempoAnterior() {
 		return tiempoAnterior;
 	}
@@ -60,6 +65,15 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 		//TODO Lo mismo que en dropPeticion, esto deberia ser setObjeto(null);?
 		this.objeto = null;
 		return objeto;
+	}
+	
+	public Objeto dropObjeto(Objeto objeto) {
+		if(this.objeto == objeto) {
+			//TODO Lo mismo que en dropPeticion, esto deberia ser setObjeto(null);?
+			this.objeto = null;
+			return objeto;
+		}
+		return null;
 	}
 
 	public Informacion getPeticion() {

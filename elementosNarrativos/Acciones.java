@@ -85,6 +85,8 @@ public abstract class Acciones {
 			if(info.hasNext())
 				info.next();
 		}
+		//TODO si se vuelven a volcar todos, es porque el iterable se esta haciendo desde el inicio del iterador y no desde el ultimo .next();
+		//Como arreglar: ul iterable, pero un if si es x<tiempoAnterior: continue;
 		for(Informacion dato: (Iterable<Informacion>) () -> info) {
 			//TODO el random simulando la olvidasion
 			//TODO decidir si al crear la creencia se le mete lugar, o es al salir de lugar. De momento, se guarda.

@@ -55,10 +55,6 @@ public class ManejaDatos extends TieneCreencia implements Lugarable, Habitable {
 		}
 		
 		@Override
-		public Object getAgentes() {
-			return ((HashSet<Agente>)agentes).clone();
-		}	
-		@Override
 		public Iterable<Agente> getAgentes() {
 			return agentes;
 		}

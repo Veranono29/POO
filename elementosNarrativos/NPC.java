@@ -30,6 +30,7 @@ public class NPC extends Agente {
 						for(int index2 = this.getCreencias().size()-1 ; index2 >=0 ; index2--){		//Iteramos de nuevo...
 							if(this.getObjetivo().getLugar() == siguienteLugar) {					//Si estamos adyacentes a nuestra habitación objetivo, nos movemos a ella
 								Acciones.relocalizar(this, siguienteLugar);
+								Intefa.setPeticionBoton(this.getPeticion());
 								return gestionJuego.GameManager.log(this, null, this.getLugar());	
 							}																			
 							else if(this.getCreencias().get(index2).getLugar() == siguienteLugar)	//Si no estamos adyacentes a nuestro objetivo, buscamos si hemos estado previamente en alguna

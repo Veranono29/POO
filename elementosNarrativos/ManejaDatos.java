@@ -44,13 +44,14 @@ public class ManejaDatos extends TieneCreencia implements Lugarable, Habitable {
 		}
 		
 		@Override
-		public Object getLugares() {
-			return ((HashSet<Lugar>)lugares).clone();
+		public Iterable<Lugar> getLugares() {
+			return lugares;
 		}
 		
+		//TODO Esto de aca con un clone?
 		@Override
-		public Object getObjeto() {
-			return ((HashSet<Objeto>)objetos).clone();
+		public Iterable<Objeto> getObjeto() {
+			return objetos;
 		}
 		
 		@Override
@@ -58,8 +59,8 @@ public class ManejaDatos extends TieneCreencia implements Lugarable, Habitable {
 			return ((HashSet<Agente>)agentes).clone();
 		}	
 		@Override
-		public void addLugar(Lugar lugar) {
-			lugares.add(lugar);
+		public Iterable<Agente> getAgentes() {
+			return agentes;
 		}
 		
 		@Override

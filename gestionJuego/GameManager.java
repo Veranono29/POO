@@ -300,7 +300,7 @@ public abstract class GameManager extends DataManager {
 	}
 	
 	public static boolean log(Agente agente, Objeto objeto, Lugar lugar) {
-		agente.getLugar().addCreencia(new Informacion(agente, null, null));
+		agente.getLugar().addCreencia(new Informacion(agente, objeto, lugar));
 		return true;
 	}
 

@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import datos.Informacion;
 import datos.Peticion;
-import gestionJuego.GameManager;
 
 
 public class NPC extends Agente {	

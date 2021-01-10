@@ -50,7 +50,8 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 		return objeto;
 	}
 
-	public void setObjeto(Objeto objeto) {
+	@Override
+	public void addObjeto(Objeto objeto) {
 		this.objeto = objeto;
 	}
 	
@@ -87,7 +88,7 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 		return objetivo;
 	}
 	
-	public void setObjetivo(Informacion objetivos) {
+	public void setObjetivo(Informacion objetivo) {
 		if(this.objetivo == null)
 			this.objetivo = objetivo;
 	}

@@ -11,6 +11,7 @@ public class NPC extends Agente {
 	public NPC(String nombre) {
 		super(nombre);
 	}
+	//TODO este supperssWarnings se ve feo.
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean dameAccion() {

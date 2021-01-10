@@ -7,5 +7,4 @@ public interface Objetable {
 	//TODO como hago para que me deje cambiar los parametros en las distintas implementaciones?
 	public Objeto dropObjeto(Objeto objeto);
 	public void addObjeto(Objeto objeto);
-	
 }

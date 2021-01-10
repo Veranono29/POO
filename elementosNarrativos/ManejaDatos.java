@@ -70,6 +70,9 @@ public class ManejaDatos extends TieneCreencia implements Lugarable, Habitable {
 		@Override
 		public void addAgente(Agente persona) {
 			agentes.add(persona);
+			
+			if(this instanceof Lugar)
+				persona.setLugar((Lugar)this);
 		}
 
 		//TODO si estas 3 no se usan, se eliminan que nos deja en evidencia una microfalla del esquema.

@@ -60,7 +60,7 @@ public class NPC extends Agente {
 						for(Agente npc: (Iterable<Agente>) () -> this.getLugar().agenteIt()){  					//hemos visto nuestro objeto en posesión de algun otro jugador
 							if (ultimaInfo.getAgente() == npc){													//y comparamos los agentes de la habitación con los de las creencias
 								 Acciones.pedirObjeto(npc, new Peticion(this, this.getObjetivo().getObjeto()));	//Si hay una coincidencia, le mandamos una petición
-								 return gestionJuego.GameManager.log(this.getPeticion().getObjeto(), this.getPeticion().getLugar()); 							
+								 return gestionJuego.GameManager.log(this,this.getPeticion().getObjeto(), this.getPeticion().getLugar()); 							
 							}
 						}
 					}

@@ -23,16 +23,8 @@ import elementosNarrativos.Objeto;
 
 //TODO deberiamos importarlo y usar los privates o extenderlo y usar protected.
 
-public abstract class GameManager extends ManejaDatos {
+public abstract class GameManager extends DataManager {
 	//TODO hacedor();
-	
-	//TODO rConfig();
-		//Consigue diferentes agentes, objetos y lugares, y los hace listas.
-		//Instancia una clase de sus correspondientes para cada uno.
-		//Meter los datos. Con setters.
-	//TODO rObjetivos();
-	//TODO rNombre();
-		//consigue nombre de jugador;
 	
 	private static List<Erlacion> erlaciones;
 	private static List<String> nombres;
@@ -41,9 +33,14 @@ public abstract class GameManager extends ManejaDatos {
 	private static final String nombreJugador = "PEPE";
 	private static Agente pepe = null;
 	private static final int maxAjyacencias = 3;
+	private static final int maxPersonas = 10;
+	private static int tiempo = 0;
 	private static final String[] textoTopes = {"<Localizaciones>","<Personajes>","<Objetos>"};
 	private static final String[] textoTopesObjetivos = {"<Localización Personajes>","<Posesión Objetos>"};
 	
+	protected static int getRonda() {
+		return tiempo/maxPersonas;
+	}
 	
 	private static String leerPalabra(int desde, String linea) {
 		int posicion;
@@ -91,11 +88,13 @@ public abstract class GameManager extends ManejaDatos {
 		return true;
 	}
 	
-	private static void rNombre(Jugador jugador) {
+	private static String rNombre() {
+		String nombre;
 		Scanner nom = new Scanner(System.in);
 		System.out.println("Cual es el nombre del Jugador: ");
-		jugador.setNombre(nom.next());
+		nombre = nom.next();
 		nom.close();
+		return nombre;
 	}
 	
 	private static void rConfig() throws FileNotFoundException {
@@ -131,8 +130,7 @@ public abstract class GameManager extends ManejaDatos {
 			while(lineasIt(lectura, textoTopes[0], textoTopes[2])) {
 				titulo = leerPalabra(lectura.nextLine());
 				if((pepe == null) && (titulo == nombreJugador)) {
-					pepe = new Jugador(titulo);
-					rNombre(pepe);
+					pepe = new Jugador(rNombre());
 					agentes.add(pepe);
 				}
 				else {
@@ -196,7 +194,6 @@ public abstract class GameManager extends ManejaDatos {
 						
 						for(Lugar lugar: lugares) {
 							if(lugar.siSoy(datos.get(0))) {
-								persona.setLugar(lugar);
 								lugar.addAgente(persona);
 								break;
 							}
@@ -292,15 +289,6 @@ public abstract class GameManager extends ManejaDatos {
 				}
 			}
 		}
-		
-		/*for(Agente agente: agentes) {
-			for(Erlacion erlacion: erlaciones) {
-				if(erlacion.siSoy(agente)) {
-					agente.setObjetivo((Objetivo) erlacion);
-					break;
-				}
-			}
-		}*/
 		erlaciones = null;
 	}
 	

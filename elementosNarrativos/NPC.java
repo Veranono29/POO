@@ -11,24 +11,25 @@ public class NPC extends Agente {
 	public NPC(String nombre) {
 		super(nombre);
 	}
+	//TODO este supperssWarnings se ve feo.
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean dameAccion() {
-		if(this.getPeticion().getObjeto() == this.getObjeto()) {		//En primer lugar comparamos si tenemos alguna petici髇 que contenga el objeto que llevamos
+		if(this.getPeticion().getObjeto() == this.getObjeto()) {		//En primer lugar comparamos si tenemos alguna petici贸n que contenga el objeto que llevamos
 			Acciones.darObjeto(this);									//Si la tenemos, damos el objeto							
 			return gestionJuego.GameManager.log(this.getPeticion().getAgente(), this.getPeticion().getObjeto(), this.getPeticion().getLugar());		
 		}
 		
-		Informacion ultimaInfo = null;																//Usaremos una variable para seleccionar informaci髇 relevante
+		Informacion ultimaInfo = null;																//Usaremos una variable para seleccionar informaci贸n relevante
 		List<Lugar> opciones = new ArrayList<Lugar>();												//Y un arraylist de opciones a las que nos podemos mover
 		
-		if(getYaObjetivo(0)) {																	//En el caso en el que ya estamos en posesi髇 del objeto
+		if(getYaObjetivo(0)) {																	//En el caso en el que ya estamos en posesi贸n del objeto
 			
 			for(int index = this.getCreencias().size()-1 ; index >=0 ; index--){					//Iteramos sobre las creencias del personaje
 				if (this.getCreencias().get(index).getLugar() == this.getObjetivo().getLugar()){	//Y buscamos en ellas nuestro lugar objetivo(Para saber si hemos estado)
-					for(Lugar siguienteLugar: (Iterable<Lugar>) () -> this.getLugar().lugarIt()){	//Iteramos sobre las adyacencias de nuestra habitaci髇
+					for(Lugar siguienteLugar: (Iterable<Lugar>) () -> this.getLugar().lugarIt()){	//Iteramos sobre las adyacencias de nuestra habitaci贸n
 						for(int index2 = this.getCreencias().size()-1 ; index2 >=0 ; index2--){		//Iteramos de nuevo...
-							if(this.getObjetivo().getLugar() == siguienteLugar){					//Si estamos adyacentes a nuestra habitaci髇 objetivo, nos movemos a ella
+							if(this.getObjetivo().getLugar() == siguienteLugar){					//Si estamos adyacentes a nuestra habitaci贸n objetivo, nos movemos a ella
 								Acciones.relocalizar(this, siguienteLugar);
 								return gestionJuego.GameManager.log(this, null, this.getLugar());	
 							}																			
@@ -50,15 +51,15 @@ public class NPC extends Agente {
 		}
 		else {
 			if(((HashSet<Objeto>)(this.getLugar().getObjeto())).contains(this.getObjetivo().getObjeto())){	//En el caso en el que no tenemos el objetyo
-				Acciones.cogerObjeto(this, this.getObjetivo().getObjeto());										//Primero miramos si esta en la habitaci髇 en la que nos encontramos
+				Acciones.cogerObjeto(this, this.getObjetivo().getObjeto());										//Primero miramos si esta en la habitaci贸n en la que nos encontramos
 				return gestionJuego.GameManager.log(this, this.getObjeto(), this.getLugar());					//Si esta, lo cogemos
 			}
 			else {
 				for(int index = this.getCreencias().size()-1 ; index >=0 ; index--) {
 					if ((ultimaInfo = this.getCreencias().get(index)).getObjeto() == this.getObjetivo().getObjeto() && ultimaInfo.getAgente() != null){	//Buscamos en nuestras creencias si
-						for(Agente npc: (Iterable<Agente>) () -> this.getLugar().agenteIt()){  					//hemos visto nuestro objeto en posesi髇 de algun otro jugador
-							if (ultimaInfo.getAgente() == npc){													//y comparamos los agentes de la habitaci髇 con los de las creencias
-								 Acciones.pedirObjeto(npc, new Peticion(this, this.getObjetivo().getObjeto()));	//Si hay una coincidencia, le mandamos una petici髇
+						for(Agente npc: (Iterable<Agente>) () -> this.getLugar().agenteIt()){  					//hemos visto nuestro objeto en posesi贸n de algun otro jugador
+							if (ultimaInfo.getAgente() == npc){													//y comparamos los agentes de la habitaci贸n con los de las creencias
+								 Acciones.pedirObjeto(npc, new Peticion(this, this.getObjetivo().getObjeto()));	//Si hay una coincidencia, le mandamos una petici贸n
 								 return gestionJuego.GameManager.log(this.getPeticion().getObjeto(), this.getPeticion().getLugar()); 							
 							}
 						}
@@ -66,7 +67,7 @@ public class NPC extends Agente {
 				}
 				for(Lugar siguienteLugar: (Iterable<Lugar>) () -> this.getLugar().lugarIt()){					//Si no, priorizamos de nuevo las habitaciones no visitadas
 					opciones.add(siguienteLugar);
-					for(int index = this.getCreencias().size()-1 ; index >=0 ; index--){						//Para tener m醩 posibilidades de encontrar el objeto
+					for(int index = this.getCreencias().size()-1 ; index >=0 ; index--){						//Para tener m谩s posibilidades de encontrar el objeto
 						if(this.getCreencias().get(index).getLugar() == siguienteLugar)
 								opciones.remove(siguienteLugar);
 					}
@@ -80,9 +81,9 @@ public class NPC extends Agente {
 	
 	
 	
-	public boolean relocalizador(List<Lugar> opciones) {									//La funci髇 relocalizador escoje una localizaci髇 aleatoria de entre las opciones
+	public boolean relocalizador(List<Lugar> opciones) {									//La funci贸n relocalizador escoje una localizaci贸n aleatoria de entre las opciones
 		if (opciones.size() == 0) {															//Si no hay opciones, las rellena de todas las habitaciones adyacentes y elije aleatoriamente
-			if( Math.random() <= 0.20 )														//A馻dimos un factor aleatorio para que pueda no hacer nada si no tiene opciones buenas
+			if( Math.random() <= 0.20 )														//A帽adimos un factor aleatorio para que pueda no hacer nada si no tiene opciones buenas
 				return gestionJuego.GameManager.log(this);
 			else {
 				for(Lugar siguienteLugar: (Iterable<Lugar>) () -> this.getLugar().lugarIt()){

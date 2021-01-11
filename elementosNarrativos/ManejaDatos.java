@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-public class ManejaDatos extends TieneCreencia implements Lugarable, Habitable {
+public abstract class ManejaDatos extends TieneCreencia implements Lugarable, Habitable {
 		//TODO como hacer para que pueda usarlos en las clase hija? Creo que se soluciona con lo de DataMAnager en medio?
 		//Agentes para la implementacion de Habitable.
 		protected Set<Agente> agentes;

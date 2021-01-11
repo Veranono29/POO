@@ -36,7 +36,7 @@ public abstract class GameManager extends DataMaganer {
 	private static final int maxPersonas = 10;
 	private static int tiempo = 0;
 	private static final String[] textoTopes = {"<Localizaciones>","<Personajes>","<Objetos>"};
-	private static final String[] textoTopesObjetivos = {"<LocalizaciÃ³n Personajes>","<PosesiÃ³n Objetos>"};
+	private static final String[] textoTopesObjetivos = {"<Localización Personajes>","<Posesión Objetos>"};
 	
 	protected static int getRonda() {
 		return tiempo/maxPersonas;

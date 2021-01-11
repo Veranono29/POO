@@ -15,8 +15,8 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	//Peticion de un objeto de parte de una persona.
 	private Informacion peticion;
 	
-	//Informacion sobre sus objetivos. No necesita getter ya que no lo va a necesitar otra clase diferente. Si necesita setter ya que la clase en si se instancia solo con el String nombre. El resto de informacion se le añade despues.
-	//TODO si se puede añadir directamente mejor, quitamos muchos setters.
+	//Informacion sobre sus objetivos. No necesita getter ya que no lo va a necesitar otra clase diferente. Si necesita setter ya que la clase en si se instancia solo con el String nombre. El resto de informacion se le aÃ±ade despues.
+	//TODO si se puede aÃ±adir directamente mejor, quitamos muchos setters.
 	//TODO si veis que un getter o setter no se va a usar, quitadlo, siempre que no sea uno que si podriamos usar pero que no lo usamos.
 	private Informacion objetivo;
 	
@@ -33,11 +33,11 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	public boolean dameAccion() {
 		GameManager.volcadoCreencias(this);
 		if(this instanceof Jugador) {
-			//TODO aca va todo lo que ser�a el llamado a los botones del apartado grafico.
+			//TODO aca va todo lo que sería el llamado a los botones del apartado grafico.
 		}
 		
-		//TODO no me gusta ese return false...
-		return false;
+		//TODO no me gusta ese return true...
+		return true;
 	}
 	
 	@Override

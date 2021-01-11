@@ -23,7 +23,7 @@ import elementosNarrativos.Objeto;
 
 //TODO deberiamos importarlo y usar los privates o extenderlo y usar protected.
 
-public abstract class GameManager extends DataMaganer {
+public abstract class GameManager extends DataMaganer implements Acciones {
 	//TODO hacedor();
 	
 	private static List<Erlacion> erlaciones;
@@ -294,6 +294,8 @@ public abstract class GameManager extends DataMaganer {
 		erlaciones = null;
 	}
 	
+	/*** Acciones ***/
+	
 	public static boolean log(Agente agente) {
 		Acciones.sumaCreencia(agente.getLugar() , new Informacion(agente, null, null));
 		
@@ -305,6 +307,53 @@ public abstract class GameManager extends DataMaganer {
 		agente.getLugar().addCreencia(new Informacion(agente, objeto, lugar));
 		return true;
 	}
+	
+	public static void pedirObjeto (Agente jugadorPeticionado, Peticion peticion){
+		Acciones.pedirObjeto(jugadorPeticionado, peticion);
+	}
+	
+	//Dar objeto a una persona.
+	public static void darObjeto (Agente jugadorPeticionado) {
+		Acciones.darObjeto(jugadorPeticionado);
+	}
+	
+	public static void relocalizar (Agente jugadorTransladado, Lugar lugar) {
+		Acciones.relocalizar(jugadorTransladado, lugar);
+	}
+	
+	public static void cogerObjeto (Agente jugador, Objeto objeto) {
+		Acciones.cogerObjeto(jugador, objeto);
+	}
+	
+	public static void dejarObjeto (Agente jugador) {
+		Acciones.dejarObjeto(jugador);
+	}
+	
+	//Comprobar persona comprueba si el agente ya ha cumplido sus objetivos en la partida. True significa que esta incumplido, y false que esta cumplido, como persona.yaObjetivos. Aplicable tambien a compLugar y compObjeto.
+	public static boolean compPersona (Agente persona) {
+		return Acciones.compPersona(persona);
+	}
+	public static boolean compLugar(Agente persona) {
+		return Acciones.compLugar(persona);
+	}
+	public static boolean compObjeto(Agente persona) {
+		return Acciones.compObjeto(persona);
+	}
+	
+	public static void verLugar(Agente persona) {
+		Acciones.verLugar(persona);
+	}
+	
+	public static void sumaCreencia(Lugar lugar, Informacion creencia) {
+		Acciones.sumaCreencia(lugar, creencia);
+	}
+	
+	//TODO el volcado de creencias debera ir dentro de dameAccion (justo antes de decidir nada, para tener los nuevos datos). Se declara aqui.
+	public static void volcadoCreencias(Agente persona) {
+		Acciones.volcadoCreencias(persona);
+	}
+	
+	/******/
 
 	public GameManager(String nombre) {
 		super(nombre);

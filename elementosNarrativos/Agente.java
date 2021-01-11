@@ -1,6 +1,7 @@
 package elementosNarrativos;
 
 import datos.Informacion;
+import gestionJuego.GameManager;
 
 public abstract class Agente extends TieneCreencia implements Accionable {
 	//Tiempo de corte de volcado de creencias
@@ -27,7 +28,18 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 		objetivo = null;
 		//TODO Ver si mejor poner aca que yaObjetivos es true y true, o dejarlo como esta, ya que los array literales solo se puden usar en la declaracion.
 	}
-
+	
+	@Override
+	public boolean dameAccion() {
+		GameManager.volcadoCreencias(this);
+		if(this instanceof Jugador) {
+			//TODO aca va todo lo que sería el llamado a los botones del apartado grafico.
+		}
+		
+		//TODO no me gusta ese return false...
+		return false;
+	}
+	
 	@Override
 	public boolean siSoy(String nombre) {
 		return (this.nombre == nombre);

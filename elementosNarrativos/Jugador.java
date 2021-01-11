@@ -4,6 +4,7 @@ import datos.Peticion;
 import gestionJuego.BotonDeCoger;	//Imports nuevos de los Botones
 import gestionJuego.BotonDeMoverse;
 import gestionJuego.BotonDePersona;
+import gestionJuego.GameManager;
 
 public class Jugador extends Agente {
 	public Jugador(String nombre) {
@@ -11,32 +12,29 @@ public class Jugador extends Agente {
 	}
 	
 	public boolean dameAccion(BotonDeMoverse boton) {
-		Acciones.relocalizar(this, boton.getLugar());
-		return gestionJuego.GameManager.log(this, null, this.getLugar());	
+		GameManager.relocalizar(this, boton.getLugar());
+		return GameManager.log(this, null, this.getLugar());
 	}
 	
 	public boolean dameAccion(BotonDeCoger boton) {		//camboi aquí presuponiendo ue querias el nombre del objeto
 		if (boton.getObjeto() == null){
-			Acciones.cogerObjeto(this, boton.getObjeto());
-			return gestionJuego.GameManager.log(this, boton.getObjeto(), this.getLugar());
+			GameManager.cogerObjeto(this, boton.getObjeto());
+			return GameManager.log(this, boton.getObjeto(), this.getLugar());
 		}
-		Acciones.dejarObjeto(this);
-		return gestionJuego.GameManager.log(null, boton.getObjeto(), this.getLugar());
+		GameManager.dejarObjeto(this);
+		return GameManager.log(null, boton.getObjeto(), this.getLugar());
 	}
 	
 	public boolean dameAccion(BotonDePersona boton) {
-		Acciones.pedirObjeto(boton.getAgente(), new Peticion(this, boton.getAgente().getObjeto())); //cambio aqui presuponiendo que querias el nombre del objeto
-		return gestionJuego.GameManager.log(this.getPeticion().getAgente(), this.getPeticion().getObjeto(), this.getPeticion().getLugar());
+		GameManager.pedirObjeto(boton.getAgente(), new Peticion(this, boton.getAgente().getObjeto())); //cambio aqui presuponiendo que querias el nombre del objeto
+		return GameManager.log(this.getPeticion().getAgente(), this.getPeticion().getObjeto(), this.getPeticion().getLugar());
 	}
 	
 	public boolean dameAccion(boolean dar) {
 		if(dar) {
-			Acciones.darObjeto(this);
-			return gestionJuego.GameManager.log(this.getPeticion().getAgente(), this.getPeticion().getObjeto(), this.getPeticion().getLugar());
+			GameManager.darObjeto(this);
+			return GameManager.log(this.getPeticion().getAgente(), this.getPeticion().getObjeto(), this.getPeticion().getLugar());
 		}
-		return gestionJuego.GameManager.log(this);
-	}
-	public boolean dameAccion(){
-		return dameAccion(false);	
+		return GameManager.log(this);
 	}
 }

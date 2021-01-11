@@ -14,16 +14,16 @@ import java.util.List;
 import datos.Erlacion;
 import datos.Informacion;
 import datos.Objetivo;
+import datos.Peticion;
 import elementosNarrativos.Agente;
 import elementosNarrativos.Jugador;
 //TODO si quitar sumaCreencia. quita el import de abajo, el de Acciones.
-import elementosNarrativos.Acciones;
 import elementosNarrativos.Lugar;
 import elementosNarrativos.Objeto;
 
 //TODO deberiamos importarlo y usar los privates o extenderlo y usar protected.
 
-public abstract class GameManager extends DataMaganer implements Acciones {
+public abstract class GameManager extends DataManager implements Acciones {
 	//TODO hacedor();
 	
 	private static List<Erlacion> erlaciones;

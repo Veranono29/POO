@@ -1,10 +1,9 @@
 package datos;
 
 import elementosNarrativos.Agente;
-import elementosNarrativos.Objeto;
 
 public class Peticion extends Informacion {
-	public Peticion(Agente agente, Objeto objeto) {
-		super(agente, objeto, null);
+	public Peticion(Agente agente) {
+		super(agente, agente.getObjetivo().getObjeto(), null);
 	}
 }

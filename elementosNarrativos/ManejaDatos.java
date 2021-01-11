@@ -71,6 +71,10 @@ public class ManejaDatos extends TieneCreencia implements Lugarable, Habitable {
 			if(this instanceof Lugar)
 				persona.setLugar((Lugar)this);
 		}
+		
+		public void addLugar(Lugar lugar) {
+			lugares.add(lugar);
+		}
 
 		//TODO si estas 3 no se usan, se eliminan que nos deja en evidencia una microfalla del esquema.
 		public void impLugares(Collection<Lugar> conjunto) {

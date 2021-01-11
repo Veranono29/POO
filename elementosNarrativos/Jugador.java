@@ -16,7 +16,7 @@ public class Jugador extends Agente {
 	}
 	
 	public boolean dameAccion(BotonDeCoger boton) {		//camboi aquí presuponiendo ue querias el nombre del objeto
-		if (boton.getNombre() != null){
+		if (boton.getObjeto() == null){
 			Acciones.cogerObjeto(this, boton.getObjeto());
 			return gestionJuego.GameManager.log(this, boton.getObjeto(), this.getLugar());
 		}

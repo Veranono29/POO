@@ -1,7 +1,7 @@
 package elementosNarrativos;
 
 import datos.Peticion;
-import gestionJuego.BotonDeCoger;
+import gestionJuego.BotonDeCoger;	//Imports nuevos de los Botones
 import gestionJuego.BotonDeMoverse;
 import gestionJuego.BotonDePersona;
 
@@ -15,8 +15,8 @@ public class Jugador extends Agente {
 		return gestionJuego.GameManager.log(this, null, this.getLugar());	
 	}
 	
-	public boolean dameAccion(BotonDeCoger boton) {
-		if (boton.getNombre() != null){
+	public boolean dameAccion(BotonDeCoger boton) {		//camboi aquí presuponiendo ue querias el nombre del objeto
+		if (boton.getObjeto().getNombre() != null){
 			Acciones.cogerObjeto(this, boton.getObjeto());
 			return gestionJuego.GameManager.log(this, boton.getObjeto(), this.getLugar());
 		}
@@ -25,7 +25,7 @@ public class Jugador extends Agente {
 	}
 	
 	public boolean dameAccion(BotonDePersona boton) {
-		Acciones.pedirObjeto(boton.getAgente(), new Peticion(this, boton.getObjeto()));
+		Acciones.pedirObjeto(boton.getAgente(), new Peticion(this, boton.getAgente().getObjeto())); //cambio aqui presuponiendo que querias el nombre del objeto
 		return gestionJuego.GameManager.log(this.getPeticion().getAgente(), this.getPeticion().getObjeto(), this.getPeticion().getLugar());
 	}
 	

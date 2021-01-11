@@ -1,6 +1,9 @@
 package elementosNarrativos;
 
 import datos.Peticion;
+import gestionJuego.BotonDeCoger;
+import gestionJuego.BotonDeMoverse;
+import gestionJuego.BotonDePersona;
 
 public class Jugador extends Agente {
 	public Jugador(String nombre) {

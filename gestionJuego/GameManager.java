@@ -1,6 +1,6 @@
 package gestionJuego;
 
-import elementosNarrativos.ManejaDatos;
+
 import elementosNarrativos.NPC;
 
 import java.io.File;
@@ -23,7 +23,7 @@ import elementosNarrativos.Objeto;
 
 //TODO deberiamos importarlo y usar los privates o extenderlo y usar protected.
 
-public abstract class GameManager extends DataManager {
+public abstract class GameManager extends DataMaganer {
 	//TODO hacedor();
 	
 	private static List<Erlacion> erlaciones;
@@ -36,10 +36,13 @@ public abstract class GameManager extends DataManager {
 	private static final int maxPersonas = 10;
 	private static int tiempo = 0;
 	private static final String[] textoTopes = {"<Localizaciones>","<Personajes>","<Objetos>"};
-	private static final String[] textoTopesObjetivos = {"<Localización Personajes>","<Posesión Objetos>"};
+	private static final String[] textoTopesObjetivos = {"<LocalizaciÃ³n Personajes>","<PosesiÃ³n Objetos>"};
 	
 	protected static int getRonda() {
 		return tiempo/maxPersonas;
+	}
+	protected static Agente getJugador(){
+		return pepe;
 	}
 	
 	private static String leerPalabra(int desde, String linea) {
@@ -237,7 +240,6 @@ public abstract class GameManager extends DataManager {
 	private static void rObjetivos(Scanner lectura) {
 		//TODO meter en erlaciones los datos de lugar y objeto.
 		List<String> datos;
-		Scanner lectura = new Scanner(ANEXO_1);
 		
 		if (lectura.hasNext(textoTopesObjetivos[0])){
 			while(lineasIt(lectura, textoTopes[1], textoTopes[0])) {

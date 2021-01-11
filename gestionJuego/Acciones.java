@@ -9,9 +9,7 @@ import elementosNarrativos.Lugar;
 import elementosNarrativos.Objeto;
 
 public interface Acciones {
-	public static void PRUEBABORRAR (String patata) {
-		System.out.println(patata);
-	}
+	
 	public static void pedirObjeto (Agente jugadorPeticionado, Peticion peticion){
 		//Entregarle a jugadorPeticionado la peticion. Si. Peticionado. Si te suena raro, analiza como llamamos en ingles las cosas. Exactamente asi son, chirrian de la misma manera.
 		//Si la pedicion que tiene actualmente es hacia el mismo objeto, no lo admitira y se quedara con el anterior.

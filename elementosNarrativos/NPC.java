@@ -11,10 +11,10 @@ public class NPC extends Agente {
 	public NPC(String nombre) {
 		super(nombre);
 	}
-	//TODO este supperssWarnings se ve feo.
-	@SuppressWarnings("unchecked")
+	
 	@Override
 	public boolean dameAccion() {
+		super.dameAccion();
 		if(this.getPeticion().getObjeto() == this.getObjeto()) {		//En primer lugar comparamos si tenemos alguna petición que contenga el objeto que llevamos
 			Acciones.darObjeto(this);									//Si la tenemos, damos el objeto							
 			return gestionJuego.GameManager.log(this.getPeticion().getAgente(), this.getPeticion().getObjeto(), this.getPeticion().getLugar());		

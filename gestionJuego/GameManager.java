@@ -6,10 +6,8 @@ import elementosNarrativos.NPC;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import datos.Creencia;
 import datos.Erlacion;
 import datos.Informacion;
@@ -60,7 +58,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 	private static final double probabilidadOlvido = -0.01;
 	private static final double probabilidadAceptar = 1.01;
 	
-	
 	public GameManager() {
 		super("Manejador");
 	}
@@ -101,7 +98,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 		return pepe;
 	}
 	
-	private static String leerPalabra(int desde, String linea) {
+	private static String leerPalabra (int desde, String linea) throws FormatoIncorrecto{
 		int posicion;
 		char letra;
 		String resultado;
@@ -111,14 +108,17 @@ public class GameManager extends ManejaDatos implements Acciones {
 		for(posicion = desde; posicion < linea.length() && Character.isLetter(letra = linea.charAt(posicion)); posicion++) {
 			resultado += letra;
 		}
+		if(resultado == "") {
+			throw new FormatoIncorrecto("Formato incorrecto: Nombre Vacío");
+		}
 		return resultado;
 	}
 	
-	private static String leerPalabra(String linea) {
+	private static String leerPalabra(String linea) throws FormatoIncorrecto {
 		return leerPalabra(0, linea);
 	}
 	
-	private static List<String> leerDatos(Scanner lectura) {
+	private static List<String> leerDatos(Scanner lectura) throws FormatoIncorrecto {
 		int posicion;
 		String temp;
 		String resultado;
@@ -157,25 +157,29 @@ public class GameManager extends ManejaDatos implements Acciones {
 	}
 	
 	//TODO aca tenemos que recojer el FileNotFoundException no?
-	private void rConfig() throws FileNotFoundException {
+	private void rConfig() throws FileNotFoundException, FormatoIncorrecto {
 		File[] anexos = {new File("ANEXO_1"),new File("ANEXO_2")};
 		Scanner lectura = null;
+		int leidoCompleto = 1;
 		
 		//Para poder poner los datos en cualquier orden.
 		for(int cualAnexo = 0; cualAnexo < anexos.length;cualAnexo++) {
 			lectura = new Scanner(anexos[cualAnexo]);
 			while(lectura.hasNextLine()){
 				if(cualAnexo == 0)
-					rInstanciar(lectura);
+					leidoCompleto *= rInstanciar(lectura);
 				else
 					rDatos(lectura);
 			}
+			//30 es la multiplicación de 2, 3 y 5 (primos) para asegurarnos de que pasa por los cada uno 1 vez
+			if (leidoCompleto /30 != 1)
+				throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Faltan apartados/Apartados repetidos");
 		}
 		rObjetivos(lectura);
 	}
 	
 	
-	public void rInstanciar(Scanner lectura){
+	public int rInstanciar(Scanner lectura) throws FormatoIncorrecto{
 		String titulo;
 		int adyacenciasObtenidas = 0;
 		//Buscamos por "Etiqueta" los tres principales datos (con etiqueta me refiero a le nombre que aparece en <>)
@@ -184,6 +188,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 				titulo = leerPalabra(lectura.nextLine());
 				lugares.add( new Lugar(titulo));
 			}
+			return 2;
 		}
 		
 		if (lectura.hasNext(textoTopes[1])) {
@@ -199,6 +204,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 				}
 				erlaciones.add( new Erlacion(titulo));
 			}
+			return 3;
 		}
 		
 		if (lectura.hasNext(textoTopes[2])){
@@ -206,10 +212,12 @@ public class GameManager extends ManejaDatos implements Acciones {
 				titulo = leerPalabra(lectura.nextLine());
 				objetos.add( new Objeto(titulo));
 			}
+			return 5;
 		}
+		return 1;
 	}
 	
-	public void rDatos(Scanner lectura) {
+	public void rDatos(Scanner lectura) throws FormatoIncorrecto {
 		List<String> datos;
 		int adyacenciasObtenidas = 0;
 		
@@ -295,7 +303,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 		}
 	}
 	
-	private void rObjetivos(Scanner lectura) {
+	private void rObjetivos(Scanner lectura) throws FormatoIncorrecto {
 		//TODO meter en erlaciones los datos de lugar y objeto.
 		List<String> datos;
 		
@@ -444,6 +452,11 @@ public class GameManager extends ManejaDatos implements Acciones {
 		} catch (FileNotFoundException error) {
 			//Si, no?
 			System.out.println("No tienes los archivos de configuracion y objetivos");
+			System.exit(0); 
+			error.printStackTrace();		
+		} catch (FormatoIncorrecto error) {
+			//Si, no?
+			System.out.println(error.getMensaje());
 			System.exit(0); 
 			error.printStackTrace();
 		}

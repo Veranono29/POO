@@ -64,7 +64,7 @@ public interface Acciones {
 			if( Math.random() > GameManager.getProbOlvido())
 				persona.addCreencia(creencia);
 		}
-		//TODO comprobar que hace lo mismo que lo de abajo que esta en comentario. No quiero borrarlo porque pues porsiacaso me falto algo y son las 3:03 de la mañana.
+		//TODO comprobar que hace lo mismo que lo de abajo que esta en comentario. No quiero borrarlo porque pues porsiacaso me falto algo y son las 3:03 de la maÃ±ana.
 		/*
 		Iterator<Informacion> info = persona.getLugar().creenciaIt();
 		
@@ -82,11 +82,5 @@ public interface Acciones {
 			persona.addCreencia(dato);
 		}
 		*/
-	}
-	
-	//Se vuelcan las creencias y se modifica el tiempo anterior. Esto es, se gestiona el volcado. No confundir con volcadoCreencias, el cual produce el volcado.
-	public static void conseguirCreencias(Agente persona) {
-		GameManager.volcadoCreencias(persona);
-		persona.setTiempoAnterior(GameManager.getTurno());
 	}
 }

@@ -5,7 +5,7 @@ import elementosNarrativos.Lugar;
 import elementosNarrativos.Objeto;
 
 public class Informacion {
-	private Agente agente;
+	protected Agente agente;
 	protected Objeto objeto;
 	protected Lugar lugar;
 	

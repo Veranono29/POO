@@ -4,7 +4,7 @@ import javax.swing.JButton;
 
 import elementosNarrativos.Objeto;
 
-public class BotonDeCoger extends JButton{
+public class BotonDeCoger extends JButton {
 	
 	private Objeto objeto;
 	

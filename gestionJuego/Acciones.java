@@ -1,7 +1,5 @@
 package gestionJuego;
 
-import java.util.Iterator;
-
 import datos.Informacion;
 import datos.Peticion;
 import elementosNarrativos.Agente;
@@ -13,7 +11,9 @@ public interface Acciones {
 	public static void pedirObjeto (Agente jugadorPeticionado, Peticion peticion){
 		//Entregarle a jugadorPeticionado la peticion. Si. Peticionado. Si te suena raro, analiza como llamamos en ingles las cosas. Exactamente asi son, chirrian de la misma manera.
 		//Si la pedicion que tiene actualmente es hacia el mismo objeto, no lo admitira y se quedara con el anterior.
-		if(peticion.getObjeto() != jugadorPeticionado.getPeticion().getObjeto())
+		//La probabilidad de aceptar la peticion la ponemos aca ya que al final es (casi) lo mismo que no lo acepten y que no le llege, y nos gustaba mas implementarlo en pedirObjeto.
+		//Dicha probabilidad se puede cambiar la probabilidad, aunque recomendamos el 100%.
+		if(peticion.getObjeto() != jugadorPeticionado.getPeticion().getObjeto() && (Math.random() < GameManager.getProbAceptar()))
 			jugadorPeticionado.setPeticion(peticion);
 	}
 	
@@ -36,26 +36,7 @@ public interface Acciones {
 		jugador.getLugar().addObjeto(jugador.dropObjeto());
 	}
 	
-	//Comprobar persona comprueba si el agente ya ha cumplido sus objetivos en la partida. True significa que esta incumplido, y false que esta cumplido, como persona.yaObjetivos. Aplicable tambien a compLugar y compObjeto.
-	public static boolean compPersona (Agente persona) {
-		if( (persona.getYaObjetivo(0) && compLugar(persona)) || (persona.getYaObjetivo(1) && compObjeto(persona)) ) {
-			return true;
-		}
-		return false;
-	}
-	public static boolean compLugar(Agente persona) {
-		if(persona.getLugar() == persona.getObjetivo().getLugar() || persona.getObjetivo().getLugar() == null) {
-			persona.setYaObjetivo(0,false);
-		}
-		return persona.getYaObjetivo(0);
-	}
-	public static boolean compObjeto(Agente persona) {
-		if(persona.getObjeto() == persona.getObjetivo().getObjeto() || persona.getObjetivo().getObjeto() == null) {
-			persona.setYaObjetivo(1,false);
-		}
-		return persona.getYaObjetivo(1);
-	}
-	
+	/* No es necesario. Los jugadores tienen esta info a traves de agente,getLugar().getCosas.
 	public static void verLugar(Agente persona) {
 		//Genera creencia acerca de quien esta.
 		Lugar lugar = persona.getLugar();
@@ -66,6 +47,7 @@ public interface Acciones {
 		for(Objeto cosa: (Iterable<Objeto>) () -> lugar.objetoIt())
 			persona.addCreencia(new Informacion(null, cosa, lugar));
 	}
+	*/
 	
 	public static void sumaCreencia(Lugar lugar, Informacion creencia) {
 		lugar.addCreencia(creencia);
@@ -73,7 +55,21 @@ public interface Acciones {
 	
 	//TODO el volcado de creencias debera ir dentro de dameAccion (justo antes de decidir nada, para tener los nuevos datos). Se declara aqui.
 	public static void volcadoCreencias(Agente persona) {
+		
+		//Bucle por cada creencia guardada en Lugar (creencias nuevas de la ronda).
+		for(Informacion creencia: persona.getLugar().getCreencias()) {
+			if(persona.getLugar().getCreencias().indexOf(creencia) < persona.getTiempoAnterior()) {
+				continue;
+			}
+			if( Math.random() > GameManager.getProbOlvido())
+				persona.addCreencia(creencia);
+		}
+		//TODO comprobar que hace lo mismo que lo de abajo que esta en comentario. No quiero borrarlo porque pues porsiacaso me falto algo y son las 3:03 de la mañana.
+		/*
 		Iterator<Informacion> info = persona.getLugar().creenciaIt();
+		
+		//Se saltan las creencias volcadas en la anterior vez.
+		//Asi se evita "ver" que paso en una sala que se entro en la misma ronda, mientras estaba el agente en otra sala.
 		for(int tiempo = persona.getTiempoAnterior(); tiempo > 0; tiempo--) {
 			if(info.hasNext())
 				info.next();
@@ -85,5 +81,12 @@ public interface Acciones {
 			//TODO decidir si al crear la creencia se le mete lugar, o es al salir de lugar. De momento, se guarda.
 			persona.addCreencia(dato);
 		}
+		*/
+	}
+	
+	//Se vuelcan las creencias y se modifica el tiempo anterior. Esto es, se gestiona el volcado. No confundir con volcadoCreencias, el cual produce el volcado.
+	public static void conseguirCreencias(Agente persona) {
+		GameManager.volcadoCreencias(persona);
+		persona.setTiempoAnterior(GameManager.getTurno());
 	}
 }

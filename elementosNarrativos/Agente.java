@@ -31,12 +31,14 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	
 	@Override
 	public boolean dameAccion() {
-		GameManager.volcadoCreencias(this);
+		GameManager.conseguirCreencias(this);
 		if(this instanceof Jugador) {
 			//TODO aca va todo lo que sería el llamado a los botones del apartado grafico.
+			
+			//TODO Aca se para el thread hasta que se le de a algun boton.
+			//TODO O un while.
 		}
-		
-		//TODO no me gusta ese return true...
+		//TODO me sigue sin gustar ese return true.
 		return true;
 	}
 	
@@ -109,7 +111,6 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	public void setYaObjetivo(int index,boolean ya) {
 		this.yaObjetivos[index] = ya;
 	}
-	
 
 	public Informacion getObjetivo() {
 		return objetivo;
@@ -118,5 +119,27 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	public void setObjetivo(Informacion objetivo) {
 		if(this.objetivo == null)
 			this.objetivo = objetivo;
+	}
+	
+	//Comprobar persona comprueba si el agente ya ha cumplido sus objetivos en la partida.
+	//True significa que esta incumplido, y false que esta cumplido, como persona.yaObjetivos. 
+	//Aplicable tambien a compLugar y compObjeto.
+	public boolean compPersona() {
+		if( (yaObjetivos[0] && compLugar()) || (yaObjetivos[1] && compObjeto()) ) {
+			return true;
+		}
+		return false;
+	}
+	private boolean compLugar() {
+		if(lugar == objetivo.getLugar() || objetivo.getLugar() == null) {
+			yaObjetivos[0] = false;
+		}
+		return yaObjetivos[0];
+	}
+	private boolean compObjeto() {
+		if(objeto == objetivo.getObjeto() || objetivo.getObjeto() == null) {
+			yaObjetivos[1] = false;
+		}
+		return yaObjetivos[1];
 	}
 }

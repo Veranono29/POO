@@ -1,9 +1,15 @@
-//TODO NO USAR
 package datos;
 
 import elementosNarrativos.Agente;
 import elementosNarrativos.Lugar;
 import elementosNarrativos.Objeto;
+import gestionJuego.GameManager;
+
+//Los tipos de creencia son:
+		/* Agente Objeto Lugar -> Agente logro Objeto en Lugar. En modo no importa.
+		 * null   Objeto Lugar -> Alguien (no se necesita saber) dejo Objeto en Lugar.
+		 * Agente null   Lugar -> Agente se movio a Lugar.
+		 */
 
 public class Creencia extends Informacion {
 	private int tiempo;
@@ -16,5 +22,17 @@ public class Creencia extends Informacion {
 	}
 	public void setTiempo(int tiempo) {
 		this.tiempo = tiempo;
+	}
+	
+	private String info() {
+		return lugar.getNombre();
+	}
+	
+	public String info(Agente agente) {
+		return info() +  " " + objeto.getNombre() + " " + GameManager.getRonda(tiempo) + " " + GameManager.getTurno(tiempo);
+	}
+	
+	public String info(Objeto objeto) {
+		return info() + " " + agente.getNombre() + " " + GameManager.getRonda(tiempo) + " " + GameManager.getTurno(tiempo);
 	}
 }

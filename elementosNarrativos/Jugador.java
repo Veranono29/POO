@@ -6,9 +6,15 @@ import gestionJuego.BotonDeMoverse;
 import gestionJuego.BotonDePersona;
 import gestionJuego.GameManager;
 
-public class Jugador extends Agente {
+public class Jugador extends Agente implements Olvidable {
 	public Jugador(String nombre) {
 		super(nombre);
+	}
+	
+	//No borra la Lista, solo deja de referenciarla.
+	@Override
+	public void limpiarCreencias() {
+		creencias = null;
 	}
 	
 	public boolean dameAccion(BotonDeMoverse boton) {
@@ -18,22 +24,18 @@ public class Jugador extends Agente {
 	
 	public boolean dameAccion(BotonDeCoger boton) {		//camboi aquí presuponiendo ue querias el nombre del objeto
 		if (boton.getObjeto() == null){
-			GameManager.cogerObjeto(this, boton.getObjeto());
-			return GameManager.log(this, boton.getObjeto(), this.getLugar());
+			return GameManager.cogerObjeto(this, boton.getObjeto());
 		}
-		GameManager.dejarObjeto(this);
-		return GameManager.log(null, boton.getObjeto(), this.getLugar());
+		return GameManager.dejarObjeto(this);
 	}
 	
 	public boolean dameAccion(BotonDePersona boton) {
-		GameManager.pedirObjeto(boton.getAgente(), new Peticion(this, boton.getAgente().getObjeto())); //cambio aqui presuponiendo que querias el nombre del objeto
-		return GameManager.log(this.getPeticion().getAgente(), this.getPeticion().getObjeto(), this.getPeticion().getLugar());
+		return GameManager.pedirObjeto(boton.getAgente(), new Peticion(this)); //cambio aqui presuponiendo que querias el nombre del objeto
 	}
 	
 	public boolean dameAccion(boolean dar) {
 		if(dar) {
-			GameManager.darObjeto(this);
-			return GameManager.log(this.getPeticion().getAgente(), this.getPeticion().getObjeto(), this.getPeticion().getLugar());
+			return GameManager.darObjeto(this);
 		}
 		return GameManager.log(this);
 	}

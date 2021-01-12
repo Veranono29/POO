@@ -2,20 +2,20 @@ package elementosNarrativos;
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import datos.Informacion;
 
 public abstract class TieneCreencia implements Creenciable, Objetable, Nombrable {
 	//TODO deberia ir private??
-	protected List<Informacion> creencias = new ArrayList<Informacion>();
+	protected List<Informacion> creencias;
 	
 	//Nombre del objeto creenciable. Servira como ID.
 	protected String nombre;
 	
 	public TieneCreencia(String nombre) {
 		this.nombre = nombre;
+		creencias = new ArrayList<Informacion>();
 	}
 	
 	@Override
@@ -49,15 +49,14 @@ public abstract class TieneCreencia implements Creenciable, Objetable, Nombrable
 		creencias.add(info);
 	}
 	
+	public void addVariasCreencias(List<Informacion> list) {
+		creencias.addAll(list);
+	}
+	
 	@Override
 	public Informacion dropCreencia(Informacion info) {
 		creencias.remove(info);
 		return info;
-	}
-	
-	@Override
-	public Iterator<Informacion> creenciaIt() {
-		return creencias.iterator();
 	}
 
 	//TODO revisa esto

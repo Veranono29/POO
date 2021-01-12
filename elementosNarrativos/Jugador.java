@@ -18,8 +18,7 @@ public class Jugador extends Agente implements Olvidable {
 	}
 	
 	public boolean dameAccion(BotonDeMoverse boton) {
-		GameManager.relocalizar(this, boton.getLugar());
-		return GameManager.log(this, null, this.getLugar());
+		return GameManager.relocalizar(this, boton.getLugar());
 	}
 	
 	public boolean dameAccion(BotonDeCoger boton) {		//camboi aquí presuponiendo ue querias el nombre del objeto
@@ -37,6 +36,6 @@ public class Jugador extends Agente implements Olvidable {
 		if(dar) {
 			return GameManager.darObjeto(this);
 		}
-		return GameManager.log(this);
+		return GameManager.pasarTurno(this);
 	}
 }

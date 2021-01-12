@@ -9,6 +9,7 @@ import gestionJuego.GameManager;
 		/* Agente Objeto Lugar -> Agente logro Objeto en Lugar. En modo no importa.
 		 * null   Objeto Lugar -> Alguien (no se necesita saber) dejo Objeto en Lugar.
 		 * Agente null   Lugar -> Agente se movio a Lugar.
+		 * Agente null   null  -> Agente no hizo nada
 		 */
 
 public class Creencia extends Informacion {
@@ -29,7 +30,9 @@ public class Creencia extends Informacion {
 	}
 	
 	public String info(Agente agente) {
-		return info() +  " " + objeto.getNombre() + " " + GameManager.getRonda(tiempo) + " " + GameManager.getTurno(tiempo);
+		if(lugar != null)
+			return info() +  " " + objeto.getNombre() + " " + GameManager.getRonda(tiempo) + " " + GameManager.getTurno(tiempo);
+		return "";
 	}
 	
 	public String info(Objeto objeto) {

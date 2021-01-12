@@ -43,6 +43,7 @@ public abstract class DataManager {
 			}
 		}
 		
+		//TODO Esto pa la memoria.
 		//Iteramos sobre todos las creencias generadas en el juego.
 		//Solo nos interesa saber sobre los agentes y objetos.
 		//Los tipos de creencia son:
@@ -55,7 +56,7 @@ public abstract class DataManager {
 		//Se puede cambiar la probabilidad, aunque recomendamos el 0%.
 		for(Informacion creencia: creencias) {
 			
-			//Iteramos sobre los objetos del juego. Si encontramos creencias donde se le nombre, lo añadimos a un set.
+			//Iteramos sobre los objetos del juego. Si encontramos creencias donde se le nombre, lo aÃ±adimos a un set.
 			for(Objeto objeto: manejador.getObjeto()) {
 				infoObjetos.add(new HashSet<Informacion>());
 				if(creencia.getObjeto() == objeto)
@@ -63,7 +64,7 @@ public abstract class DataManager {
 				contador++;
 			}
 			contador = 0;
-			//Iteramos sobre los agentes del juego. Si encontramos creencias donde se le nombre, lo añadimos a un set.
+			//Iteramos sobre los agentes del juego. Si encontramos creencias donde se le nombre, lo aÃ±adimos a un set.
 			for(Agente agente: manejador.getAgentes()) {
 				infoAgentes.add(new HashSet<Informacion>());
 				if(creencia.getAgente() == agente)
@@ -74,7 +75,7 @@ public abstract class DataManager {
 		
 		contador = 0;
 		
-		/*Ahora se itera sobre los set de objetos y el de agentes:*/
+		/*Ahora se itera sobre los set de objetos y el de agentes. No hace falta filtrado previo ya que cada set "pertenece" al agente/objeto en si.*/
 		
 		for(Objeto objeto: manejador.getObjeto()) {
 
@@ -136,7 +137,7 @@ LUGAR OBJETO RONDA TURNO
 ...
 ...
 ...
-		 *Si llego a su dueño (si la persona que lo tiene necesita ese objeto), se pone al final lo de LLEGO A SU DESTINO
+		 *Si llego a su dueÃ±o (si la persona que lo tiene necesita ese objeto), se pone al final lo de LLEGO A SU DESTINO
 		 */
 	}
 }

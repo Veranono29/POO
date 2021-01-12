@@ -404,11 +404,11 @@ public class GameManager extends ManejaDatos implements Acciones {
 		Acciones.sumaCreencia(lugar, creencia);
 	}
 	
-	//TODO el volcado de creencias debera ir dentro de dameAccion (justo antes de decidir nada, para tener los nuevos datos). Se declara aqui.
 	protected static void volcadoCreencias(Agente persona) {
 		Acciones.volcadoCreencias(persona);
 	}
 	
+	//Se vuelcan las creencias y se modifica el tiempo anterior. Esto es, se gestiona el volcado. No confundir con volcadoCreencias, el cual produce el volcado.
 	public static void conseguirCreencias(Agente persona) {
 		GameManager.volcadoCreencias(persona);
 		persona.setTiempoAnterior(GameManager.getTurno());

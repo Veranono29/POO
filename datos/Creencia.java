@@ -9,7 +9,6 @@ import gestionJuego.GameManager;
 		/* Agente Objeto Lugar -> Agente logro Objeto en Lugar. En modo no importa.
 		 * null   Objeto Lugar -> Alguien (no se necesita saber) dejo Objeto en Lugar.
 		 * Agente null   Lugar -> Agente se movio a Lugar.
-		 * Agente null   null  -> Agente no hizo nada
 		 */
 
 public class Creencia extends Informacion {

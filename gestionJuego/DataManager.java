@@ -43,6 +43,7 @@ public abstract class DataManager {
 			}
 		}
 		
+		//TODO Esto pa la memoria.
 		//Iteramos sobre todos las creencias generadas en el juego.
 		//Solo nos interesa saber sobre los agentes y objetos.
 		//Los tipos de creencia son:
@@ -74,7 +75,7 @@ public abstract class DataManager {
 		
 		contador = 0;
 		
-		/*Ahora se itera sobre los set de objetos y el de agentes:*/
+		/*Ahora se itera sobre los set de objetos y el de agentes. No hace falta filtrado previo ya que cada set "pertenece" al agente/objeto en si.*/
 		
 		for(Objeto objeto: manejador.getObjeto()) {
 

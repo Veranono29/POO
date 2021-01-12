@@ -83,10 +83,4 @@ public interface Acciones {
 		}
 		*/
 	}
-	
-	//Se vuelcan las creencias y se modifica el tiempo anterior. Esto es, se gestiona el volcado. No confundir con volcadoCreencias, el cual produce el volcado.
-	public static void conseguirCreencias(Agente persona) {
-		GameManager.volcadoCreencias(persona);
-		persona.setTiempoAnterior(GameManager.getTurno());
-	}
 }

@@ -6,7 +6,6 @@ public class Main {
 		GameManager manejador = new GameManager();
 		manejador.main();
 		
-		//
-		DataManager.main(manejador);
+		//DataManager.main(manejador);
 	}
 }

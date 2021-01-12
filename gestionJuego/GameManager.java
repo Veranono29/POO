@@ -354,6 +354,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 	
 	/*** Acciones ***/
 	
+	//log de no hacer nada.
 	public static boolean log(Agente agente) {
 		GameManager.sumaCreencia(agente.getLugar() , new Creencia(agente, null, null, tiempo));
 		
@@ -361,7 +362,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 		return false;
 	}
 	
-	public static boolean log(Agente agente, Objeto objeto, Lugar lugar) {
+	private static boolean log(Agente agente, Objeto objeto, Lugar lugar) {
 		agente.getLugar().addCreencia(new Creencia(agente, objeto, lugar, tiempo));
 		return true;
 	}
@@ -394,11 +395,9 @@ public class GameManager extends ManejaDatos implements Acciones {
 		return logRet;
 	}
 	
-	/* No hace falta
-	public static boolean verLugar(Agente persona) {
-		Acciones.verLugar(persona);
+	public static boolean pasarTurno (Agente jugador) {
+		return GameManager.log(jugador);
 	}
-	*/
 	
 	//TODO entoces esto que.
 	private static void sumaCreencia(Lugar lugar, Informacion creencia) {
@@ -411,7 +410,8 @@ public class GameManager extends ManejaDatos implements Acciones {
 	}
 	
 	public static void conseguirCreencias(Agente persona) {
-		Acciones.conseguirCreencias(persona);
+		GameManager.volcadoCreencias(persona);
+		persona.setTiempoAnterior(GameManager.getTurno());
 	}
 	
 	//Libera al Jugador de las creencias, pasandolas al set de la instacia de GameManager.

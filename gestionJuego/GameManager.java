@@ -389,6 +389,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 	
 	public static boolean pedirObjeto (Agente jugadorPeticionado, Peticion peticion){
 		//Si no tiene el objeto, no le llega la peticion, simulando que la rechazo y el que hizo la peticion pierde el turno
+		System.out.println("pato");
 		if(jugadorPeticionado.getObjeto() != null)
 			Acciones.pedirObjeto(jugadorPeticionado, peticion);
 		return true;
@@ -398,26 +399,31 @@ public class GameManager extends ManejaDatos implements Acciones {
 	public static boolean darObjeto (Agente jugadorPeticionado) {
 		boolean logRet = log(jugadorPeticionado.getPeticion().getAgente(), jugadorPeticionado.getPeticion().getObjeto(),jugadorPeticionado.getLugar());
 		Acciones.darObjeto(jugadorPeticionado);
+		System.out.println("pato1");
 		return logRet;
 	}
 	
 	public static boolean relocalizar (Agente jugadorTransladado, Lugar lugar) {
 		Acciones.relocalizar(jugadorTransladado, lugar);
+		System.out.println("Se mueve");
 		return log(jugadorTransladado, null, lugar);
 	}
 	
 	public static boolean cogerObjeto (Agente jugador, Objeto objeto) {
 		Acciones.cogerObjeto(jugador, objeto);
+		System.out.println("Coje");
 		return log(jugador, objeto, jugador.getLugar());
 	}
 	
 	public static boolean dejarObjeto (Agente jugador) {
 		boolean logRet = log(null, jugador.getObjeto(), jugador.getLugar());
 		Acciones.dejarObjeto(jugador);
+		System.out.println("Deja");
 		return logRet;
 	}
 	
 	public static boolean pasarTurno (Agente jugador) {
+		System.out.println("pato5");
 		return GameManager.log(jugador);
 	}
 	
@@ -481,12 +487,12 @@ public class GameManager extends ManejaDatos implements Acciones {
 			
 			//Se itera por cada agente para hacer los turnos.
 			for(Agente agente: agentes) {
+				System.out.println(agente.getNombre());
+				System.out.println(agente.getYaObjetivo(0));
+				System.out.println(agente.getYaObjetivo(1));
 				
 				//Si todos hicieron lo suyo, ninguno cumplira la condicion, y por lo tanto ninguno cambiara bucleTurno, por lo que saldra del while.
 				if(agente.compPersona()) {
-					System.out.println(agente.getNombre());
-					System.out.println(agente.getYaObjetivo(0));
-					System.out.println(agente.getYaObjetivo(1));
 					
 					//dameAccion se encarga de indicar que accion quiere realizar (y el log que debe hacer) y el resto de gestiones.
 					seMovieron = agente.dameAccion();
@@ -498,7 +504,9 @@ public class GameManager extends ManejaDatos implements Acciones {
 					else
 						if(!bucleTurno && seMovieron)
 							bucleTurno = true;
+					
 				}
+				
 				//Aumento el tiempo del turno.
 				tiempo++;
 			}

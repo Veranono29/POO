@@ -21,7 +21,7 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	private Informacion objetivo;
 	
 	//"Bitmap" de objetivos incumplidos. El primero sera la ubicacion y el segundo la posesion del objeto.
-	private boolean[] yaObjetivos = {true,true};
+	private boolean[] yaObjetivos = {true, true};
 	
 	public Agente(String nombre) {
 		super(nombre);

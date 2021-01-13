@@ -20,13 +20,13 @@ public class NPC extends Agente {
 	@Override
 	public boolean dameAccion() {
 		super.dameAccion();
-		if (this.getObjeto() != this.getObjetivo().getObjeto())
-			return GameManager.dejarObjeto(this);
-		if(this.getPeticion() != null && this.getPeticion().getObjeto() == this.getObjeto() && this.getPeticion().getObjeto() != this.getObjetivo().getObjeto())		//En primer lugar comparamos si tenemos alguna petición que contenga el objeto que llevamos
+		if(this.getPeticion() != null  && this.getPeticion().getObjeto() != this.getObjetivo().getObjeto())		//En primer lugar comparamos si tenemos alguna petición que contenga el objeto que llevamos
 			return GameManager.darObjeto(this);										//Si la tenemos, damos el objeto							
 		else 
 			this.dropPeticion();
-		
+		if (this.getObjeto() != this.getObjetivo().getObjeto() && this.getObjeto() != null) {
+			return GameManager.dejarObjeto(this);
+		}
 		Informacion ultimaInfo = null;																//Usaremos una variable para seleccionar información relevante
 		List<Lugar> opciones = new ArrayList<Lugar>();												//Y un arraylist de opciones a las que nos podemos mover
 		
@@ -61,14 +61,18 @@ public class NPC extends Agente {
 			}
 			else {
 				for(int index = this.getCreencias().size()-1 ; index >=0 ; index--) {
-					if ((ultimaInfo = this.getCreencias().get(index)).getObjeto() == this.getObjetivo().getObjeto() && ultimaInfo.getAgente() != null){	//Buscamos en nuestras creencias si
-						for(Agente npc: this.getLugar().getAgentes()){  					//hemos visto nuestro objeto en posesión de algun otro jugador
-							if (ultimaInfo.getAgente() == npc){													//y comparamos los agentes de la habitación con los de las creencias
-								return GameManager.pedirObjeto(npc, new Peticion((Agente)this));	//Si hay una coincidencia, le mandamos una petición
-							}
+					ultimaInfo = this.getCreencias().get(index);
+					if (ultimaInfo.getObjeto() == this.getObjetivo().getObjeto())
+						break;
+				}
+				if (ultimaInfo != null && ultimaInfo.getObjeto() == this.getObjetivo().getObjeto() && ultimaInfo.getAgente() != null && ultimaInfo.getAgente() instanceof Jugador){	//Buscamos en nuestras creencias si
+					for(Agente npc: this.getLugar().getAgentes()){  					//hemos visto nuestro objeto en posesión de algun otro jugador
+						if (ultimaInfo.getAgente() == npc){	
+							System.out.println("muerte");						//y comparamos los agentes de la habitación con los de las creencias
+							return GameManager.pedirObjeto(npc, new Peticion((Agente)this));	//Si hay una coincidencia, le mandamos una petición
 						}
 					}
-				}		
+				}	
 				for(Lugar siguienteLugar: this.getLugar().getLugares()){
 					opciones.add(siguienteLugar);											//Priorizamos de nuevo las habitaciones no visitadas
 					for(int index = this.getCreencias().size()-1 ; index >=0 ; index--){	//Para tener más posibilidades de encontrar el objeto

@@ -468,8 +468,47 @@ public class GameManager extends ManejaDatos implements Acciones {
 		yo = this;
 		//TOOD alguna forma mas elegante de volver a llamar a la clase GameManager, pero la instantacion.
 	}
+	
+	private void rondaNPC() {
+		while(bucleTurno) {
+			bucleTurno = false;
+
+			//Se itera por cada agente para hacer los turnos.
+			for(Agente agente: agentes) {
+				System.out.println(agente.getNombre());
+				System.out.println(agente.getYaObjetivo(0));
+				System.out.println(agente.getYaObjetivo(1));
+
+				//Si todos hicieron lo suyo, ninguno cumplira la condicion, y por lo tanto ninguno cambiara bucleTurno, por lo que saldra del while.
+				if(agente.compPersona()) {
+					if(!bucleTurno && agente.dameAccion())
+						bucleTurno = true;
+				}
+				tiempo++;
+			}
+			//A partir de aqui se ejecuta en la siguiente ronda, turno 0.
+			//Se borra la referencia a las creencias guardadas en el jugador jugable, y se agrega en el set de creencias del GameManager, quien almacenara las creencias obtenidas por el jugador durante la partida.
+			//liberarCreencias();	TODO Descomentar y enfrentarse a él
+
+			//Se itera por cada lugar para volcarles las Informaciones a los agentes antes de borrar 
+			for(Lugar lugar: lugares)
+				for(Agente agente: agentes)
+					if(agente.getLugar() == lugar)
+						agente.addVariasCreencias(lugar.getCreencias());
+			/*
+			for(Agente agente: agentes)
+				conseguirCreencias(agente);*/
+		}
+	}
 
 	public void ronda()  {//TODO aca vendria bien comentario?
+		
+		//Para poder hacer jugar a los NPC:
+		if(pepe == null) {
+			rondaNPC();
+			return;
+		}
+		
 		if(GameManager.flagRonda) {
 			flagRonda = false;
 			for(Agente agente: agentes) {

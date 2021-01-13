@@ -25,7 +25,6 @@ public class Creencia extends Informacion {
 		this.tiempo = tiempo;
 	}
 	
-	//TODO aca abajo tienes como 12364873642793658634754587 Null pointer exception
 	private String info() {
 		return lugar.getNombre();
 	}

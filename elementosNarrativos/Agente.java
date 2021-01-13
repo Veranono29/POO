@@ -34,7 +34,7 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 		GameManager.conseguirCreencias(this);
 		if(this instanceof Jugador) {
 			//TODO aca va todo lo que sería el llamado a los botones del apartado grafico.
-			
+			GameManager.getInterfaz().setRonda(GameManager.getRonda());
 			//TODO Aca se para el thread hasta que se le de a algun boton.
 			//TODO O un while.
 		}

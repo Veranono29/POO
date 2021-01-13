@@ -53,9 +53,9 @@ public class PruebaDinamica extends JFrame {
 	 	//Objetivos
 	 JTextField txtLiObjetivo;
 	 
-	public PruebaDinamica() {
+	public PruebaDinamica(Agente pepe) {
 		
-		rudolf= (Jugador) GameManager.getJugador();	//debo tratarlo como jugador porque si no no puedo invocar los metodos propios del jugador
+		rudolf= (Jugador) pepe;	//debo tratarlo como jugador porque si no no puedo invocar los metodos propios del jugador
 		ru =rudolf.getLugar(); 
 		
 		//inicializar cosas
@@ -436,5 +436,7 @@ public class PruebaDinamica extends JFrame {
 		comprobarPeticion();	//Revisa si hay una peticion a mi jugador
 		mostrarTodo();
 	}
-	
+	private void reanudarRonda() {
+	    ((GameManager)GameManager.getGMins()).ronda();
+	}
 }

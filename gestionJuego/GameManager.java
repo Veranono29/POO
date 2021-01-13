@@ -41,9 +41,10 @@ public class GameManager extends ManejaDatos implements Acciones {
 	private static Jugador pepe = null;
 	
 	//Interfaz grafica.
-	PruebaDinamica interfaz;
+	private static PruebaDinamica interfaz;
 	
-	Object yo;
+	//Referencia a instancia de GameManager.
+	private static Object yo;
 	
 	//Maximo de ajyacencias por lugar.
 	private static final int maxAjyacencias = 3;
@@ -78,12 +79,12 @@ public class GameManager extends ManejaDatos implements Acciones {
 	protected static double getProbOlvido() {
 		return probabilidadOlvido;
 	}
-	//Necesita accederse desde gestionJuego (interfaz grafica, por ejemplo).
-	protected static int getRonda() {
+	//TODO estos comentarios sobran verdad?
+	//Necesita accederse desde Agente.
+	public static int getRonda() {
 		return tiempo/cantPersonas;
 	}
 	
-	//Necesita accederse desde Agente.
 	protected static int getTurno() {
 		//En el caso de haber terminado los turnos y estar en el volcado, esta en el turno 0.
 		return tiempo%cantPersonas;
@@ -99,11 +100,15 @@ public class GameManager extends ManejaDatos implements Acciones {
 		//En el caso de haber terminado los turnos y estar en el volcado en el cual
 		return tiempoT%cantPersonas;
 	}
-		
-	protected static Agente getJugador(){
-		return pepe;
+	
+	protected static Object getGMins() {
+		return yo;
 	}
 	
+	//Se usa desde Agente.
+	public static PruebaDinamica getInterfaz() {
+		return interfaz;
+	}
 	
 	private static String leerPalabra (Scanner lectura) throws FormatoIncorrecto{
 		String[] resultado;
@@ -505,13 +510,13 @@ public class GameManager extends ManejaDatos implements Acciones {
 			//liberarCreencias();	TODO Descomentar y enfrentarse a él
 
 			//Se itera por cada lugar para volcarles las Informaciones a los agentes antes de borrar 
-			for(Lugar lugar: lugares)
+			/*for(Lugar lugar: lugares)
 				for(Agente agente: agentes)
 					if(agente.getLugar() == lugar)
-						agente.addVariasCreencias(lugar.getCreencias());
-			/*
+						agente.addVariasCreencias(lugar.getCreencias());*/
+			
 			for(Agente agente: agentes)
-				conseguirCreencias(agente);*/
+				conseguirCreencias(agente);
 		}
 	}
 
@@ -524,12 +529,12 @@ public class GameManager extends ManejaDatos implements Acciones {
 		}
 		
 		if(GameManager.flagRonda) {
-			flagRonda = false;
+			//flagRonda = false;
 			for(Agente agente: agentes) {
 				if(agente instanceof Jugador) {
 					liberarCreencias();
 					bucleTurno = bucleTurno || interfaz.getBoleanDameAccion();
-					flagRonda = true;
+					//flagRonda = true;
 					continue;
 				}
 				if(flagRonda) {
@@ -551,9 +556,12 @@ public class GameManager extends ManejaDatos implements Acciones {
 		
 		for(Agente agente: agentes) {
 			bucleTurno = bucleTurno || rondaAcciones(agente);
-			if(agente instanceof Jugador)
-				break;
 			tiempo++;
+			if(agente instanceof Jugador) {
+				if(agente.getYaObjetivo(0) == false && agente.getYaObjetivo(1) == false)
+					ronda();
+				break;
+			}
 		}
 	}
 	
@@ -565,7 +573,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 		}
 		return false;
 	}
-	
 	public void main() {
 		try {
 			rConfig();
@@ -584,7 +591,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 		//TODO Gerardo, por aca lo que tengas que poner de instanciar la interfaz o lo de iniciarla o asi.
 		//TODO Gerardo, recuerda que el punto donde le pides que te pasemos la ronda es en el dameAccion de elementosNarrativos.Agente.
 		//TODO descomentar la de abajo.		
-		//interfaz = new PruebaDinamica();
+		interfaz = new PruebaDinamica(pepe);
 		
 		//Primera llamada a ronda. No ejecutara la primera mitaz del "bucle truncado".
 		ronda();

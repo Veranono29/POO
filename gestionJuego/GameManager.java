@@ -238,14 +238,14 @@ public class GameManager extends ManejaDatos implements Acciones {
 									adyacenciasObtenidas++;
 									break;
 								}
-							
-							}
-							
+							}							
 							//Llega 3 veces (esta abajo y ++Antes para que se ejecute 1 vez menos).
 							if(adyacenciasObtenidas >= maxAjyacencias) {
 								break;	
 							}
 						}
+						if(adyacenciasObtenidas==0)
+							throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Datos insuficientes en " + textoTopes[0] + ", " + lugar.getNombre());
 						adyacenciasObtenidas = 0;
 						break;
 					}
@@ -263,10 +263,13 @@ public class GameManager extends ManejaDatos implements Acciones {
 						
 						if (datos.isEmpty())
 							throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Datos insuficientes en " + textoTopes[1] + ", " + persona.getNombre());
-						
+
 						for(Lugar lugar: lugares) {
 							if(lugar.siSoy(datos.get(0))) {
 								lugar.addAgente(persona);
+								datos.remove(0);
+								if(!datos.isEmpty())
+									throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Demasiados datos en " + persona.getNombre());
 								break;
 							}
 						}
@@ -291,6 +294,8 @@ public class GameManager extends ManejaDatos implements Acciones {
 							if(lugar.siSoy(datos.get(0))) {
 								lugar.addObjeto(objeto);
 								datos.remove(0);
+								if(!datos.isEmpty())
+									throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Demasiados datos en " + objeto.getNombre());
 								break;
 							}
 						}
@@ -314,6 +319,8 @@ public class GameManager extends ManejaDatos implements Acciones {
 		else {
 			for(Agente agente: agentes) {
 				for(Erlacion erlacion: relaciones) {
+					if(erlacion.getLugar() == null && erlacion.getObjeto() == null)
+						throw new FormatoIncorrecto("Formato incorrecto en anexo 2: Agente " + erlacion.getNombre() + " sin proposito en la vida :(");
 					if(erlacion.siSoy(agente)) {
 						agente.setObjetivo((Objetivo) erlacion);
 					}
@@ -336,8 +343,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 								for(Erlacion erlacion: relaciones) {
 									if(erlacion.siSoy(agente)) {
 										erlacion.setLugar(lugar);
-										if(erlacion.getLugar() == null && erlacion.getObjeto() == null)
-											throw new FormatoIncorrecto("Formato incorrecto en anexo 2: Agente sin proposito en la vida :(");
 										break;
 									}
 								}
@@ -363,8 +368,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 								for(Erlacion erlacion: relaciones) {
 									if(erlacion.siSoy(agente)) {
 										erlacion.setObjeto(objeto);
-										if(erlacion.getLugar() == null && erlacion.getObjeto() == null)
-											throw new FormatoIncorrecto("Formato incorrecto en anexo 2: Agente sin proposito en la vida :(");
 										break;
 									}
 								}

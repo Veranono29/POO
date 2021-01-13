@@ -89,9 +89,11 @@ public class PruebaDinamica extends JFrame {
 		
 		botonDejar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(rudolf.getObjeto()!=null)
+				if(rudolf.getObjeto()!=null){
 					boleanDameAccion= rudolf.dameAccion(botonDejar);	// ->dameAccion(null) es 
 					ocultarTodo();//AL haber pusado un botï¿½n se ocultan los demï¿½s y se acaba la ronda
+					reanudarRonda();	//Devolver control al main
+				}	
 			}
 		});
 		botonDejar.setBounds(525, 326, 97, 40);
@@ -105,6 +107,7 @@ public class PruebaDinamica extends JFrame {
 				boleanDameAccion = rudolf.dameAccion(true); //-> esto da el objeto a quien se lo estï¿½ pidiendo
 				botonDar.setVisible(false);	//AL pulsarlo significa que le estï¿½s dando el objeto a alguien
 				ocultarTodo();//AL haber pusado un botï¿½n se ocultan los demï¿½s y se acaba la ronda
+				reanudarRonda();
 			}
 		});
 		botonDar.setBounds(525, 326, 97, 40);
@@ -130,8 +133,9 @@ public class PruebaDinamica extends JFrame {
 			botonPasarTurno.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-				boleanDameAccion=rudolf.dameAccion(false);	//	
-				ocultarTodo();//AL haber pusado un botï¿½n se ocultan los demï¿½s y se acaba la ronda
+					boleanDameAccion=rudolf.dameAccion(false);	//	
+					ocultarTodo();//AL haber pusado un botï¿½n se ocultan los demï¿½s y se acaba la ronda
+					reanudarRonda();
 				}
 			});	
 			botonPasarTurno.setBounds(307, 326, 97, 40);	
@@ -166,6 +170,7 @@ public class PruebaDinamica extends JFrame {
 				boleanDameAccion=rudolf.dameAccion(botonesLugares[0]);
 				System.out.println("Sala Arriba 1");
 				ocultarTodo();//AL haber pusado un boton se ocultan los demas y se acaba la ronda
+				reanudarRonda();
 				}
 			});
 		botonesLugares[0].setBounds(12, 34, 97, 40);
@@ -179,6 +184,7 @@ public class PruebaDinamica extends JFrame {
 				boleanDameAccion = rudolf.dameAccion(botonesLugares[1]);
 				System.out.println("Sala Derecha 2");
 				ocultarTodo();//AL haber pusado un boton se ocultan los demas y se acaba la ronda
+				reanudarRonda();
 				}
 			});
 		botonesLugares[1].setBounds(161, 196, 97, 40);
@@ -192,6 +198,7 @@ public class PruebaDinamica extends JFrame {
 				boleanDameAccion=rudolf.dameAccion(botonesLugares[2]);
 				System.out.println("Habitacion");
 				ocultarTodo();//AL haber pusado un boton se ocultan los demas y se acaba la ronda
+				reanudarRonda();
 				}
 			});
 		botonesLugares[2].setBounds(12, 326, 97, 40);
@@ -256,6 +263,7 @@ public class PruebaDinamica extends JFrame {
 				public void actionPerformed(ActionEvent arg0) {
 					boleanDameAccion = rudolf.dameAccion(a); //-> esto da el objeto a quien se lo estï¿½ pidiendo
 					ocultarTodo();//AL haber pusado un botï¿½n se ocultan los demï¿½s y se acaba la ronda
+					reanudarRonda();
 				}
 			});
 			a.setVisible(true);
@@ -308,6 +316,7 @@ public class PruebaDinamica extends JFrame {
 				public void actionPerformed(ActionEvent arg0) {
 					boleanDameAccion = rudolf.dameAccion(a); //-> esto da el objeto a quien se lo estï¿½ pidiendo
 					ocultarTodo();//AL haber pusado un botï¿½n se ocultan los demï¿½s y se acaba la ronda
+					reanudarRonda();
 				}
 			});
 			a.setVisible(true);

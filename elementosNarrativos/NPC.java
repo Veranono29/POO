@@ -3,6 +3,8 @@ package elementosNarrativos;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
+
 import datos.Informacion;
 import datos.Peticion;
 import gestionJuego.GameManager;
@@ -18,21 +20,21 @@ public class NPC extends Agente {
 	@Override
 	public boolean dameAccion() {
 		super.dameAccion();
-		if(this.getPeticion().getObjeto() == this.getObjeto() && this.getPeticion().getObjeto() != this.getObjetivo().getObjeto()) {		//En primer lugar comparamos si tenemos alguna petición que contenga el objeto que llevamos
-			return GameManager.darObjeto(this);									//Si la tenemos, damos el objeto							
-		}
-		else {
+		if (this.getObjeto() != this.getObjetivo().getObjeto())
+			return GameManager.dejarObjeto(this);
+		if(this.getPeticion() != null && this.getPeticion().getObjeto() == this.getObjeto() && this.getPeticion().getObjeto() != this.getObjetivo().getObjeto())		//En primer lugar comparamos si tenemos alguna petición que contenga el objeto que llevamos
+			return GameManager.darObjeto(this);										//Si la tenemos, damos el objeto							
+		else 
 			this.dropPeticion();
-		}
 		
 		Informacion ultimaInfo = null;																//Usaremos una variable para seleccionar información relevante
 		List<Lugar> opciones = new ArrayList<Lugar>();												//Y un arraylist de opciones a las que nos podemos mover
 		
-		if(getYaObjetivo(0)) {																	//En el caso en el que ya estamos en posesión del objeto
-			
+		if(!getYaObjetivo(1)){																	//En el caso en el que ya estamos en posesión del objeto
+			System.out.println("Hola" );
 			for(int index = this.getCreencias().size()-1 ; index >=0 ; index--){					//Iteramos sobre las creencias del personaje
 				if (this.getCreencias().get(index).getLugar() == this.getObjetivo().getLugar()){	//Y buscamos en ellas nuestro lugar objetivo(Para saber si hemos estado)
-					for(Lugar siguienteLugar: this.getLugar().getLugares()){	//Iteramos sobre las adyacencias de nuestra habitación
+					for(Lugar siguienteLugar: this.getLugar().getLugares()){					//Iteramos sobre las adyacencias de nuestra habitación
 						for(int index2 = this.getCreencias().size()-1 ; index2 >=0 ; index2--){		//Iteramos de nuevo...
 							if(this.getObjetivo().getLugar() == siguienteLugar){					//Si estamos adyacentes a nuestra habitación objetivo, nos movemos a ella
 								return GameManager.relocalizar(this, siguienteLugar);
@@ -43,9 +45,9 @@ public class NPC extends Agente {
 					}
 					return relocalizador(opciones);													//Relocalizador explicado abajo
 				}
-			}	
-			for(Lugar siguienteLugar: this.getLugar().getLugares()){			//Si no hemos estado en el lugar objetivo anteriormente
-				opciones.add(siguienteLugar);														//Hacemos lo contrario y priorizamos las habitaciones no visitadas
+			}																	//Si no hemos estado en el lugar objetivo anteriormente	
+			for(Lugar siguienteLugar: this.getLugar().getLugares()) {
+				opciones.add(siguienteLugar);								//Hacemos lo contrario y priorizamos las habitaciones no visitadas
 				for(int index = this.getCreencias().size()-1 ; index >=0 ; index--){
 					if(this.getCreencias().get(index).getLugar() == siguienteLugar)
 							opciones.remove(siguienteLugar);
@@ -66,10 +68,10 @@ public class NPC extends Agente {
 							}
 						}
 					}
-				}
-				for(Lugar siguienteLugar: this.getLugar().getLugares()){					//Si no, priorizamos de nuevo las habitaciones no visitadas
-					opciones.add(siguienteLugar);
-					for(int index = this.getCreencias().size()-1 ; index >=0 ; index--){						//Para tener más posibilidades de encontrar el objeto
+				}		
+				for(Lugar siguienteLugar: this.getLugar().getLugares()){
+					opciones.add(siguienteLugar);											//Priorizamos de nuevo las habitaciones no visitadas
+					for(int index = this.getCreencias().size()-1 ; index >=0 ; index--){	//Para tener más posibilidades de encontrar el objeto
 						if(this.getCreencias().get(index).getLugar() == siguienteLugar)
 								opciones.remove(siguienteLugar);
 					}
@@ -83,19 +85,19 @@ public class NPC extends Agente {
 	
 	
 	
-	public boolean relocalizador(List<Lugar> opciones) {									//La función relocalizador escoje una localización aleatoria de entre las opciones
+	public boolean relocalizador(List<Lugar> opciones) {										//La función relocalizador escoje una localización aleatoria de entre las opciones
 		if (opciones.size() == 0) {															//Si no hay opciones, las rellena de todas las habitaciones adyacentes y elije aleatoriamente
 			if( Math.random() <= 0.20 )														//Añadimos un factor aleatorio para que pueda no hacer nada si no tiene opciones buenas
-				return GameManager.log(this);
+				return GameManager.pasarTurno(this);
 			else {
 				for(Lugar siguienteLugar: this.getLugar().getLugares()){
 					opciones.add(siguienteLugar);
 				}
 			}
-			return GameManager.relocalizar(this, opciones.get((int) Math.floor(Math.random() * (opciones.size()-1))));
+			return GameManager.relocalizar(this, opciones.get(new Random().nextInt(opciones.size())));
 		}
 		else {
-			return GameManager.relocalizar(this, opciones.get((int)Math.floor(Math.random() * (opciones.size()-1))));
+			return GameManager.relocalizar(this, opciones.get(new Random().nextInt(opciones.size())));
 		}
 	}
 }

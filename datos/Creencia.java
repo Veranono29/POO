@@ -30,8 +30,9 @@ public class Creencia extends Informacion {
 	}
 	
 	public String info(Agente agente) {
-		if(lugar != null)
+		if(lugar != null) {
 			return info() +  " " + objeto.getNombre() + " " + GameManager.getRonda(tiempo) + " " + GameManager.getTurno(tiempo);
+		}
 		return "";
 	}
 	
@@ -39,3 +40,4 @@ public class Creencia extends Informacion {
 		return info() + " " + agente.getNombre() + " " + GameManager.getRonda(tiempo) + " " + GameManager.getTurno(tiempo);
 	}
 }
+

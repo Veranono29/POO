@@ -124,8 +124,14 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	//Comprobar persona comprueba si el agente ya ha cumplido sus objetivos en la partida.
 	//True significa que esta incumplido, y false que esta cumplido, como persona.yaObjetivos. 
 	//Aplicable tambien a compLugar y compObjeto.
-	public boolean compPersona() {
+	/*public boolean compPersona() {
 		if( (yaObjetivos[0] && compLugar()) || (yaObjetivos[1] && compObjeto()) ) {
+			return true;
+		}
+		return false;
+	}*/
+	public boolean compPersona() {
+		if(compLugar() || compObjeto()) {
 			return true;
 		}
 		return false;
@@ -134,12 +140,16 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 		if(lugar == objetivo.getLugar() || objetivo.getLugar() == null) {
 			yaObjetivos[0] = false;
 		}
+		else
+			yaObjetivos[0] = true;
 		return yaObjetivos[0];
 	}
 	private boolean compObjeto() {
 		if(objeto == objetivo.getObjeto() || objetivo.getObjeto() == null) {
 			yaObjetivos[1] = false;
 		}
+		else
+			yaObjetivos[1] = true;
 		return yaObjetivos[1];
 	}
 }

@@ -34,4 +34,15 @@ public class Erlacion extends Objetivo implements Nombrable {
 	public String getNombre() {
 		return nombreAgente;
 	}
+	@Override
+    public String toString() {
+        String texto = "";
+        if(objeto !=null) {
+            texto+=objeto.getNombre();				//TODO Eliminar
+        }
+        if(lugar != null) {
+            texto+=lugar.getNombre();
+        }
+        return nombreAgente+texto;
+    }
 }

@@ -20,10 +20,14 @@ public class Informacion {
 	}
 
 	public Objeto getObjeto() {
-		return objeto;
+		if (objeto != null)
+			return objeto;
+		return null;
 	}
 
 	public Lugar getLugar() {
-		return lugar;
+		if (lugar != null)
+			return lugar;
+		return null;
 	}
 }

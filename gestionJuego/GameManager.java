@@ -54,7 +54,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 	
 	//Probabilidades:
 	//TODO esto asi, o lo ponemos para cambiar en la interfaz?
-	private static final double probabilidadOlvido = -0.01;
+	private static final double probabilidadOlvido = 0.00;
 	private static final double probabilidadAceptar = 1.01;
 	
 	//Necesita accederse desde gestionJuego.
@@ -72,7 +72,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 	}
 	
 	//Necesita accederse desde Agente.
-	public static int getTurno() {
+	protected static int getTurno() {
 		//En el caso de haber terminado los turnos y estar en el volcado, esta en el turno 0.
 		return tiempo%cantPersonas;
 	}
@@ -91,6 +91,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 	protected static Agente getJugador(){
 		return pepe;
 	}
+	
 	
 	private static String leerPalabra (Scanner lectura) throws FormatoIncorrecto{
 		String[] resultado;
@@ -137,46 +138,30 @@ public class GameManager extends ManejaDatos implements Acciones {
 	private void rConfig() throws FileNotFoundException, FormatoIncorrecto {
 		File anexoUno = new File("src/ANEXO_1");
 		Scanner lectura;
-		int leidoCompleto = 1;;
-		
+		int leidoCompleto = 1;
 		for(int cualAnexo = 0; cualAnexo < 2;cualAnexo++) {
 			lectura = new Scanner(anexoUno);
 			while(lectura.hasNextLine()){
-				if(cualAnexo == 0) {
+				if(cualAnexo == 0)
 					leidoCompleto *= rInstanciar(lectura);
-					//30 es la multiplicación de 2, 3 y 5 (primos) para asegurarnos de que pasa por los cada uno 1 vez
-					if (leidoCompleto != 30)
-						throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Faltan apartados/Apartados repetidos");
-				}
-				else
+				else 
 					rDatos(lectura);
 			}
+			//30 es la multiplicación de 2, 3 y 5 (primos) para asegurarnos de que pasa por los cada uno 1 vez
+			if (leidoCompleto != 30)
+				throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Faltan apartados/Apartados repetidos");
 			lectura.close();
-			
 		}
 		lectura = new Scanner(new File("src/ANEXO_2"));
 		rObjetivos(lectura);
 		lectura.close();
-		/*leidoCompleto = rInstanciar(lectura);
-		lectura.close();
-		if (leidoCompleto != 30)
-			throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Faltan apartados/Apartados repetidos/En mal orden");
-		
-		System.out.println("EEEOO");
-		lectura = new Scanner(anexoUno);
-		rDatos(lectura);
-		lectura.close();
-		
-		lectura = new Scanner(anexoUno);
-		rObjetivos(lectura);
-		lectura.close();*/
 	}
 	
 	
-	public int rInstanciar(Scanner lectura) throws FormatoIncorrecto{
+	private int rInstanciar(Scanner lectura) throws FormatoIncorrecto{
 		String titulo;
-		int adyacenciasObtenidas = 0;
-		int comprobar = 1;
+		int adyacenciasObtenidas = 0;	
+		
 		//Buscamos por "Etiqueta" los tres principales datos (con etiqueta me refiero a le nombre que aparece en <>)
 		if (lectura.hasNext(textoTopes[0])){
 			leerPalabra(lectura);
@@ -184,15 +169,13 @@ public class GameManager extends ManejaDatos implements Acciones {
 				titulo = leerPalabra(lectura);
 				lugares.add( new Lugar(titulo));
 			}
-			comprobar *= 2;
+			return 2;
 		}
 		
 		if (lectura.hasNext(textoTopes[1])) {
 			leerPalabra(lectura);
 			while(lineasIt(lectura, textoTopes[0], textoTopes[2])) {
 				cantPersonas++;
-				
-				
 				titulo = leerPalabra(lectura);
 				if((pepe == null) && (titulo == nombreJugador)) {
 					pepe = new Jugador(rNombre());
@@ -202,8 +185,9 @@ public class GameManager extends ManejaDatos implements Acciones {
 					agentes.add( new NPC(titulo));
 				}
 				this.relaciones.add(new Erlacion(titulo));
+				
 			}
-			comprobar *= 3;
+			return 3;
 		}
 		
 		if (lectura.hasNext(textoTopes[2])){
@@ -212,12 +196,12 @@ public class GameManager extends ManejaDatos implements Acciones {
 				titulo = leerPalabra(lectura);
 				objetos.add( new Objeto(titulo));
 			}
-			comprobar *= 5;
+			return 5;
 		}
-		return comprobar;
+		return 1;
 	}
 	
-	public void rDatos(Scanner lectura) throws FormatoIncorrecto {
+	private void rDatos(Scanner lectura) throws FormatoIncorrecto {
 		List<String> datos;
 		int adyacenciasObtenidas = 0;
 		
@@ -231,25 +215,26 @@ public class GameManager extends ManejaDatos implements Acciones {
 					if(lugar.siSoy(datos.get(0))) {
 						//Llega 1 vez.
 						datos.remove(0);
-						
 						if (datos.isEmpty())
 							throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Datos insuficientes en " + textoTopes[0] + ", " + lugar.getNombre());
-						
 						for(String nombre: datos) {
 							for(Lugar adyacente: lugares) {
 								//Llega 9 veces.
-								if(adyacente.siSoy(nombre)) {
+								if(adyacente.siSoy(nombre.trim())) {
 									//Llega 3 veces.
 									lugar.addLugar(adyacente);
+									adyacenciasObtenidas++;
+									break;
 								}
 							
 							}
 							
 							//Llega 3 veces (esta abajo y ++Antes para que se ejecute 1 vez menos).
-							if(++adyacenciasObtenidas < maxAjyacencias) {
-								break;
+							if(adyacenciasObtenidas >= maxAjyacencias) {
+								break;	
 							}
 						}
+						adyacenciasObtenidas = 0;
 						break;
 					}
 				}
@@ -311,7 +296,19 @@ public class GameManager extends ManejaDatos implements Acciones {
 			}
 		}
 	}
-	
+	private void rObjetivoSaltar(Scanner lectura) throws FormatoIncorrecto {
+		if(lectura.hasNextLine())
+			rObjetivos(lectura);
+		else {
+			for(Agente agente: agentes) {
+				for(Erlacion erlacion: relaciones) {
+					if(erlacion.siSoy(agente)) {
+						agente.setObjetivo((Objetivo) erlacion);
+					}
+				}
+			}
+		}
+	}
 	private void rObjetivos(Scanner lectura) throws FormatoIncorrecto {
 		List<String> datos;
 		
@@ -319,7 +316,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 			lectura.nextLine();
 			while(lineasIt(lectura, textoTopesObjetivos[1])) {
 				datos = leerDatos(lectura);
-				
 				for(Agente agente: agentes) {
 					if(agente.siSoy(datos.get(0))) {
 						datos.remove(0);
@@ -328,6 +324,8 @@ public class GameManager extends ManejaDatos implements Acciones {
 								for(Erlacion erlacion: relaciones) {
 									if(erlacion.siSoy(agente)) {
 										erlacion.setLugar(lugar);
+										if(erlacion.getLugar() == null && erlacion.getObjeto() == null)
+											throw new FormatoIncorrecto("Formato incorrecto en anexo 2: Agente sin proposito en la vida :(");
 										break;
 									}
 								}
@@ -338,19 +336,16 @@ public class GameManager extends ManejaDatos implements Acciones {
 					}
 				}
 			}
-			if(lectura.hasNextLine())
-				rObjetivos(lectura);
+			rObjetivoSaltar(lectura);
 		}
 		
 		if (lectura.hasNext(textoTopesObjetivos[1])){
 			lectura.nextLine();
 			while(lineasIt(lectura, textoTopesObjetivos[0])) {
 				datos = leerDatos(lectura);
-				
 				for(Agente agente: agentes) {
 					if(agente.siSoy(datos.get(1))) {
 						datos.remove(1);
-						
 						for(Objeto objeto: objetos) {
 							if(objeto.siSoy(datos.get(0))) {
 								for(Erlacion erlacion: relaciones) {
@@ -358,8 +353,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 										erlacion.setObjeto(objeto);
 										if(erlacion.getLugar() == null && erlacion.getObjeto() == null)
 											throw new FormatoIncorrecto("Formato incorrecto en anexo 2: Agente sin proposito en la vida :(");
-										
-										agente.setObjetivo((Objetivo) erlacion);
 										break;
 									}
 								}
@@ -370,8 +363,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 					}
 				}
 			}
-			if(lectura.hasNextLine())
-				rObjetivos(lectura);
+			rObjetivoSaltar(lectura);
 		}
 		relaciones = null;
 	}
@@ -379,15 +371,19 @@ public class GameManager extends ManejaDatos implements Acciones {
 	/*** Acciones ***/
 	
 	//log de no hacer nada
-	public static boolean log(Agente agente) {
+	private static boolean log(Agente agente) {
 		GameManager.sumaCreencia(agente.getLugar() , new Creencia(agente, null, null, tiempo));
 		
 		//agente.getLugar().addCreencia(new Informacion(agente, null, null));
 		return false;
 	}
 	
-	public static boolean log(Agente agente, Objeto objeto, Lugar lugar) {
-		agente.getLugar().addCreencia(new Creencia(agente, objeto, lugar, tiempo));
+	private static boolean log(Agente agente, Objeto objeto, Lugar lugar) {
+		if(agente == null) {
+			lugar.addCreencia(new Creencia(agente, objeto, lugar, tiempo));
+		}
+		else
+			agente.getLugar().addCreencia(new Creencia(agente, objeto, lugar, tiempo));
 		return true;
 	}
 	
@@ -441,6 +437,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 	}
 	
 	//Libera al Jugador de las creencias, pasandolas al set de la instacia de GameManager.
+	@SuppressWarnings("unused")
 	private void liberarCreencias() {
 		this.addVariasCreencias(pepe.getCreencias());
 		pepe.limpiarCreencias();
@@ -454,7 +451,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 	}
 
 	public void main() {
-		
+		int contador = 0;
 		//TODO Gerardo, por aca lo que tengas que poner de instanciar la interfaz o lo de iniciarla o asi.
 		//TODO Gerardo, recuerda que el punto donde le pides que te pasemos la ronda es en el dameAccion de elementosNarrativos.Agente.
 		
@@ -478,8 +475,8 @@ public class GameManager extends ManejaDatos implements Acciones {
 			System.exit(0); 
 			error.printStackTrace();
 		}
-		
 		while(bucleTurno) {
+			contador++;
 			bucleTurno = false;
 			
 			//Se itera por cada agente para hacer los turnos.
@@ -487,6 +484,9 @@ public class GameManager extends ManejaDatos implements Acciones {
 				
 				//Si todos hicieron lo suyo, ninguno cumplira la condicion, y por lo tanto ninguno cambiara bucleTurno, por lo que saldra del while.
 				if(agente.compPersona()) {
+					System.out.println(agente.getNombre());
+					System.out.println(agente.getYaObjetivo(0));
+					System.out.println(agente.getYaObjetivo(1));
 					
 					//dameAccion se encarga de indicar que accion quiere realizar (y el log que debe hacer) y el resto de gestiones.
 					seMovieron = agente.dameAccion();
@@ -504,7 +504,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 			}
 			//A partir de aqui se ejecuta en la siguiente ronda, turno 0.
 			//Se borra la referencia a las creencias guardadas en el jugador jugable, y se agrega en el set de creencias del GameManager, quien almacenara las creencias obtenidas por el jugador durante la partida.
-			liberarCreencias();
+			//liberarCreencias();	TODO Descomentar y enfrentarse a �l
 			
 			//Se itera por cada lugar para volcarles las Informaciones a los agentes antes de borrar 
 			for(Lugar lugar: lugares)
@@ -512,5 +512,23 @@ public class GameManager extends ManejaDatos implements Acciones {
 					if(agente.getLugar() == lugar)
 						agente.addVariasCreencias(lugar.getCreencias());
 		}
-	}
+		
+		for(Agente agente: agentes) {
+			System.out.println(agente.getNombre() + " " + agente.getObjetivo());
+            System.out.print(agente.getNombre() + ": \n\t"+agente.getObjeto());
+            if(agente.getYaObjetivo(1)) {
+                System.out.println("[NO]");
+            } else {
+                System.out.print("[SI]");
+            }
+            System.out.print("\n\t" + agente.getLugar());
+            if(agente.getYaObjetivo(0)) {
+                System.out.println("[NO]");
+            } else {
+                System.out.print("[SI]");
+            }
+            System.out.println("");
+        }
+		System.out.println("\nFelicidades, nos vamos a la cama " + contador);
+    }
 }

@@ -13,7 +13,7 @@ public interface Acciones {
 		//Si la pedicion que tiene actualmente es hacia el mismo objeto, no lo admitira y se quedara con el anterior.
 		//La probabilidad de aceptar la peticion la ponemos aca ya que al final es (casi) lo mismo que no lo acepten y que no le llege, y nos gustaba mas implementarlo en pedirObjeto.
 		//Dicha probabilidad se puede cambiar la probabilidad, aunque recomendamos el 100%.
-		if(peticion.getObjeto() != jugadorPeticionado.getPeticion().getObjeto() && (Math.random() < GameManager.getProbAceptar()))
+		if(jugadorPeticionado.getPeticion() == null || (peticion.getObjeto() != jugadorPeticionado.getPeticion().getObjeto() && (Math.random() < GameManager.getProbAceptar())))
 			jugadorPeticionado.setPeticion(peticion);
 	}
 	

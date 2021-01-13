@@ -5,12 +5,16 @@ import java.util.HashSet;
 //TODO em... creo que todas las veces le puse de util.List, no? esque tambien esta el de awt y ese no queremos.
 import java.util.List;
 import java.util.Set;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import datos.Creencia;
 import datos.Informacion;
 import elementosNarrativos.Agente;
 import elementosNarrativos.Jugador;
 import elementosNarrativos.Objeto;
+
 
 //TODO ta bien que no herede?
 //No hereda de ManejaDatos, porque aunque maneje datos, no ManejaDatos. Hace cosas un poco (bastante) diferences.
@@ -22,7 +26,7 @@ public abstract class DataManager {
 	private static List<Set<Informacion>> infoAgentes;
 	private static List<Creencia> creencias;*/
 	
-	public static void main(GameManager manejador) {
+	public static void main(GameManager manejador) throws IOException {
 		
 		int contador = 0;
 		
@@ -30,6 +34,28 @@ public abstract class DataManager {
 		List<Set<Informacion>> infoAgentes = new ArrayList<Set<Informacion>>();
 		List<Informacion> creencias = new ArrayList<Informacion>();
 		Creencia creen = null;
+		try{
+			File datos = new File("movAgentes.txt");
+			if (!datos.createNewFile()){
+				datos.delete();
+				datos.createNewFile();
+		      } 
+		}
+		catch(IOException error) {
+			System.out.println("Error creando el fichero de datos movPersonas");
+		}
+		try{
+			File datos = new File("movObjetos.txt");
+			if (!datos.createNewFile()){
+				datos.delete();
+				datos.createNewFile();
+		      } 
+		}
+		catch(IOException error) {
+			System.out.println("Error creando el fichero de datos movObjetos");
+		}
+		FileWriter writerAgentes = new FileWriter("movAgentes.txt");
+		FileWriter writerObjetos = new FileWriter("movObjetos.txt");
 		//List<Objeto> obj = new ArrayList<Objeto>();
 		//List<Agente> agen = new ArrayList<Agente>();
 		
@@ -80,32 +106,35 @@ public abstract class DataManager {
 		for(Objeto objeto: manejador.getObjeto()) {
 
 			//Por cada set de creencias sobre un objeto, se crea un fichero con la info del recorrido de este.
-			//TODO aca se le escribe por fichero "<" + objeto.getNombre() + ">\nLUGAR AGENTE RONDA TURNO"
-			//TODO le puedo meter el ++ en el get(contador)?
-			for(Informacion creencia: infoObjetos.get(contador)) {
+			writerObjetos.write("<" + objeto.getNombre() + ">\nLUGAR AGENTE RONDA TURNO");
+			//TODO le puedo meter el ++ en el get(contador)
+			for(Informacion creencia: infoObjetos.get(contador)){
 				creen = ((Creencia) creencia);
-				//TODO aca le escribe por fichero creen.info(objeto);
+				writerObjetos.write(creen.info(objeto));
 			}
 			if(creen.getAgente().getYaObjetivo(1)) {
-				//TODO Aca se le escribe un "LLEGO A SU DESTINO".
+				writerObjetos.write("LLEGA A SU DESTINO");
 			}
+			writerObjetos.close();
 			contador++;
 		}
 		contador = 0;
 		for(Agente agente: manejador.getAgentes()) {
 
 			//Por cada set de creencias sobre un agente, se crea un fichero con la info del recorrido de este.
-			//TODO aca se le escribe por fichero "<" + agente.getNombre() + ">\nLUGAR AGENTE RONDA TURNO"
+			writerAgentes.write("<" + agente.getNombre() + ">\nLUGAR AGENTE RONDA TURNO");
 			//TODO le puedo meter el ++ en el get(contador)?
 			for(Informacion creencia: infoAgentes.get(contador)) {
 				creen = ((Creencia) creencia);
-				//TODO aca le escribe por fichero creen.info(agente);
+				writerAgentes.write(creen.info(agente));
 			}
 			if(!creen.getAgente().compPersona()) {
-				//TODO Aca se le escribe un "LLEGO A SU DESTINO".
+				writerAgentes.write("LLEGO A SU DESTINO");
 			}
+			writerAgentes.close();
 			contador++;
 		}
+		
 		
 		
 		//TODO aca se debe de guardar en listas de Informaciones:
@@ -139,5 +168,7 @@ LUGAR OBJETO RONDA TURNO
 ...
 		 *Si llego a su dueño (si la persona que lo tiene necesita ese objeto), se pone al final lo de LLEGO A SU DESTINO
 		 */
+
+		      
 	}
 }

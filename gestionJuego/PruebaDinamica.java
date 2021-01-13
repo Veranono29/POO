@@ -4,6 +4,9 @@ import elementosNarrativos.Agente;
 import elementosNarrativos.Jugador;
 import elementosNarrativos.Lugar;
 import elementosNarrativos.Objeto;
+
+import datos.Objetivo;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -197,7 +200,7 @@ public class PruebaDinamica extends JFrame {
 		
 		
 			//LISTA DE Objetivos
-		txtLiObjetivo = new JTextField("");	
+		txtLiObjetivo = new JTextField( ((Objetivo)rudolf.getObjetivo()).toString() );	
 		txtLiObjetivo.setBounds(12, 123, 135, 165);
 		contentPane.add(txtLiObjetivo);
 		

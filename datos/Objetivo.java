@@ -18,7 +18,6 @@ public class Objetivo extends Informacion {
 		//Realmente nunca va a llegar aca sin tener lugar == null, pero mira, es un if, no me voy a morir por ponerlo no vaya a ser.
 		else if(lugar == null)
 			texto = "Tener " + objeto.getNombre();
-			
 		return "Objetivo: " + texto;
 	}
 }

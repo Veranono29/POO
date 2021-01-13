@@ -9,8 +9,9 @@ import elementosNarrativos.Objeto;
 public interface Acciones {
 	
 	public static void pedirObjeto (Agente jugadorPeticionado, Peticion peticion){
-		//Entregarle a jugadorPeticionado la peticion. Si. Peticionado. Si te suena raro, analiza como llamamos en ingles las cosas. Exactamente asi son, chirrian de la misma manera.
-		//Si la pedicion que tiene actualmente es hacia el mismo objeto, no lo admitira y se quedara con el anterior.
+		//Entregarle a jugadorPeticionado la peticion.
+		//Si la pedicion que tiene actualmente es hacia el mismo objeto, no lo admitira y se quedara con el anterior. La cosa esta en que siempre va a ser sobre el mismo objeto, por lo que no lo admitira. 
+		//En el caso de querer pedir un objeto exacto, recojera la peticion mas reciente.
 		//La probabilidad de aceptar la peticion la ponemos aca ya que al final es (casi) lo mismo que no lo acepten y que no le llege, y nos gustaba mas implementarlo en pedirObjeto.
 		//Dicha probabilidad se puede cambiar la probabilidad, aunque recomendamos el 100%.
 		if(jugadorPeticionado.getPeticion() == null || (peticion.getObjeto() != jugadorPeticionado.getPeticion().getObjeto() && (Math.random() < GameManager.getProbAceptar())))

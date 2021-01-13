@@ -138,12 +138,15 @@ public class GameManager extends ManejaDatos implements Acciones {
 	}
 	
 	private static String  rNombre() {
+		/* Para poder personalizar el nombre.
 		String nombre;
 		Scanner nom = new Scanner(System.in);
 		System.out.println("Cual es tu nombre: ");
 		nombre = nom.next();
 		nom.close();
 		return nombre;
+		*/
+		return "Pepe";
 	}
 	
 	//TODO aca tenemos que recojer el FileNotFoundException no?
@@ -273,6 +276,9 @@ public class GameManager extends ManejaDatos implements Acciones {
 								break;
 							}
 						}
+						if(persona.getLugar() == null)
+							throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Datos no declarados en " + textoTopes[1] + ", " + persona.getNombre());
+
 						break;
 					}
 				}
@@ -290,12 +296,17 @@ public class GameManager extends ManejaDatos implements Acciones {
 						if (datos.isEmpty())
 							throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Datos insuficientes en " + textoTopes[2] + ", " + objeto.getNombre());
 						
+						try {
+							if(datos.get(2) == null);
+							throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Demasiados datos en " + textoTopes[2] + objeto.getNombre());
+						} catch (IndexOutOfBoundsException e) {
+							;
+						}
+						
 						for(Lugar lugar: lugares) {
 							if(lugar.siSoy(datos.get(0))) {
 								lugar.addObjeto(objeto);
 								datos.remove(0);
-								if(!datos.isEmpty())
-									throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Demasiados datos en " + objeto.getNombre());
 								break;
 							}
 						}

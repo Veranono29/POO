@@ -6,6 +6,7 @@ import elementosNarrativos.NPC;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
 import java.util.ArrayList;
 import java.util.List;
 import datos.Creencia;
@@ -39,6 +40,9 @@ public class GameManager extends ManejaDatos implements Acciones {
 	//Referencia al jugador jugable.
 	private static Jugador pepe = null;
 	
+	//Interfaz grafica.
+	PruebaDinamica interfaz;
+	
 	//Maximo de ajyacencias por lugar.
 	private static final int maxAjyacencias = 3;
 	
@@ -47,6 +51,12 @@ public class GameManager extends ManejaDatos implements Acciones {
 	
 	//Tiempo de "ejecucion" de la partida. Lleva la cuenta de los turnos y rondas.
 	private static int tiempo = 0;
+	
+	private static boolean flagRonda = false;
+	
+	//Esta es la variable que almacena si alguien ha hecho algo en la ronda o si todos acabaron sus quehaceres. 
+	//Esto es, guarda si el juego debe o no seguir.
+	private static boolean bucleTurno = true;
 	
 	//Strings de lo que hay que detecctar en los anexos:
 	private static final String[] textoTopes = {"<Localizaciones>","<Personajes>","<Objetos>"};
@@ -443,7 +453,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 	}
 	
 	//Libera al Jugador de las creencias, pasandolas al set de la instacia de GameManager.
-	@SuppressWarnings("unused")
 	private void liberarCreencias() {
 		this.addVariasCreencias(pepe.getCreencias());
 		pepe.limpiarCreencias();
@@ -456,17 +465,55 @@ public class GameManager extends ManejaDatos implements Acciones {
 		relaciones = new ArrayList<Erlacion>();
 	}
 
+	public void ronda()  {//TODO aca vendria bien comentario?
+		if(GameManager.flagRonda) {
+			flagRonda = false;
+			for(Agente agente: agentes) {
+				if(agente instanceof Jugador) {
+					liberarCreencias();
+					bucleTurno = bucleTurno || interfaz.getBoleanDameAccion();
+					flagRonda = true;
+					continue;
+				}
+				if(flagRonda) {
+					bucleTurno = bucleTurno || rondaAcciones(agente);
+				}
+				tiempo++;
+			}
+			for(Agente agente: agentes)
+				conseguirCreencias(agente);
+		}
+		else
+			GameManager.flagRonda = true;
+		
+		if(!bucleTurno) {
+			return;
+			//TODO esto pa donde va?
+		}
+		bucleTurno = false;
+		
+		for(Agente agente: agentes) {
+			bucleTurno = bucleTurno || rondaAcciones(agente);
+			if(agente instanceof Jugador)
+				break;
+			tiempo++;
+		}
+	}
+	
+	private boolean rondaAcciones(Agente agente) {
+		//Si todos hicieron lo suyo, ninguno cumplira la condicion, y por lo tanto ninguno cambiara bucleTurno, por lo que saldra del while.
+		if(agente.compPersona()) {
+			//dameAccion se encarga de indicar de forma indirecta que accion quiere realizar (y el log que debe hacer) y el resto de gestiones.
+			return agente.dameAccion();
+		}
+		return false;
+	}
+	
 	public void main() {
-		int contador = 0;
 		//TODO Gerardo, por aca lo que tengas que poner de instanciar la interfaz o lo de iniciarla o asi.
 		//TODO Gerardo, recuerda que el punto donde le pides que te pasemos la ronda es en el dameAccion de elementosNarrativos.Agente.
 		
-		//Esta es la variable que almacena si alguien ha hecho algo en esta ronda o si todos acabaron sus quehaceres. 
-		//Esto es, guarda si el juego debe o no seguir.
-		boolean bucleTurno = true;
-		
-		//Este otro sirve de apoyo al bucleTurno.
-		boolean seMovieron;
+		interfaz = new PruebaDinamica();
 		
 		try {
 			rConfig();
@@ -481,62 +528,8 @@ public class GameManager extends ManejaDatos implements Acciones {
 			System.exit(0); 
 			error.printStackTrace();
 		}
-		while(bucleTurno) {
-			contador++;
-			bucleTurno = false;
-			
-			//Se itera por cada agente para hacer los turnos.
-			for(Agente agente: agentes) {
-				System.out.println(agente.getNombre());
-				System.out.println(agente.getYaObjetivo(0));
-				System.out.println(agente.getYaObjetivo(1));
-				
-				//Si todos hicieron lo suyo, ninguno cumplira la condicion, y por lo tanto ninguno cambiara bucleTurno, por lo que saldra del while.
-				if(agente.compPersona()) {
-					
-					//dameAccion se encarga de indicar que accion quiere realizar (y el log que debe hacer) y el resto de gestiones.
-					seMovieron = agente.dameAccion();
-					
-					//Si el agente hizo alguna accion y si todavia nadie la hizo, marcar que al menos alguien hizo algo en esta ronda para poder tener una siguiente.
-					if(agente instanceof Jugador && !bucleTurno/* && TODO Gerardo, como era lo del getBooleanDameAccion?*/) {
-						bucleTurno = true;
-					}
-					else
-						if(!bucleTurno && seMovieron)
-							bucleTurno = true;
-					
-				}
-				
-				//Aumento el tiempo del turno.
-				tiempo++;
-			}
-			//A partir de aqui se ejecuta en la siguiente ronda, turno 0.
-			//Se borra la referencia a las creencias guardadas en el jugador jugable, y se agrega en el set de creencias del GameManager, quien almacenara las creencias obtenidas por el jugador durante la partida.
-			//liberarCreencias();	TODO Descomentar y enfrentarse a él
-			
-			//Se itera por cada lugar para volcarles las Informaciones a los agentes antes de borrar 
-			for(Lugar lugar: lugares)
-				for(Agente agente: agentes)
-					if(agente.getLugar() == lugar)
-						agente.addVariasCreencias(lugar.getCreencias());
-		}
 		
-		for(Agente agente: agentes) {
-			System.out.println(agente.getNombre() + " " + agente.getObjetivo());
-            System.out.print(agente.getNombre() + ": \n\t"+agente.getObjeto());
-            if(agente.getYaObjetivo(1)) {
-                System.out.println("[NO]");
-            } else {
-                System.out.print("[SI]");
-            }
-            System.out.print("\n\t" + agente.getLugar());
-            if(agente.getYaObjetivo(0)) {
-                System.out.println("[NO]");
-            } else {
-                System.out.print("[SI]");
-            }
-            System.out.println("");
-        }
-		System.out.println("\nFelicidades, nos vamos a la cama " + contador);
+		//Primera llamada a ronda. No ejecutara la primera mitaz del "bucle truncado".
+		ronda();
     }
 }

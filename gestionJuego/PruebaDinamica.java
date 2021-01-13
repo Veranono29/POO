@@ -30,6 +30,7 @@ import javax.swing.AbstractListModel;
 
 public class PruebaDinamica extends JFrame {
 	//private boolean boleanoDelVotonDeDar=false;
+	//TODO aca deberia ir todo al constructor?
 	private boolean boleanDameAccion;
 	
 	private final int MARCO_X=100,MARCO_Y=100,ANCHO_MARCO=700,ALTO_MARCO=550;	//EL MARCO

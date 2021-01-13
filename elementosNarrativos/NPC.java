@@ -68,7 +68,7 @@ public class NPC extends Agente {
 				if (ultimaInfo != null && ultimaInfo.getObjeto() == this.getObjetivo().getObjeto() && ultimaInfo.getAgente() != null && ultimaInfo.getAgente() instanceof Jugador){	//Buscamos en nuestras creencias si
 					for(Agente npc: this.getLugar().getAgentes()){  					//hemos visto nuestro objeto en posesión de algun otro jugador
 						if (ultimaInfo.getAgente() == npc){	
-							System.out.println("muerte");						//y comparamos los agentes de la habitación con los de las creencias
+																								//y comparamos los agentes de la habitación con los de las creencias
 							return GameManager.pedirObjeto(npc, new Peticion((Agente)this));	//Si hay una coincidencia, le mandamos una petición
 						}
 					}

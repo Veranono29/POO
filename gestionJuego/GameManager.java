@@ -27,9 +27,8 @@ import elementosNarrativos.Objeto;
  * Cambiar manejador.main() a GameManager.main() en gestionJuego.Main.java.
  */
 public class GameManager extends ManejaDatos implements Acciones {
-	//TODO hacedor();
 	
-	private static List<Erlacion> erlaciones;
+	private List<Erlacion> relaciones;
 	//private static List<String> nombres;
 	
 	//TODO los finales los metemos en una interfaz?
@@ -51,17 +50,12 @@ public class GameManager extends ManejaDatos implements Acciones {
 	
 	//Strings de lo que hay que detecctar en los anexos:
 	private static final String[] textoTopes = {"<Localizaciones>","<Personajes>","<Objetos>"};
-	private static final String[] textoTopesObjetivos = {"<LocalizaciÃ³n Personajes>","<PosesiÃ³n Objetos>"};
+	private static final String[] textoTopesObjetivos = {"<Localizacion","<Posesion"};
 	
 	//Probabilidades:
 	//TODO esto asi, o lo ponemos para cambiar en la interfaz?
 	private static final double probabilidadOlvido = -0.01;
 	private static final double probabilidadAceptar = 1.01;
-	
-	public GameManager() {
-		super("Manejador");
-	}
-	
 	
 	//Necesita accederse desde gestionJuego.
 	protected static double getProbAceptar() {
@@ -98,40 +92,23 @@ public class GameManager extends ManejaDatos implements Acciones {
 		return pepe;
 	}
 	
-	private static String leerPalabra (int desde, String linea) throws FormatoIncorrecto{
-		int posicion;
-		char letra;
-		String resultado;
+	private static String leerPalabra (Scanner lectura) throws FormatoIncorrecto{
+		String[] resultado;
 		
-		resultado = "";
-		
-		for(posicion = desde; posicion < linea.length() && Character.isLetter(letra = linea.charAt(posicion)); posicion++) {
-			resultado += letra;
-		}
-		if(resultado.trim().isEmpty()) {
-			throw new FormatoIncorrecto("Formato incorrecto: Nombre Vacío");
-		}
-		return resultado;
-	}
-	
-	private static String leerPalabra(String linea) throws FormatoIncorrecto {
-		return leerPalabra(0, linea);
+		resultado = lectura.nextLine().split("\\(");
+
+		return resultado[0];
 	}
 	
 	private static List<String> leerDatos(Scanner lectura) throws FormatoIncorrecto {
-		int posicion;
-		String temp;
-		String resultado;
-		List<String> datos = new ArrayList<String>();
+		List<String> dato = new ArrayList<String>();
+		String[] resultado = lectura.nextLine().split("[(,)]");
 		
-		temp = lectura.nextLine();
-		resultado = "";
-		//TODO si no funciona, aca el +1 quitalo o no se.
-		for(posicion = 0; posicion < temp.length(); posicion+=resultado.length()+1) {
-			resultado = leerPalabra(posicion, temp);
-			datos.add(resultado);
+		for(String string: resultado) {
+			dato.add(string);
 		}
-		return datos;
+		
+		return dato;
 	}
 	
 	//TODO si no funciona el String ...tope, usamos este y otro con solo 1 String.
@@ -140,7 +117,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 	}*/
 	private static boolean lineasIt(Scanner lectura, String ...tope) {
 		for (String string : tope) {
-			if(lectura.hasNext(string)) {
+			if(lectura.hasNext(string) || !lectura.hasNextLine()) {
 				return false;
 			}
 		}
@@ -158,43 +135,65 @@ public class GameManager extends ManejaDatos implements Acciones {
 	
 	//TODO aca tenemos que recojer el FileNotFoundException no?
 	private void rConfig() throws FileNotFoundException, FormatoIncorrecto {
-		File[] anexos = {new File("ANEXO_1"),new File("ANEXO_2")};
-		Scanner lectura = null;
-		int leidoCompleto = 1;
+		File anexoUno = new File("src/ANEXO_1");
+		Scanner lectura;
+		int leidoCompleto = 1;;
 		
-		//Para poder poner los datos en cualquier orden.
-		for(int cualAnexo = 0; cualAnexo < anexos.length;cualAnexo++) {
-			lectura = new Scanner(anexos[cualAnexo]);
+		for(int cualAnexo = 0; cualAnexo < 2;cualAnexo++) {
+			lectura = new Scanner(anexoUno);
 			while(lectura.hasNextLine()){
-				if(cualAnexo == 0)
+				if(cualAnexo == 0) {
 					leidoCompleto *= rInstanciar(lectura);
+					//30 es la multiplicación de 2, 3 y 5 (primos) para asegurarnos de que pasa por los cada uno 1 vez
+					if (leidoCompleto != 30)
+						throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Faltan apartados/Apartados repetidos");
+				}
 				else
 					rDatos(lectura);
 			}
-			//30 es la multiplicación de 2, 3 y 5 (primos) para asegurarnos de que pasa por los cada uno 1 vez
-			if (leidoCompleto /30 != 1)
-				throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Faltan apartados/Apartados repetidos");
+			lectura.close();
+			
 		}
+		lectura = new Scanner(new File("src/ANEXO_2"));
 		rObjetivos(lectura);
+		lectura.close();
+		/*leidoCompleto = rInstanciar(lectura);
+		lectura.close();
+		if (leidoCompleto != 30)
+			throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Faltan apartados/Apartados repetidos/En mal orden");
+		
+		System.out.println("EEEOO");
+		lectura = new Scanner(anexoUno);
+		rDatos(lectura);
+		lectura.close();
+		
+		lectura = new Scanner(anexoUno);
+		rObjetivos(lectura);
+		lectura.close();*/
 	}
 	
 	
 	public int rInstanciar(Scanner lectura) throws FormatoIncorrecto{
 		String titulo;
 		int adyacenciasObtenidas = 0;
+		int comprobar = 1;
 		//Buscamos por "Etiqueta" los tres principales datos (con etiqueta me refiero a le nombre que aparece en <>)
 		if (lectura.hasNext(textoTopes[0])){
-			while(lineasIt(lectura, textoTopes[1], textoTopes[2]) && adyacenciasObtenidas++ < 4) {
-				titulo = leerPalabra(lectura.nextLine());
+			leerPalabra(lectura);
+			while(lineasIt(lectura, textoTopes[1], textoTopes[2]) && adyacenciasObtenidas++ < maxAjyacencias+2) {
+				titulo = leerPalabra(lectura);
 				lugares.add( new Lugar(titulo));
 			}
-			return 2;
+			comprobar *= 2;
 		}
 		
 		if (lectura.hasNext(textoTopes[1])) {
+			leerPalabra(lectura);
 			while(lineasIt(lectura, textoTopes[0], textoTopes[2])) {
 				cantPersonas++;
-				titulo = leerPalabra(lectura.nextLine());
+				
+				
+				titulo = leerPalabra(lectura);
 				if((pepe == null) && (titulo == nombreJugador)) {
 					pepe = new Jugador(rNombre());
 					agentes.add(pepe);
@@ -202,19 +201,20 @@ public class GameManager extends ManejaDatos implements Acciones {
 				else {
 					agentes.add( new NPC(titulo));
 				}
-				erlaciones.add( new Erlacion(titulo));
+				this.relaciones.add(new Erlacion(titulo));
 			}
-			return 3;
+			comprobar *= 3;
 		}
 		
 		if (lectura.hasNext(textoTopes[2])){
+			leerPalabra(lectura);
 			while(lineasIt(lectura, textoTopes[1], textoTopes[0])) {
-				titulo = leerPalabra(lectura.nextLine());
+				titulo = leerPalabra(lectura);
 				objetos.add( new Objeto(titulo));
 			}
-			return 5;
+			comprobar *= 5;
 		}
-		return 1;
+		return comprobar;
 	}
 	
 	public void rDatos(Scanner lectura) throws FormatoIncorrecto {
@@ -313,20 +313,19 @@ public class GameManager extends ManejaDatos implements Acciones {
 	}
 	
 	private void rObjetivos(Scanner lectura) throws FormatoIncorrecto {
-		//TODO meter en erlaciones los datos de lugar y objeto.
 		List<String> datos;
 		
 		if (lectura.hasNext(textoTopesObjetivos[0])){
-			while(lineasIt(lectura, textoTopes[1], textoTopes[0])) {
+			lectura.nextLine();
+			while(lineasIt(lectura, textoTopesObjetivos[1])) {
 				datos = leerDatos(lectura);
 				
 				for(Agente agente: agentes) {
 					if(agente.siSoy(datos.get(0))) {
 						datos.remove(0);
-						
 						for(Lugar lugar: lugares) {
 							if(lugar.siSoy(datos.get(0))) {
-								for(Erlacion erlacion: erlaciones) {
+								for(Erlacion erlacion: relaciones) {
 									if(erlacion.siSoy(agente)) {
 										erlacion.setLugar(lugar);
 										break;
@@ -339,10 +338,13 @@ public class GameManager extends ManejaDatos implements Acciones {
 					}
 				}
 			}
+			if(lectura.hasNextLine())
+				rObjetivos(lectura);
 		}
 		
 		if (lectura.hasNext(textoTopesObjetivos[1])){
-			while(lineasIt(lectura, textoTopes[1], textoTopes[0])) {
+			lectura.nextLine();
+			while(lineasIt(lectura, textoTopesObjetivos[0])) {
 				datos = leerDatos(lectura);
 				
 				for(Agente agente: agentes) {
@@ -351,22 +353,27 @@ public class GameManager extends ManejaDatos implements Acciones {
 						
 						for(Objeto objeto: objetos) {
 							if(objeto.siSoy(datos.get(0))) {
-								for(Erlacion erlacion: erlaciones) {
+								for(Erlacion erlacion: relaciones) {
 									if(erlacion.siSoy(agente)) {
 										erlacion.setObjeto(objeto);
+										if(erlacion.getLugar() == null && erlacion.getObjeto() == null)
+											throw new FormatoIncorrecto("Formato incorrecto en anexo 2: Agente sin proposito en la vida :(");
+										
 										agente.setObjetivo((Objetivo) erlacion);
 										break;
 									}
 								}
 								break;
 							}
-						}//TODO ekaitz hijoputa mira esto y pon la excepcion
+						}
 						break;
 					}
 				}
 			}
+			if(lectura.hasNextLine())
+				rObjetivos(lectura);
 		}
-		erlaciones = null;
+		relaciones = null;
 	}
 	
 	/*** Acciones ***/
@@ -441,10 +448,10 @@ public class GameManager extends ManejaDatos implements Acciones {
 	
 	/******/
 
-	/*public GameManager(String nombre) {
-		super(nombre);
-		// TODO Borrad esto al final. Si no se pone java se enfada y no te dice nada mas
-	}*/
+	public GameManager() {
+		super("Manejador");
+		relaciones = new ArrayList<Erlacion>();
+	}
 
 	public void main() {
 		
@@ -459,7 +466,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 		boolean seMovieron;
 		
 		try {
-			this.rConfig();
+			rConfig();
 		} catch (FileNotFoundException error) {
 			//Si, no?
 			System.out.println("No tienes los archivos de configuracion y objetivos");
@@ -473,7 +480,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 		}
 		
 		while(bucleTurno) {
-			System.out.println("Vamos a aprobar");
 			bucleTurno = false;
 			
 			//Se itera por cada agente para hacer los turnos.

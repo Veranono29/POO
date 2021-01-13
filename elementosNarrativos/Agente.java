@@ -44,7 +44,7 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	
 	@Override
 	public boolean siSoy(String nombre) {
-		return (this.nombre == nombre);
+		return (this.nombre.equals(nombre));
 	}
 	
 	public int getTiempoAnterior() {

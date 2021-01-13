@@ -13,8 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 import javax.swing.JSlider;
 import javax.swing.JLabel;
 import javax.swing.JButton;

@@ -27,7 +27,7 @@ public class Erlacion extends Objetivo implements Nombrable {
 	}
 
 	public boolean siSoy(Agente agente) {
-		return (agente.getNombre() == nombreAgente);
+		return (agente.getNombre().equals(nombreAgente));
 	}
 	
 	@Override

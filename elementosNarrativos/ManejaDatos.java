@@ -98,7 +98,7 @@ public abstract class ManejaDatos extends TieneCreencia implements Lugarable, Ha
 	
 		@Override
 		public boolean siSoy(String nombre) {
-			return (this.nombre == nombre);
+			return (this.nombre.equals(nombre));
 		}
 		
 	

@@ -108,7 +108,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 		for(posicion = desde; posicion < linea.length() && Character.isLetter(letra = linea.charAt(posicion)); posicion++) {
 			resultado += letra;
 		}
-		if(resultado == "") {
+		if(resultado.trim().isEmpty()) {
 			throw new FormatoIncorrecto("Formato incorrecto: Nombre Vacío");
 		}
 		return resultado;
@@ -232,6 +232,9 @@ public class GameManager extends ManejaDatos implements Acciones {
 						//Llega 1 vez.
 						datos.remove(0);
 						
+						if (datos.isEmpty())
+							throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Datos insuficientes en " + textoTopes[0] + ", " + lugar.getNombre());
+						
 						for(String nombre: datos) {
 							for(Lugar adyacente: lugares) {
 								//Llega 9 veces.
@@ -261,6 +264,9 @@ public class GameManager extends ManejaDatos implements Acciones {
 					if(persona.siSoy(datos.get(0))) {
 						datos.remove(0);
 						
+						if (datos.isEmpty())
+							throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Datos insuficientes en " + textoTopes[1] + ", " + persona.getNombre());
+						
 						for(Lugar lugar: lugares) {
 							if(lugar.siSoy(datos.get(0))) {
 								lugar.addAgente(persona);
@@ -280,6 +286,9 @@ public class GameManager extends ManejaDatos implements Acciones {
 				for(Objeto objeto: objetos) {
 					if(objeto.siSoy(datos.get(0))) {
 						datos.remove(0);
+						
+						if (datos.isEmpty())
+							throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Datos insuficientes en " + textoTopes[2] + ", " + objeto.getNombre());
 						
 						for(Lugar lugar: lugares) {
 							if(lugar.siSoy(datos.get(0))) {
@@ -351,7 +360,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 								}
 								break;
 							}
-						}
+						}//TODO ekaitz hijoputa mira esto y pon la excepcion
 						break;
 					}
 				}
@@ -462,6 +471,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 		}
 		
 		while(bucleTurno) {
+			System.out.println("Vamos a aprobar");
 			bucleTurno = false;
 			
 			//Se itera por cada agente para hacer los turnos.

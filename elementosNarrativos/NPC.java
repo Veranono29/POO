@@ -18,7 +18,7 @@ public class NPC extends Agente {
 	@Override
 	public boolean dameAccion() {
 		super.dameAccion();
-		if(this.getPeticion().getObjeto() == this.getObjeto()) {		//En primer lugar comparamos si tenemos alguna petición que contenga el objeto que llevamos
+		if(this.getPeticion().getObjeto() == this.getObjeto() && this.getPeticion().getObjeto() != this.getObjetivo().getObjeto()) {		//En primer lugar comparamos si tenemos alguna petición que contenga el objeto que llevamos
 			return GameManager.darObjeto(this);									//Si la tenemos, damos el objeto							
 		}
 		else {

@@ -2,8 +2,9 @@
 Jorge(Jardín)
 Esther(Comedor)
 María(Comedor)
+Pepe(Jardín)
 <Posesión Objetos>
 Llave(Esther)
-Ordenador
+Ordenador(Pepe)
 Cartera(Jorge)
 Pan(María)

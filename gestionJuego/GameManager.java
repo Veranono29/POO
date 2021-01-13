@@ -43,6 +43,8 @@ public class GameManager extends ManejaDatos implements Acciones {
 	//Interfaz grafica.
 	PruebaDinamica interfaz;
 	
+	Object yo;
+	
 	//Maximo de ajyacencias por lugar.
 	private static final int maxAjyacencias = 3;
 	
@@ -463,6 +465,8 @@ public class GameManager extends ManejaDatos implements Acciones {
 	public GameManager() {
 		super("Manejador");
 		relaciones = new ArrayList<Erlacion>();
+		yo = this;
+		//TOOD alguna forma mas elegante de volver a llamar a la clase GameManager, pero la instantacion.
 	}
 
 	public void ronda()  {//TODO aca vendria bien comentario?
@@ -510,11 +514,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 	}
 	
 	public void main() {
-		//TODO Gerardo, por aca lo que tengas que poner de instanciar la interfaz o lo de iniciarla o asi.
-		//TODO Gerardo, recuerda que el punto donde le pides que te pasemos la ronda es en el dameAccion de elementosNarrativos.Agente.
-		
-		interfaz = new PruebaDinamica();
-		
 		try {
 			rConfig();
 		} catch (FileNotFoundException error) {
@@ -528,6 +527,11 @@ public class GameManager extends ManejaDatos implements Acciones {
 			System.exit(0); 
 			error.printStackTrace();
 		}
+		
+		//TODO Gerardo, por aca lo que tengas que poner de instanciar la interfaz o lo de iniciarla o asi.
+		//TODO Gerardo, recuerda que el punto donde le pides que te pasemos la ronda es en el dameAccion de elementosNarrativos.Agente.
+		//TODO descomentar la de abajo.		
+		//interfaz = new PruebaDinamica();
 		
 		//Primera llamada a ronda. No ejecutara la primera mitaz del "bucle truncado".
 		ronda();

@@ -51,7 +51,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 	
 	//Strings de lo que hay que detecctar en los anexos:
 	private static final String[] textoTopes = {"<Localizaciones>","<Personajes>","<Objetos>"};
-	private static final String[] textoTopesObjetivos = {"<Localización Personajes>","<Posesión Objetos>"};
+	private static final String[] textoTopesObjetivos = {"<LocalizaciÃ³n Personajes>","<PosesiÃ³n Objetos>"};
 	
 	//Probabilidades:
 	//TODO esto asi, o lo ponemos para cambiar en la interfaz?
@@ -109,7 +109,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 			resultado += letra;
 		}
 		if(resultado.trim().isEmpty()) {
-			throw new FormatoIncorrecto("Formato incorrecto: Nombre Vac�o");
+			throw new FormatoIncorrecto("Formato incorrecto: Nombre Vacío");
 		}
 		return resultado;
 	}
@@ -171,7 +171,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 				else
 					rDatos(lectura);
 			}
-			//30 es la multiplicaci�n de 2, 3 y 5 (primos) para asegurarnos de que pasa por los cada uno 1 vez
+			//30 es la multiplicación de 2, 3 y 5 (primos) para asegurarnos de que pasa por los cada uno 1 vez
 			if (leidoCompleto /30 != 1)
 				throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Faltan apartados/Apartados repetidos");
 		}
@@ -385,7 +385,9 @@ public class GameManager extends ManejaDatos implements Acciones {
 	}
 	
 	public static boolean pedirObjeto (Agente jugadorPeticionado, Peticion peticion){
-		Acciones.pedirObjeto(jugadorPeticionado, peticion);
+		//Si no tiene el objeto, no le llega la peticion, simulando que la rechazo y el que hizo la peticion pierde el turno
+		if(jugadorPeticionado.getObjeto() != null)
+			Acciones.pedirObjeto(jugadorPeticionado, peticion);
 		return true;
 	}
 	

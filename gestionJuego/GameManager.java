@@ -142,18 +142,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 		return true;
 	}
 	
-	private static String  rNombre() {
-		/* Para poder personalizar el nombre.
-		String nombre;
-		Scanner nom = new Scanner(System.in);
-		System.out.println("Cual es tu nombre: ");
-		nombre = nom.next();
-		nom.close();
-		return nombre;
-		*/
-		return "Pepe";
-	}
-	
 	//TODO aca tenemos que recojer el FileNotFoundException no?
 	private void rConfig() throws FileNotFoundException, FormatoIncorrecto {
 		File anexoUno = new File("src/ANEXO_1");
@@ -167,7 +155,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 				else 
 					rDatos(lectura);
 			}
-			//30 es la multiplicación de 2, 3 y 5 (primos) para asegurarnos de que pasa por los cada uno 1 vez
+			//30 es la multiplicaciÃ³n de 2, 3 y 5 (primos) para asegurarnos de que pasa por los cada uno 1 vez
 			if (leidoCompleto != 30)
 				throw new FormatoIncorrecto("Formato incorrecto en anexo 1: Faltan apartados/Apartados repetidos");
 			lectura.close();
@@ -197,8 +185,8 @@ public class GameManager extends ManejaDatos implements Acciones {
 			while(lineasIt(lectura, textoTopes[0], textoTopes[2])) {
 				cantPersonas++;
 				titulo = leerPalabra(lectura);
-				if((pepe == null) && (titulo == nombreJugador)) {
-					pepe = new Jugador(rNombre());
+				if((pepe == null) && (titulo.equals(nombreJugador))) {
+					pepe = new Jugador(titulo);
 					agentes.add(pepe);
 				}
 				else {
@@ -507,7 +495,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 			}
 			//A partir de aqui se ejecuta en la siguiente ronda, turno 0.
 			//Se borra la referencia a las creencias guardadas en el jugador jugable, y se agrega en el set de creencias del GameManager, quien almacenara las creencias obtenidas por el jugador durante la partida.
-			//liberarCreencias();	TODO Descomentar y enfrentarse a �l
+			//liberarCreencias();	TODO Descomentar y enfrentarse a él
 
 			//Se itera por cada lugar para volcarles las Informaciones a los agentes antes de borrar 
 			/*for(Lugar lugar: lugares)

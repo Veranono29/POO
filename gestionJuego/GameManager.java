@@ -422,6 +422,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 		return logRet;
 	}
 	
+	//Reocalizar actualiza la posicion del Agente
 	public static boolean relocalizar (Agente jugadorTransladado, Lugar lugar) {
 		Acciones.relocalizar(jugadorTransladado, lugar);
 		System.out.println("Se mueve");
@@ -509,7 +510,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 	}
 
 	public void ronda()  {//TODO aca vendria bien comentario?
-		
 		//Para poder hacer jugar a los NPC:
 		if(pepe == null) {
 			rondaNPC();
@@ -537,6 +537,8 @@ public class GameManager extends ManejaDatos implements Acciones {
 			GameManager.flagRonda = true;
 		
 		if(!bucleTurno) {
+			interfaz.dispose(); //elimina la interfaz
+			Main.datos();		//Weas
 			return;
 			//TODO esto pa donde va?
 		}
@@ -578,9 +580,10 @@ public class GameManager extends ManejaDatos implements Acciones {
 		
 		//TODO Gerardo, por aca lo que tengas que poner de instanciar la interfaz o lo de iniciarla o asi.
 		//TODO Gerardo, recuerda que el punto donde le pides que te pasemos la ronda es en el dameAccion de elementosNarrativos.Agente.
-		//TODO descomentar la de abajo.		
-		interfaz = new PruebaDinamica(pepe);
+		//TODO descomentar la de abajo.	
 		
+		interfaz = new PruebaDinamica(pepe);
+		interfaz.setVisible(true);
 		//Primera llamada a ronda. No ejecutara la primera mitaz del "bucle truncado".
 		ronda();
     }

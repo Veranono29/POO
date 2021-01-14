@@ -235,6 +235,12 @@ public class PruebaDinamica extends JFrame {
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	private void irASeleccionJugador(){	//oculta bootnes y muestra bootnes para seleccoinar a que persona le pides el objeto 
+		System.out.println(sizePer);
+		
+		botonPer=new BotonDePersona[sizePer];	
+		
+		ocultarBotonesAccion(); //se ocultan los botones de las acciones para mostrar estos en su lugar 
+		setPersonasAdyacentes();	//inicializa los botnes de persona ycarga el tamanio de persona
 		
 		int maxPorFila= 3, numFilas=(sizePer/maxPorFila)+1;
 		int posActualX=SUBZONA_TOP_IZ_X;	//variables temporales para almecenar las X/Y de cada boton
@@ -246,13 +252,12 @@ public class PruebaDinamica extends JFrame {
 		//Boton volver para poder volver a la seleccion de accion
 		botonVolver.setVisible(true);
 		//botones
-		botonPer=new BotonDePersona[sizePer];
 		
-		ocultarBotonesAccion(); //se ocultan los botones de las acciones para mostrar estos en su lugar 
-		setPersonasAdyacentes();	//inicializa los botnes de persona ycarga el tamaÃ¯Â¿Â½o de persona
+		
+	
 		int i=0; 		
 		for(i=0;i<((sizePer/maxPorFila)*maxPorFila);++i){	//desde 0 hasta la ultima columna fila todos son iguales
-			
+			System.out.println(i);
 			
 			botonPer[i].setBounds(posActualX,posActualY,IncX,IncY);
 			contentPane.add(botonPer[i]);
@@ -274,6 +279,7 @@ public class PruebaDinamica extends JFrame {
 		}
 		//La segunda parte del weonado	
 		for(;i<sizePer;++i){
+			//System.out.println(i);
 			botonPer[i].setBounds(posActualX,posActualY,IncX,IncY);
 			contentPane.add(botonPer[i]);
 			posActualX+=IncX;
@@ -480,17 +486,18 @@ private void irASeleccionLugar(){
 		}	
 	}
 	private void setLugares(){
-		
+		System.out.println(ru.getObjeto());
+		System.out.println(ru.getLugares());
 		sizeLugar =0;
 		int i=0;	//podrÃ¯Â¿Â½amos inicializarla mas abajo pero pereza be like
-		for (@SuppressWarnings("unused") Objeto a : ru.getObjeto()){ //contador de tamaÃ¯Â¿Â½o
+		for (@SuppressWarnings("unused") Lugar a : ru.getLugares()){ //contador de tamaÃ¯Â¿Â½o
 			++sizeObj;
 		}
-		botonSuelo = new BotonDeCoger[sizeObj]; //al haber empezado en 0 no me hace falta el sizePer-1 para almacenar uno menos				
-		for( Objeto a : ru.getObjeto()){
+		botonesLugares = new BotonDeMoverse[sizeObj]; //al haber empezado en 0 no me hace falta el sizePer-1 para almacenar uno menos				
+		for( Lugar a : ru.getLugares()){
 						//Como la funcion tmb me devuelve mi propio jugador
-				botonSuelo[i++]=new BotonDeCoger(a);		//si lo ve, lo ignora y guarda al resto
-				botonSuelo[i].setVisible(true);	
+				botonesLugares[i++] = new BotonDeMoverse(a);		//si lo ve, lo ignora y guarda al resto
+				botonesLugares[i].setVisible(true);	
 		}	
 		
 		

@@ -39,7 +39,7 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 			//TODO O un while.
 		}
 		//TODO me sigue sin gustar ese return true.
-		return true;
+		return false;
 	}
 	
 	@Override

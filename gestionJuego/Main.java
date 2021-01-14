@@ -4,9 +4,15 @@ import java.io.IOException;
 
 public class Main {
 	
+	static GameManager manejador;
+	
 	public static void main(String[] args) {
-		GameManager manejador = new GameManager();
+		manejador = new GameManager();
 		manejador.main();
+		
+	}
+	
+	protected static void datos(){
 		try {
 			DataManager.main(manejador);
 		} catch (IOException e) {

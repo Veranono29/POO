@@ -5,7 +5,7 @@ Cocina(Comedor)
 Dormitorio(Comedor, Jardin)
 <Personajes> //Entre parentesis la localizacion inicial
 Jorge(Comedor)
-Pepe(Cocina)
+PEPE(Cocina)
 Esther(Dormitorio)
 Maria(Jardin)
 <Objetos> //Entre parentesis la localizacion inicial o quien lo posee inicialmente

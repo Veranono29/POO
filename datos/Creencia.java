@@ -30,13 +30,17 @@ public class Creencia extends Informacion {
 	}
 	
 	public String info(Agente agente) {
-		if(lugar != null) {
-			return info() +  " " + objeto.getNombre() + " " + GameManager.getRonda(tiempo) + " " + GameManager.getTurno(tiempo);
+		if(objeto != null) {
+			if(lugar != null) {
+				return info() +  " " + objeto.getNombre() + " " + GameManager.getRonda(tiempo) + " " + GameManager.getTurno(tiempo);
+			}
 		}
-		return "";
+		return "No hizo nada";
 	}
 	
 	public String info(Objeto objeto) {
+		if(agente == null)
+			retrun info() + " Nadie " +  GameManager.getRonda(tiempo) + " " + GameManager.getTurno(tiempo);
 		return info() + " " + agente.getNombre() + " " + GameManager.getRonda(tiempo) + " " + GameManager.getTurno(tiempo);
 	}
 }

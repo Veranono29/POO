@@ -1,3 +1,5 @@
+//:D
+
 package gestionJuego;
 
 import elementosNarrativos.Agente;
@@ -165,7 +167,12 @@ public class PruebaDinamica extends JFrame {
 		
 		//HABITACIONES
 			//SALA ARRIBA
-		botonesLugares[0]=new BotonDeMoverse(null);
+	
+		int w=0;
+		for(Lugar l : ru.getLugares()){
+		botonesLugares[w++]=new BotonDeMoverse(l);
+	}
+		
 		botonesLugares[0].addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				boleanDameAccion=rudolf.dameAccion(botonesLugares[0]);
@@ -179,7 +186,7 @@ public class PruebaDinamica extends JFrame {
 		botonesLugares[0].setVisible(false);
 			
 			//SALA DERECHA
-		botonesLugares[1]=new BotonDeMoverse(null);
+		
 		botonesLugares[1].addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				boleanDameAccion = rudolf.dameAccion(botonesLugares[1]);
@@ -193,7 +200,7 @@ public class PruebaDinamica extends JFrame {
 		botonesLugares[1].setVisible(false);
 		
 			//SALA ABAJO
-		botonesLugares[2]=new BotonDeMoverse(null);
+		
 		botonesLugares[2].addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				boleanDameAccion=rudolf.dameAccion(botonesLugares[2]);
@@ -205,7 +212,6 @@ public class PruebaDinamica extends JFrame {
 		botonesLugares[2].setBounds(12, 326, 97, 40);
 		contentPane.add(botonesLugares[2]);
 		botonesLugares[2].setVisible(false);	//Estan desactivados hasta que diga lo contrario
-		
 		
 			//LISTA DE Objetivos
 		txtLiObjetivo = new JTextField( ((Objetivo)rudolf.getObjetivo()).toString() );	

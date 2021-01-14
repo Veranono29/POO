@@ -1,5 +1,7 @@
 package elementosNarrativos;
 
+import java.util.ArrayList;
+
 import datos.Informacion;
 import gestionJuego.GameManager;
 
@@ -25,6 +27,7 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	
 	public Agente(String nombre) {
 		super(nombre);
+		creencias = new ArrayList<Informacion>();
 		objetivo = null;
 		//TODO Ver si mejor poner aca que yaObjetivos es true y true, o dejarlo como esta, ya que los array literales solo se puden usar en la declaracion.
 	}

@@ -46,18 +46,24 @@ public abstract class TieneCreencia implements Creenciable, Objetable, Nombrable
 	
 	@Override
 	public void addCreencia(Informacion info) {
-		creencias.add(info);
+		if(info!=null){
+			creencias.add(info);
+		}
 	}
 	
 	@Override
 	public void addVariasCreencias(List<Informacion> list) {
-		creencias.addAll(list);
+		if(list!=null)
+			creencias.addAll(list);
 	}
 	
 	@Override
 	public Informacion dropCreencia(Informacion info) {
-		creencias.remove(info);
+		if(info!=null){
+			creencias.remove(info);
+		}
 		return info;
+		
 	}
 
 	//TODO revisa esto

@@ -74,6 +74,10 @@ public class GameManager extends ManejaDatos implements Acciones {
 	protected static double getProbAceptar() {
 		return probabilidadAceptar;
 	}
+	protected Jugador getJugador() {
+		// TODO Auto-generated method stub
+		return pepe;
+	}
 
 	//Necesita accederse desde gestionJuego.
 	protected static double getProbOlvido() {
@@ -509,7 +513,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 		}
 	}
 
-	public void ronda()  {//TODO aca vendria bien comentario?
+	public void ronda()  {
 		//Para poder hacer jugar a los NPC:
 		if(pepe == null) {
 			rondaNPC();
@@ -531,7 +535,9 @@ public class GameManager extends ManejaDatos implements Acciones {
 				tiempo++;
 			}
 			for(Agente agente: agentes)
-				conseguirCreencias(agente);
+				/////////////////////////////////////////////////////////////////////////////////////////
+				 conseguirCreencias(agente);// TODO quitar comentario
+///////////////////////////////////////////////////////////////////////////////////////// 
 		}
 		else
 			GameManager.flagRonda = true;

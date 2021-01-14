@@ -1,7 +1,10 @@
 package elementosNarrativos;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
+
+import datos.Informacion;
 
 public abstract class ManejaDatos extends TieneCreencia implements Lugarable, Habitable {
 		//TODO como hacer para que pueda usarlos en las clase hija? Creo que se soluciona con lo de DataMAnager en medio?
@@ -21,6 +24,7 @@ public abstract class ManejaDatos extends TieneCreencia implements Lugarable, Ha
 			objetos = new HashSet<Objeto>();
 			agentes = new HashSet<Agente>();
 			lugares = new HashSet<Lugar>();
+			creencias = new ArrayList<Informacion>();
 		}
 		
 		

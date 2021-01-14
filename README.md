@@ -1,7 +1,7 @@
 # POO
 Historias Digitales
 
-Daniel Khomyakov Trubnikov
-Gerardo Escudero López
-Ekaitz Arriola Garcia
+Gerardo Escudero López,
+Ekaitz Arriola Garcia,
+Daniel Khomyakov Trubnikov,
 Raúl Carrascal Esteban

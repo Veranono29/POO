@@ -37,24 +37,10 @@ public interface Acciones {
 		jugador.getLugar().addObjeto(jugador.dropObjeto());
 	}
 	
-	/* No es necesario. Los jugadores tienen esta info a traves de agente,getLugar().getCosas.
-	public static void verLugar(Agente persona) {
-		//Genera creencia acerca de quien esta.
-		Lugar lugar = persona.getLugar();
-		for(Agente paco: (Iterable<Agente>) () -> lugar.agenteIt())
-			persona.addCreencia(new Informacion(paco, null, lugar));
-		
-		//Genera creencia acerca de que hay.
-		for(Objeto cosa: (Iterable<Objeto>) () -> lugar.objetoIt())
-			persona.addCreencia(new Informacion(null, cosa, lugar));
-	}
-	*/
-	
 	public static void sumaCreencia(Lugar lugar, Informacion creencia) {
 		lugar.addCreencia(creencia);
 	}
 	
-	//TODO el volcado de creencias debera ir dentro de dameAccion (justo antes de decidir nada, para tener los nuevos datos). Se declara aqui.
 	public static void volcadoCreencias(Agente persona) {
 		
 		//Bucle por cada creencia guardada en Lugar (creencias nuevas de la ronda).
@@ -65,23 +51,6 @@ public interface Acciones {
 			if( Math.random() > GameManager.getProbOlvido())
 				persona.addCreencia(creencia);
 		}
-		//TODO comprobar que hace lo mismo que lo de abajo que esta en comentario. No quiero borrarlo porque pues porsiacaso me falto algo y son las 3:03 de la mañana.
-		/*
-		Iterator<Informacion> info = persona.getLugar().creenciaIt();
 		
-		//Se saltan las creencias volcadas en la anterior vez.
-		//Asi se evita "ver" que paso en una sala que se entro en la misma ronda, mientras estaba el agente en otra sala.
-		for(int tiempo = persona.getTiempoAnterior(); tiempo > 0; tiempo--) {
-			if(info.hasNext())
-				info.next();
-		}
-		//TODO si se vuelven a volcar todos, es porque el iterable se esta haciendo desde el inicio del iterador y no desde el ultimo .next();
-		//Como arreglar: ul iterable, pero un if si es x<tiempoAnterior: continue;
-		for(Informacion dato: (Iterable<Informacion>) () -> info) {
-			//TODO el random simulando la olvidasion
-			//TODO decidir si al crear la creencia se le mete lugar, o es al salir de lugar. De momento, se guarda.
-			persona.addCreencia(dato);
-		}
-		*/
 	}
 }

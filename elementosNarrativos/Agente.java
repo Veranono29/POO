@@ -17,9 +17,6 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	//Peticion de un objeto de parte de una persona.
 	private Informacion peticion;
 	
-	//Informacion sobre sus objetivos. No necesita getter ya que no lo va a necesitar otra clase diferente. Si necesita setter ya que la clase en si se instancia solo con el String nombre. El resto de informacion se le aÃƒÂ±ade despues.
-	//TODO si se puede aÃƒÂ±adir directamente mejor, quitamos muchos setters.
-	//TODO si veis que un getter o setter no se va a usar, quitadlo, siempre que no sea uno que si podriamos usar pero que no lo usamos.
 	private Informacion objetivo;
 	
 	//"Bitmap" de objetivos incumplidos. El primero sera la ubicacion y el segundo la posesion del objeto.
@@ -29,7 +26,6 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 		super(nombre);
 		creencias = new ArrayList<Informacion>();
 		objetivo = null;
-		//TODO Ver si mejor poner aca que yaObjetivos es true y true, o dejarlo como esta, ya que los array literales solo se puden usar en la declaracion.
 	}
 	
 	@Override
@@ -37,15 +33,12 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 		GameManager.conseguirCreencias(this);
 		System.out.println(this.getNombre()+"Ha llegado al if() maldito");
 		
-		if(GameManager.getJugador().getNombre().equals(this.nombre)) { //this instanceof Jugador//this == GameManager.getJugador, aquí no entra nunca no sé por qué
-			
+		if(GameManager.getJugador().getNombre().equals(this.nombre)) { 
 			System.out.println("El juagdor llego que "+this.getNombre());
-			//TODO aca va todo lo que serÃ­a el llamado a los botones del apartado grafico.
 			GameManager.getInterfaz().setRonda();
-			//TODO Aca se para el thread hasta que se le de a algun boton.
-			//TODO O un while.
+	
 		}
-		//TODO me sigue sin gustar ese return true.
+	
 		return false;
 	}
 	
@@ -70,8 +63,6 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 		this.lugar = lugar;
 	}
 
-	//TODO Elimine getObjeto. No se usa.
-	//TODO No elimineis getObjeto. Si se usa.
 	public Objeto getObjeto() {
 		return objeto;
 	}
@@ -83,15 +74,12 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	
 	public Objeto dropObjeto() {
 		Objeto objeto = this.objeto;
-		//TODO Lo mismo que en dropPeticion, esto deberia ser setObjeto(null);?
 		this.objeto = null;
 		return objeto;
 	}
 
-	//TODO esto de aca no se usa, ya que siempre que lo hemos usado sabemos que tiene el objeto que queremos que suelte. Esta bien mantenerlo por el "por si se necesitase".
 	public Objeto dropObjeto(Objeto objeto) {
 		if(this.objeto == objeto) {
-			//TODO Lo mismo que en dropPeticion, esto deberia ser setObjeto(null);?
 			this.objeto = null;
 			return objeto;
 		}
@@ -107,7 +95,6 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	}
 
 	public void dropPeticion() {
-		//TODO esto deberia ser this.peticion = this.setPeticion(null);?
 		this.peticion = null;
 	}
 	

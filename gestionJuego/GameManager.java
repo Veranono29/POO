@@ -21,20 +21,10 @@ import elementosNarrativos.Lugar;
 import elementosNarrativos.ManejaDatos;
 import elementosNarrativos.Objeto;
 
-//TODO deberia ser abstracta. Arreglar error ese.
-/* Si no se puede como esta:
- * Cambiar todo this.cosa a GameManager.
- * Cambiar todos los metodos a static.
- * Cambiar manejador.main() a GameManager.main() en gestionJuego.Main.java.
- */
 public class GameManager extends ManejaDatos implements Acciones {
 	
 	private List<Erlacion> relaciones;
-	//private static List<String> nombres;
-	
-	//TODO los finales los metemos en una interfaz?
-	//TODO mejor dejarlo protected o como aparece en default, ya que no necesitamos que las subclases la vean (no va a tener).
-	//Nombre del jugador jugable tal y como aparece en ANEXO_1 y ANEXO_2.
+
 	private static final String nombreJugador = "PEPE";
 	
 	//Referencia al jugador jugable.
@@ -66,7 +56,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 	private static final String[] textoTopesObjetivos = {"<Localizacion","<Posesion"};
 	
 	//Probabilidades:
-	//TODO esto asi, o lo ponemos para cambiar en la interfaz?
 	private static final double probabilidadOlvido = 0.00;
 	private static final double probabilidadAceptar = 1.01;
 	
@@ -84,7 +73,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 	protected static double getProbOlvido() {
 		return probabilidadOlvido;
 	}
-	//TODO estos comentarios sobran verdad?
+	
 	//Necesita accederse desde Agente.
 	public static int getRonda() {
 		return tiempo/cantPersonas;
@@ -134,10 +123,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 		return dato;
 	}
 	
-	//TODO si no funciona el String ...tope, usamos este y otro con solo 1 String.
-	/*private static boolean lineasIt(Scanner lectura, String tope1, String tope2) {
-		return (!(lectura.hasNext(tope1) || lectura.hasNext(tope2)));
-	}*/
 	private static boolean lineasIt(Scanner lectura, String ...tope) {
 		for (String string : tope) {
 			if(lectura.hasNext(string) || !lectura.hasNextLine()) {
@@ -147,7 +132,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 		return true;
 	}
 	
-	//TODO aca tenemos que recojer el FileNotFoundException no?
 	private void rConfig() throws FileNotFoundException, FormatoIncorrecto {
 		File anexoUno = new File("src/ANEXO_1");
 		Scanner lectura;
@@ -397,8 +381,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 	//log de no hacer nada
 	private static boolean log(Agente agente) {
 		GameManager.sumaCreencia(agente.getLugar() , new Creencia(agente, null, null, tiempo));
-		
-		//agente.getLugar().addCreencia(new Informacion(agente, null, null));
 		return false;
 	}
 	
@@ -452,7 +434,6 @@ public class GameManager extends ManejaDatos implements Acciones {
 		return GameManager.log(jugador);
 	}
 	
-	//TODO entoces esto que.
 	private static void sumaCreencia(Lugar lugar, Informacion creencia) {
 		Acciones.sumaCreencia(lugar, creencia);
 	}
@@ -479,7 +460,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 		super("Manejador");
 		relaciones = new ArrayList<Erlacion>();
 		yo = this;
-		//TOOD alguna forma mas elegante de volver a llamar a la clase GameManager, pero la instantacion.
+		
 	}
 	
 	private void rondaNPC() {
@@ -500,18 +481,11 @@ public class GameManager extends ManejaDatos implements Acciones {
 				tiempo++;
 			}
 			//A partir de aqui se ejecuta en la siguiente ronda, turno 0.
-			//Se borra la referencia a las creencias guardadas en el jugador jugable, y se agrega en el set de creencias del GameManager, quien almacenara las creencias obtenidas por el jugador durante la partida.
-			//liberarCreencias();	TODO Descomentar y enfrentarse a él
-
 			//Se itera por cada lugar para volcarles las Informaciones a los agentes antes de borrar 
-			/*for(Lugar lugar: lugares)
-				for(Agente agente: agentes)
-					if(agente.getLugar() == lugar)
-						agente.addVariasCreencias(lugar.getCreencias());*/
-			
 			for(Agente agente: agentes)
 				conseguirCreencias(agente);
 		}
+		
 	}
 
 	public void ronda()  {
@@ -533,19 +507,17 @@ public class GameManager extends ManejaDatos implements Acciones {
 				tiempo++;
 			}
 			for(Agente agente: agentes)
-				/////////////////////////////////////////////////////////////////////////////////////////
-				 conseguirCreencias(agente);// TODO quitar comentario
-///////////////////////////////////////////////////////////////////////////////////////// 
+				 conseguirCreencias(agente);
 		}
 		else
 			GameManager.flagRonda = true;
 		
 		if(!bucleTurno) {
 			
-			interfaz.dispose(); //elimina la interfaz
+			interfaz.dispose(); //elimina la interfaz al ganar la partida
 			Main.datos();		//Weas
 			return;
-			//TODO esto pa donde va?
+			
 		}
 		bucleTurno = false;
 		
@@ -559,7 +531,8 @@ public class GameManager extends ManejaDatos implements Acciones {
 				
 				if(agente.getYaObjetivo(0) == false && agente.getYaObjetivo(1) == false){
 					System.out.println("DANILAAAAAAAAAAAAA");
-					ronda();
+					rondaNPC();
+					//ronda();
 				}
 				break;
 			}
@@ -579,12 +552,12 @@ public class GameManager extends ManejaDatos implements Acciones {
 		try {
 			rConfig();
 		} catch (FileNotFoundException error) {
-			//Si, no?
+			
 			System.out.println("No tienes los archivos de configuracion y objetivos");
 			System.exit(0); 
 			error.printStackTrace();		
 		} catch (FormatoIncorrecto error) {
-			//Si, no?
+			
 			System.out.println(error.getMensaje());
 			System.exit(0); 
 			error.printStackTrace();

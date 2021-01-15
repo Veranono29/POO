@@ -13,7 +13,6 @@ public class Erlacion extends Objetivo implements Nombrable {
 		this.nombreAgente = nombreAgente;
 	}
 	
-	//TODO deberia estar en una interfaz ObjetivoEditable) (no)
 	public void setLugar(Lugar lugar) {
 		this.lugar = lugar;
 	}

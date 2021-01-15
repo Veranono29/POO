@@ -1,7 +1,5 @@
 package gestionJuego;
 
-import java.io.IOException;
-
 public class Main {
 	
 	static GameManager manejador;
@@ -15,7 +13,7 @@ public class Main {
 	protected static void datos(){
 		try {
 			DataManager.main(manejador);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println("No se ha podido acceder a DataManager");
 		}
 	}

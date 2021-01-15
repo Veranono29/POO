@@ -7,7 +7,7 @@ import java.util.Set;
 import datos.Informacion;
 
 public abstract class ManejaDatos extends TieneCreencia implements Lugarable, Habitable {
-		//TODO como hacer para que pueda usarlos en las clase hija? Creo que se soluciona con lo de DataMAnager en medio?
+		
 		//Agentes para la implementacion de Habitable.
 		protected Set<Agente> agentes;
 		
@@ -20,7 +20,6 @@ public abstract class ManejaDatos extends TieneCreencia implements Lugarable, Ha
 		
 		public ManejaDatos(String nombre) {
 			super(nombre);
-			//TODO Si todos van a tener que inicializarse, mejor lo dejamos en el constructor.
 			objetos = new HashSet<Objeto>();
 			agentes = new HashSet<Agente>();
 			lugares = new HashSet<Lugar>();
@@ -51,7 +50,6 @@ public abstract class ManejaDatos extends TieneCreencia implements Lugarable, Ha
 			return lugares;
 		}
 		
-		//TODO Esto de aca con un clone?
 		@Override
 		public Iterable<Objeto> getObjeto() {
 			return objetos;
@@ -80,31 +78,11 @@ public abstract class ManejaDatos extends TieneCreencia implements Lugarable, Ha
 			lugares.add(lugar);
 		}
 
-		//TODO si estas 3 no se usan, se eliminan que nos deja en evidencia una microfalla del esquema.
-		/*public void impLugares(Collection<Lugar> conjunto) {
-			//if(this.lugares == null) {
-				lugares.addAll(conjunto);
-			//}
-		}
-	
 		
-		public void impObjetos(Collection<Objeto> conjunto) {
-			//if(this.objetos == null) {
-				objetos.addAll(conjunto);
-			//}
-		}
-
-		public void impAgentes(Collection<Agente> conjunto) {
-			//if(this.agentes == null) {
-				agentes.addAll(conjunto);
-			//}
-		}*/
-	
 		@Override
 		public boolean siSoy(String nombre) {
 			return (this.nombre.equals(nombre));
 		}
 		
 	
-		//Aca no hay el poder añadir otro set al set porque no vamos a necesitar eso.
 }

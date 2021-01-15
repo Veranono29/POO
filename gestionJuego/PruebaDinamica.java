@@ -24,7 +24,7 @@ public class PruebaDinamica extends JFrame {
 	//private boolean boleanoDelVotonDeDar=false;
 	private boolean boleanDameAccion;
 	//TODO Aqui deberia ir todo al construcotr en vez de definirse?
-	private final int MARCO_X=100,MARCO_Y=100,ANCHO_MARCO=700,ALTO_MARCO=550;	//EL MARCO
+	private final int MARCO_X=100,MARCO_Y=100,ANCHO_MARCO=1400,ALTO_MARCO=550;	//EL MARCO
 	
 	private final int anchoBoton=97,altoBoton=40;
 		//Como los botones de accion van a ser sustituidos por las personas al pulsar el boton DAR
@@ -119,7 +119,7 @@ public class PruebaDinamica extends JFrame {
 		contentPane.add(botonDar);
 		if(rudolf.getPeticion()==null)
 			botonDar.setVisible(false);
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		//BOTON PEDIR OBJETO	->4
 		botonPedir.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
@@ -127,18 +127,18 @@ public class PruebaDinamica extends JFrame {
 				irASeleccionJugador();		//Se imprimen todos los posibles y luego seleccionas
 			}
 		});
-		botonPedir.setBounds(525, 123, 97, 40);
+		botonPedir.setBounds(1000, 123, 97, 40);
 		contentPane.add(botonPedir);		//El boton add ya lo hace visible al crearlo
 		if(ru.getObjeto()==null){
 			botonPedir.setVisible(false);
 		}
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		//BOTON PASAR TURNO
 			botonPasarTurno.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					boleanDameAccion=rudolf.dameAccion(false);	//	
-					ocultarTodo();//AL haber pusado un botÃ¯Â¿Â½n se ocultan los demÃ¯Â¿Â½s y se acaba la ronda
+					ocultarTodo();
 					
 				}
 			});	
@@ -147,30 +147,26 @@ public class PruebaDinamica extends JFrame {
 			
 			//Turnos	
 		//texto del turno
-		
-
 		txtpnTurnoJorge = new JTextPane();
 		txtpnTurnoJorge.setText("Turno "+ronda);
-		txtpnTurnoJorge.setBounds(525, 13, 97, 22);
+		txtpnTurnoJorge.setBounds(700, 13, 97, 22);
 		contentPane.add(txtpnTurnoJorge);
 	
 		
 	
-		//BOTON VOLVER
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+		//BOTON VOLVER		
 		botonVolver = new JButton("Volver");
 		botonVolver.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				volverASeleccionAccion();
 				}
 			});
-		botonVolver.setBounds(431, 451, 74, 25);
+		botonVolver.setBounds(700, 451, 74, 25);
 		contentPane.add(botonVolver);
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 		
 		//HABITACIONES
 			//MOVERSE A LUGARES
-	
 		botonLugar.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0){
 				
@@ -182,64 +178,19 @@ public class PruebaDinamica extends JFrame {
 		
 		botonLugar.setBounds(12, 34, 97, 40);
 		contentPane.add(botonLugar);
-		
 		botonLugar.setVisible(true);
-		/*
-		int w=0;
-		for(Lugar l : ru.getLugares()){
-		botonesLugares[w++]=new BotonDeMoverse(l);
-	}
 		
-		botonesLugares[0].addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
-				boleanDameAccion=rudolf.dameAccion(botonesLugares[0]);
-				System.out.println("Sala Arriba 1");
-				ocultarTodo();//AL haber pusado un boton se ocultan los demas y se acaba la ronda
-				
-				}
-			});
-		botonesLugares[0].setBounds(12, 34, 97, 40);
-		contentPane.add(botonesLugares[0]);
-		botonesLugares[0].setVisible(false);
-			
-			//SALA DERECHA
-		
-		botonesLugares[1].addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
-				boleanDameAccion = rudolf.dameAccion(botonesLugares[1]);
-				System.out.println("Sala Derecha 2");
-				ocultarTodo();//AL haber pusado un boton se ocultan los demas y se acaba la ronda
-				
-				}
-			});
-		botonesLugares[1].setBounds(161, 196, 97, 40);
-		contentPane.add(botonesLugares[1]);
-		botonesLugares[1].setVisible(false);
-		
-			//SALA ABAJO
-		
-		botonesLugares[2].addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0){
-				boleanDameAccion=rudolf.dameAccion(botonesLugares[2]);
-				System.out.println("Habitacion");
-				ocultarTodo();//AL haber pusado un boton se ocultan los demas y se acaba la ronda
-				
-				}
-			});
-		botonesLugares[2].setBounds(12, 326, 97, 40);
-		contentPane.add(botonesLugares[2]);
-		botonesLugares[2].setVisible(false);	//Estan desactivados hasta que diga lo contrario
-		*/
 			//LISTA DE Objetivos
 		txtLiObjetivo = new JTextField( ("Tus objetivos:\n"+(Objetivo)rudolf.getObjetivo()).toString() );	
 		txtLiObjetivo.setBounds(12, 123, 235, 165);
 		contentPane.add(txtLiObjetivo);
 		informarEstado();
+			//Asegurarse de que todas las cosas se ven com0 deben
 		ocultarBotonesAccion();
 		mostrarBotonesAccion();
 		System.out.println("RUDOLF TIENE UN OBJETO?"+(rudolf.getObjeto()!=null?rudolf.getObjeto().getNombre():"No tiene objeto"));
 	}
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	private void irASeleccionJugador(){	//oculta bootnes y muestra bootnes para seleccoinar a que persona le pides el objeto 
 		setPersonasAdyacentes();	//inicializa los botones de persona y carga el tamanio de persona
 		System.out.println("Size per: "+ sizePer);
@@ -256,8 +207,13 @@ public class PruebaDinamica extends JFrame {
 		//Boton volver para poder volver a la seleccion de accion
 		botonVolver.setVisible(true);
 		
+		/*
+		 * Para poder impirmir los botones y que se ajusten a un tama�o predeterminado en el ejeX e Y debemos hacer todo esto
+		 * 
+		 * 
+		 * */
 		int i=0; 		
-		for(i=0;i<((sizePer/maxPorFila)*maxPorFila);++i){	//desde 0 hasta la ultima columna fila todos son iguales
+		for(i=0;i<((sizePer/maxPorFila)*maxPorFila);++i){	//est va hasta el maximo multiplo de 3 menor que el maximo de botones 
 			System.out.println(i);
 			
 			botonPer[i].setBounds(posActualX,posActualY,IncX,IncY);
@@ -265,20 +221,20 @@ public class PruebaDinamica extends JFrame {
 			posActualX+=IncX;
 			
 			
-				if(((i+1)%maxPorFila==0)&&(i!=0)){								//si el boton es multiplo de 3 y por ende es nueva fila, se incrementa la Y
-					posActualX =  SUBZONA_TOP_IZ_X;//la X inicial
-					posActualY += IncY;				//se incrementa la Y(baja una fila)
+				if(((i+1)%maxPorFila==0)&&(i!=0)){			//si el boton es multiplo de 3 y por ende es nueva fila, se incrementa la Y
+					posActualX =  SUBZONA_TOP_IZ_X;			//la X inicial se resetea
+					posActualY += IncY;						//se incrementa la Y(baja una fila)
 				}
 			
 		}
-		//Se podrÃƒÂ­an juntar ambos bucles con un if, pero como el momento en el que
-		//se cumple ese if es constante pues es mejor separarlos en 2 contiguos
+		//Se pueden juntar ambos bucles con un if, pero como el momento en el que
+		//se cumple ese if es constante pues es mejor separarlos en 2 continuos ynos ahorramos el if
 		try {
-			IncX=(SUBZONA_BOT_DER_X-SUBZONA_TOP_IZ_X)/(sizePer-i);		//me siento sucio, al ser multiplo de 3 numJug e i se igualaran creando /0
+			IncX=(SUBZONA_BOT_DER_X-SUBZONA_TOP_IZ_X)/(sizePer-i);		
 		} catch (Exception e) {
 			
 		}
-		//La segunda parte del weonado	
+		//La segunda parte del bucle
 		for(;i<sizePer;++i){
 			//System.out.println(i);
 			botonPer[i].setBounds(posActualX,posActualY,IncX,IncY);
@@ -290,9 +246,8 @@ public class PruebaDinamica extends JFrame {
 			for(BotonDePersona a : botonPer){
 				a.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						boleanDameAccion = rudolf.dameAccion(a); //-> esto da el objeto a quien se lo estÃ¯Â¿Â½ pidiendo
-						ocultarTodo();//AL haber pusado un botÃ¯Â¿Â½n se ocultan los demÃ¯Â¿Â½s y se acaba la ronda
-						
+						boleanDameAccion = rudolf.dameAccion(a); 
+						ocultarTodo();
 					}
 				});
 				a.setVisible(true);
@@ -300,7 +255,7 @@ public class PruebaDinamica extends JFrame {
 		}
 	}
 	
-	private void irASeleccionObjeto(){	//oculta bootnes y muestra bootnes para seleccoinar a que objeto recoger del suelo
+	private void irASeleccionObjeto(){	//oculta bootnes y muestra botones para seleccoinar a que objeto recoger del suelo
 			//Data Para que funcione
 		setObjetosSuelo();		//setea los nuevos valores del metodo 
 		ocultarBotonesAccion(); //se ocultan los botones de las acciones para mostrar estos en su lugar
@@ -315,9 +270,6 @@ public class PruebaDinamica extends JFrame {
 		//PAra poder vovler
 		botonVolver.setVisible(true);
 		
-	//	botonSuelo=new BotonDeCoger[sizeObj];
-		
-		 
 		
 		int i=0; 		
 		for(i=0;i<((sizeObj/maxPorFila)*maxPorFila);++i){	//desde 0 hasta la ultima columna fila todos son iguales
@@ -327,13 +279,13 @@ public class PruebaDinamica extends JFrame {
 			contentPane.add(botonSuelo[i]);
 			posActualX+=IncX;
 			
-				if(((i+1)%maxPorFila==0)&&(i!=0)){								//si el boton es multiplo de 3 y por ende es nueva fila, se incrementa la Y
-					posActualX =  SUBZONA_TOP_IZ_X;//la X inicial
-					posActualY += IncY;				//se incrementa la Y(baja una fila)
+				if(((i+1)%maxPorFila==0)&&(i!=0)){							
+					posActualX =  SUBZONA_TOP_IZ_X;
+					posActualY += IncY;				
 				}			
 		}
 		try {
-			IncX=(SUBZONA_BOT_DER_X-SUBZONA_TOP_IZ_X)/(sizeObj-i);		//me siento sucio sÃƒÂ­, al ser multiplo de 3 numJug e i se igualarÃƒÂ­an
+			IncX=(SUBZONA_BOT_DER_X-SUBZONA_TOP_IZ_X)/(sizeObj-i);		
 		} catch (Exception e) {
 		}
 			
@@ -343,56 +295,50 @@ public class PruebaDinamica extends JFrame {
 			contentPane.add(botonSuelo[i]);
 			posActualX+=IncX;
 		}	
-		//Le aÃ¯Â¿Â½ado las acciones a realizar y los muestro
+		
 		for(BotonDeCoger a : botonSuelo){
 			a.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					boleanDameAccion = rudolf.dameAccion(a); //-> esto da el objeto a quien se lo estÃ¯Â¿Â½ pidiendo
-					ocultarTodo();//AL haber pusado un botÃ¯Â¿Â½n se ocultan los demÃ¯Â¿Â½s y se acaba la ronda
-					
+					boleanDameAccion = rudolf.dameAccion(a); 
+					ocultarTodo();
 				}
 			});
 			a.setVisible(true);
 		}	
-}
+	}
 
-private void irASeleccionLugar(){
-		//Data Para que funcione
-	ocultarBotonesAccion(); //se ocultan los botones de las acciones para mostrar estos en su lugar 
-	setLugares();		//setea los nuevos valores del metodo 
-	botonVolver.setVisible(true);
-	System.out.println("Tama�o sizeLugar"+ sizeLugar);
-		
-	int maxPorFila= 3, numFilas=(sizeLugar/maxPorFila)+1;
+	private void irASeleccionLugar(){
+			//Data Para que funcione
+		ocultarBotonesAccion(); //se ocultan los botones de las acciones para mostrar estos en su lugar 
+		setLugares();		//setea los nuevos valores del metodo 
+		botonVolver.setVisible(true);
+		System.out.println("Tama�o sizeLugar"+ sizeLugar);
+			
+		int maxPorFila= 3, numFilas=(sizeLugar/maxPorFila)+1;
 		int posActualX=SUBZONA_TOP_IZ_X;	//variables temporales para almecenar las X/Y de cada boton
 		int posActualY=SUBZONA_TOP_IZ_Y;
 		int IncX,IncY;
 		IncY=(SUBZONA_BOT_DER_Y-SUBZONA_TOP_IZ_Y)/(numFilas); //Calculamos el NumDeFilas y lo usamo como denominador para dividir la altura maxima
 		IncX = (SUBZONA_BOT_DER_X-SUBZONA_TOP_IZ_X)/maxPorFila;
-		
-		//PAra poder vovler
-		
-		
-	//	botonesLugares=new BotonDeMoverse[sizeLugar];
-		
-		ocultarBotonesAccion(); //se ocultan los botones de las acciones para mostrar estos en su lugar 
-		setLugares();		//setea los nuevos valores del metodo 
-		int i=0; 		
-		for(i=0;i<((sizeObj/maxPorFila)*maxPorFila);++i){	//desde 0 hasta la ultima columna fila todos son iguales
 			
+		botonVolver.setVisible(true);
+		
+			
+		int i=0; 		
+		for(i=0;i<((sizeObj/maxPorFila)*maxPorFila);++i){	//desde 0 hasta la ultima columna fila todos son iguales	
 			botonesLugares[i].setBounds(posActualX,posActualY,IncX,IncY);
 			botonesLugares[i].setVisible(true);
 			contentPane.add(botonesLugares[i]);
 			posActualX+=IncX;
-			
-				if(((i+1)%maxPorFila==0)&&(i!=0)){								//si el boton es multiplo de 3 y por ende es nueva fila, se incrementa la Y
-					posActualX =  SUBZONA_TOP_IZ_X;//la X inicial
+				
+				if(((i+1)%maxPorFila==0)&&(i!=0)){		//si el boton es multiplo de 3 y por ende es nueva fila, se incrementa la Y
+					posActualX =  SUBZONA_TOP_IZ_X;	//la X inicial
 					posActualY += IncY;				//se incrementa la Y(baja una fila)
 				}			
 		}
 		try {
-			IncX=(SUBZONA_BOT_DER_X-SUBZONA_TOP_IZ_X)/(sizeObj-i);		//me siento sucio sÃƒÂ­, al ser multiplo de 3 numJug e i se igualarÃƒÂ­an
-		} catch (Exception e) {
+			IncX=(SUBZONA_BOT_DER_X-SUBZONA_TOP_IZ_X)/(sizeObj-i);		
+			} catch (Exception e) {
 		}
 			
 		for(;i<sizeLugar;++i){
@@ -401,12 +347,12 @@ private void irASeleccionLugar(){
 			contentPane.add(botonesLugares[i]);
 			posActualX+=IncX;
 		}	
-		//Le aÃ¯Â¿Â½ado las acciones a realizar y los muestro
+		
 		for(BotonDeMoverse a : botonesLugares){
 			a.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					boleanDameAccion = rudolf.dameAccion(a); //-> esto da el objeto a quien se lo estÃ¯Â¿Â½ pidiendo
-					ocultarTodo();//AL haber pusado un botÃ¯Â¿Â½n se ocultan los demÃ¯Â¿Â½s y se acaba la ronda
+					boleanDameAccion = rudolf.dameAccion(a); 
+					ocultarTodo();//AL pulsar un boton se acaba la ronda y se ocultan los demas botones hasta el inicio de la siguiente ronda(GM mande se�al)
 					
 				}
 			});
@@ -417,14 +363,14 @@ private void irASeleccionLugar(){
 	
 	private void volverASeleccionAccion() {	//Este sirve para ocultar ambos, 
 		
-		ocultarPersonas();//volver invisibles a lso jugadores y sus botones 
-		ocultarObjetos();	//vuelve invisibles los objetos de la sala si los hay
-		ocultarLugares();	//Vuelve los lugares invisibles
+		ocultarPersonas();	//volver invisibles y elimina los botones qeu haya creado antes
+		ocultarObjetos();	
+		ocultarLugares();	
 		mostrarBotonesAccion();//mostrar los botones de accion 
 	}
 	
 	//Elimina las personas de la pantalla
-	private void ocultarPersonas(){	//ERROR DE NULLPOINTER EXCEPTION
+	private void ocultarPersonas(){	
 		if(botonPer!=null){		//nos aseguramos de que hay algo que recorrer antes de ocultarlo
 			for(BotonDePersona a : botonPer){
 				a.setVisible(false);
@@ -432,7 +378,7 @@ private void irASeleccionLugar(){
 			}
 		}
 	}
-	private void ocultarObjetos(){	//ERROR DE NULLPOINTER EXCEPTION
+	private void ocultarObjetos(){	
 		if(botonSuelo!=null){
 			for(BotonDeCoger a : botonSuelo){
 				a.setVisible(false);
@@ -440,7 +386,7 @@ private void irASeleccionLugar(){
 			}
 		}
 	}
-	private void ocultarLugares(){	//ERROR DE NULLPOINTER EXCEPTION
+	private void ocultarLugares(){	
 		if(botonesLugares!=null){
 			for(BotonDeMoverse a : botonesLugares){
 				a.setVisible(false);
@@ -467,13 +413,11 @@ private void irASeleccionLugar(){
 		botonPedir.setVisible(false);
 		botonLugar.setVisible(false);
 	}
-	//funcion invocada desde el GM para informarnos de que le han hecho una peticion (del objeto)
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	private void setPersonasAdyacentes(){
 		sizePer=0; //actualizamos a 0
-		int i=0;	//podrÃ¯Â¿Â½amos inicializarla mas abajo pero pereza be like
-		for (Agente a :  ru.getAgentes() ){ //contador de tamaÃ¯Â¿Â½o
+		int i=0;	
+		for (Agente a :  ru.getAgentes() ){ //contador 
 			if(a==null){
 				continue;
 			}
@@ -495,14 +439,14 @@ private void irASeleccionLugar(){
 	}
 	private void setObjetosSuelo(){
 		sizeObj=0;
-		int i=0;	//podriamos inicializarla mas abajo pero pereza be like
+		int i=0;	
 		for ( Objeto a : ru.getObjeto()){ //contador de tamanio
 			++sizeObj;
 		}
-		botonSuelo = new BotonDeCoger[sizeObj]; //al haber empezado en 0 no me hace falta el sizePer-1 para almacenar uno menos				
+		botonSuelo = new BotonDeCoger[sizeObj]; 		
 		for( Objeto a : ru.getObjeto()){
-						//Como la funcion tmb me devuelve mi propio jugador
-				botonSuelo[i]=new BotonDeCoger(a);		//si lo ve, lo ignora y guarda al resto
+						
+				botonSuelo[i]=new BotonDeCoger(a);	
 				botonSuelo[i].setVisible(true);	
 				++i;
 		}	
@@ -511,14 +455,14 @@ private void irASeleccionLugar(){
 		System.out.println(ru.getObjeto());
 		System.out.println(ru.getLugares());
 		sizeLugar =0;
-		int i=0;	//podrÃ¯Â¿Â½amos inicializarla mas abajo pero pereza be like
-		for (@SuppressWarnings("unused") Lugar a : ru.getLugares()){ //contador de tamaÃ¯Â¿Â½o
+		int i=0;	
+		for (@SuppressWarnings("unused") Lugar a : ru.getLugares()){ 	//Solo es un contador
 			++sizeLugar;
 		}
-		botonesLugares = new BotonDeMoverse[sizeLugar]; //al haber empezado en 0 no me hace falta el sizePer-1 para almacenar uno menos				
+		botonesLugares = new BotonDeMoverse[sizeLugar]; 		
 		for( Lugar a : ru.getLugares()){
-						//Como la funcion tmb me devuelve mi propio jugador
-				botonesLugares[i] = new BotonDeMoverse(a);		//si lo ve, lo ignora y guarda al resto
+						
+				botonesLugares[i] = new BotonDeMoverse(a);		
 				botonesLugares[i].setVisible(true);	
 				++i;
 		}	
@@ -559,29 +503,24 @@ private void irASeleccionLugar(){
 		
 		reanudarRonda();			//Devuelve el control al main
 	}
-///////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	//con esto se muestra todo tras un cambio de turno
 	private void mostrarTodo(){
 			//los botones de acciones posibles
 		mostrarBotonesAccion();	
 		botonVolver.setVisible(false);
-			//los botones de lugar solo los que puedas irte
-		setLugares();	
 			//la lista con el objetivo del jugador
 		txtLiObjetivo.setVisible(true);
 			//mostar texto con la ronda
 		txtpnTurnoJorge.setText("Turno "+ ronda);	//Actualizada cada ronda
 		txtpnTurnoJorge.setVisible(true);
 	}
-///////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	private void comprobarPeticion(){
 		botonDar.setVisible(rudolf.getPeticion()!=null);
 	}
-	private void informarEstado(){ //+ "\nTe piden algo?"+ (rudolf.getPeticion()!=null?"Si":"No
+	private void informarEstado(){ //La pesta�a informativa
 		JOptionPane.showMessageDialog(null, "Tu Objeto:"+((rudolf.getObjeto()!=null)?(rudolf.getObjeto().getNombre()):("Ninguno"))+"\n Tu habitacion:"+(rudolf.getLugar()!=null?rudolf.getLugar().getNombre(): "Error con la habitacion"  ),"Informe situacion:", JOptionPane.ERROR_MESSAGE);             
-		//JLabel label2 = new JLabel("Mariano");
-		//label2.setText("<html>This is a<br>multline label!<br> Try it yourself!</html>");
-		//label.setText("<html>Este es tu informe de estado<br>Tu Objeto: </html>"+((rudolf.getObjeto().getNombre()!=null)?(rudolf.getObjeto().getNombre()):("Ninguno"))+"<html><br>Tu habitacion: </html>"+rudolf.getLugar().getNombre() +"<html><br> Te piden?: </html>"/*((rudolf.getPeticion()!=null)?("Si"):("No"))*/);                                    
 	}
 	public boolean getBoleanDameAccion() {
 		return this.boleanDameAccion;

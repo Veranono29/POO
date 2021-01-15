@@ -10,6 +10,8 @@ import elementosNarrativos.Objeto;
 import datos.Objetivo;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
@@ -26,8 +28,8 @@ public class PruebaDinamica extends JFrame {
 	
 	private final int anchoBoton=97,altoBoton=40;
 		//Como los botones de accion van a ser sustituidos por las personas al pulsar el boton DAR
-	private final int SUBZONA_TOP_IZ_X = 327, SUBZONA_TOP_IZ_Y = 173;	//307,123
-	private final int SUBZONA_BOT_DER_X = 425+anchoBoton, SUBZONA_BOT_DER_Y = 226+altoBoton; //525,326
+	private final int SUBZONA_TOP_IZ_X = 307, SUBZONA_TOP_IZ_Y = 173;	//307,123
+	private final int SUBZONA_BOT_DER_X = 525+anchoBoton, SUBZONA_BOT_DER_Y = 226+altoBoton; //525,326
 	
 	private JPanel contentPane;
 		//BOTONES ACCIONES
@@ -232,7 +234,10 @@ public class PruebaDinamica extends JFrame {
 		txtLiObjetivo = new JTextField( ("Tus objetivos:\n"+(Objetivo)rudolf.getObjetivo()).toString() );	
 		txtLiObjetivo.setBounds(12, 123, 235, 165);
 		contentPane.add(txtLiObjetivo);
-		
+		informarEstado();
+		ocultarBotonesAccion();
+		mostrarBotonesAccion();
+		System.out.println("RUDOLF TIENE UN OBJETO?"+(rudolf.getObjeto()!=null?rudolf.getObjeto().getNombre():"No tiene objeto"));
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	private void irASeleccionJugador(){	//oculta bootnes y muestra bootnes para seleccoinar a que persona le pides el objeto 
@@ -445,7 +450,7 @@ private void irASeleccionLugar(){
 	}
 	private void mostrarBotonesAccion(){
 
-		if(ru.getObjeto()==null){	//Si tiene objeto
+		if(rudolf.getObjeto()!=null){	//Si tiene objeto
 			botonDejar.setVisible(true);
 		}else{						//Si no tiene objeto
 			botonRecoger.setVisible(true);
@@ -490,8 +495,8 @@ private void irASeleccionLugar(){
 	}
 	private void setObjetosSuelo(){
 		sizeObj=0;
-		int i=0;	//podrÃ¯Â¿Â½amos inicializarla mas abajo pero pereza be like
-		for ( Objeto a : ru.getObjeto()){ //contador de tamaÃ¯Â¿Â½o
+		int i=0;	//podriamos inicializarla mas abajo pero pereza be like
+		for ( Objeto a : ru.getObjeto()){ //contador de tamanio
 			++sizeObj;
 		}
 		botonSuelo = new BotonDeCoger[sizeObj]; //al haber empezado en 0 no me hace falta el sizePer-1 para almacenar uno menos				
@@ -525,20 +530,23 @@ private void irASeleccionLugar(){
 		
 		ocultarBotonesAccion();	//oculto todos los botones de acciones
 		
-		if(sizePer!=0&&botonPer!=null){
+		if(sizePer !=0  &&  botonPer != null){
 			for(BotonDePersona a : botonPer){
 				a.setVisible(false);
 			}
+			botonPer=null;
 		}
-		if(sizeLugar!=0){
+		if(sizeLugar!=0 && botonesLugares!=null){
 			for (BotonDeMoverse l : botonesLugares) {
 				l.setVisible(false);
 			}
+			botonesLugares=null;
 		}
-		if(sizeObj!=0){
+		if(sizeObj!=0 && botonSuelo!=null){
 			for(BotonDeCoger a : botonSuelo){
 				a.setVisible(false);
 			}
+			botonSuelo=null;
 		}
 		//la lista con el objetivo del jugador
 		txtLiObjetivo.setVisible(false);
@@ -569,15 +577,25 @@ private void irASeleccionLugar(){
 	private void comprobarPeticion(){
 		botonDar.setVisible(rudolf.getPeticion()!=null);
 	}
-
+	private void informarEstado(){ //+ "\nTe piden algo?"+ (rudolf.getPeticion()!=null?"Si":"No
+		JOptionPane.showMessageDialog(null, "Tu Objeto:"+((rudolf.getObjeto()!=null)?(rudolf.getObjeto().getNombre()):("Ninguno"))+"\n Tu habitacion:"+(rudolf.getLugar()!=null?rudolf.getLugar().getNombre(): "Error con la habitacion"  ),"Informe situacion:", JOptionPane.ERROR_MESSAGE);             
+		//JLabel label2 = new JLabel("Mariano");
+		//label2.setText("<html>This is a<br>multline label!<br> Try it yourself!</html>");
+		//label.setText("<html>Este es tu informe de estado<br>Tu Objeto: </html>"+((rudolf.getObjeto().getNombre()!=null)?(rudolf.getObjeto().getNombre()):("Ninguno"))+"<html><br>Tu habitacion: </html>"+rudolf.getLugar().getNombre() +"<html><br> Te piden?: </html>"/*((rudolf.getPeticion()!=null)?("Si"):("No"))*/);                                    
+	}
 	public boolean getBoleanDameAccion() {
 		return this.boleanDameAccion;
 	}
 	
-	public void setRonda(int ronda){
-		this.ronda=ronda;
-		comprobarPeticion();	//Revisa si hay una peticion a mi jugador
-		mostrarTodo();
+	public void setRonda(){
+		ronda++;				//EL contaodr de las rondas que pasan
+		rudolf=(Jugador)GameManager.getJugador();
+		ru=rudolf.getLugar();
+		System.out.println("ESTA DSPIERTA");
+		comprobarPeticion();	//Revisa si hay una peticion a mi jugador y si la hay muestra el boton de dar
+		mostrarTodo();		//pongo en visible a las cosas
+		informarEstado();	//JPane con la ubicacion y el objeto
+		
 	}
 	
 	private void reanudarRonda() {		//Se llama en ocultar todo

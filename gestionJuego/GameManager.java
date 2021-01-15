@@ -74,9 +74,10 @@ public class GameManager extends ManejaDatos implements Acciones {
 	protected static double getProbAceptar() {
 		return probabilidadAceptar;
 	}
-	protected Jugador getJugador() {
-		// TODO Auto-generated method stub
-		return pepe;
+	///////////////////////////////////////////////////////////////////protected, static
+	public static Agente getJugador() {
+		// le hacemos el casteo porque nunca sobra 
+		return (Agente)pepe;
 	}
 
 	//Necesita accederse desde gestionJuego.
@@ -515,22 +516,19 @@ public class GameManager extends ManejaDatos implements Acciones {
 
 	public void ronda()  {
 		//Para poder hacer jugar a los NPC:
-		if(pepe == null) {
-			rondaNPC();
-			return;
-		}
 		
 		if(GameManager.flagRonda) {
 			//flagRonda = false;
 			for(Agente agente: agentes) {
 				if(agente instanceof Jugador) {
+				
 					liberarCreencias();
-					bucleTurno = bucleTurno || interfaz.getBoleanDameAccion();
+					bucleTurno = interfaz.getBoleanDameAccion() || bucleTurno;
 					//flagRonda = true;
 					continue;
 				}
 				if(flagRonda) {
-					bucleTurno = bucleTurno || rondaAcciones(agente);
+					bucleTurno = rondaAcciones(agente) || bucleTurno;
 				}
 				tiempo++;
 			}
@@ -543,6 +541,7 @@ public class GameManager extends ManejaDatos implements Acciones {
 			GameManager.flagRonda = true;
 		
 		if(!bucleTurno) {
+			
 			interfaz.dispose(); //elimina la interfaz
 			Main.datos();		//Weas
 			return;
@@ -551,11 +550,17 @@ public class GameManager extends ManejaDatos implements Acciones {
 		bucleTurno = false;
 		
 		for(Agente agente: agentes) {
-			bucleTurno = bucleTurno || rondaAcciones(agente);
+			System.out.println("Bucle Rondas() " + agente.getNombre()); //Aqui llega
+			bucleTurno = rondaAcciones(agente)||bucleTurno ;
 			tiempo++;
+			System.out.println("Tiempo en Ronda() = "+tiempo);
 			if(agente instanceof Jugador) {
-				if(agente.getYaObjetivo(0) == false && agente.getYaObjetivo(1) == false)
+				System.out.println("ELSAPAOTGKFODAKSFKASDOFKAF");
+				
+				if(agente.getYaObjetivo(0) == false && agente.getYaObjetivo(1) == false){
+					System.out.println("DANILAAAAAAAAAAAAA");
 					ronda();
+				}
 				break;
 			}
 		}
@@ -563,7 +568,8 @@ public class GameManager extends ManejaDatos implements Acciones {
 	
 	private boolean rondaAcciones(Agente agente) {
 		//Si todos hicieron lo suyo, ninguno cumplira la condicion, y por lo tanto ninguno cambiara bucleTurno, por lo que saldra del while.
-		if(agente.compPersona()) {
+		if(true) { //agente.compPersona()
+			
 			//dameAccion se encarga de indicar de forma indirecta que accion quiere realizar (y el log que debe hacer) y el resto de gestiones.
 			return agente.dameAccion();
 		}
@@ -583,14 +589,14 @@ public class GameManager extends ManejaDatos implements Acciones {
 			System.exit(0); 
 			error.printStackTrace();
 		}
-		
-		//TODO Gerardo, por aca lo que tengas que poner de instanciar la interfaz o lo de iniciarla o asi.
-		//TODO Gerardo, recuerda que el punto donde le pides que te pasemos la ronda es en el dameAccion de elementosNarrativos.Agente.
-		//TODO descomentar la de abajo.	
-		
-		interfaz = new PruebaDinamica(pepe);
-		interfaz.setVisible(true);
-		//Primera llamada a ronda. No ejecutara la primera mitaz del "bucle truncado".
-		ronda();
+		if(pepe == null) {
+			rondaNPC();
+			return;
+		}else{
+			interfaz = new PruebaDinamica(pepe);
+			interfaz.setVisible(true);
+			//Primera llamada a ronda. No ejecutara la primera mitaz del "bucle truncado".
+			ronda();
+		}
     }
 }

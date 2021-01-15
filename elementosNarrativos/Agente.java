@@ -35,9 +35,13 @@ public abstract class Agente extends TieneCreencia implements Accionable {
 	@Override
 	public boolean dameAccion() {
 		GameManager.conseguirCreencias(this);
-		if(this instanceof Jugador) {
+		System.out.println(this.getNombre()+"Ha llegado al if() maldito");
+		
+		if(GameManager.getJugador().getNombre().equals(this.nombre)) { //this instanceof Jugador//this == GameManager.getJugador, aquí no entra nunca no sé por qué
+			
+			System.out.println("El juagdor llego que "+this.getNombre());
 			//TODO aca va todo lo que serÃ­a el llamado a los botones del apartado grafico.
-			GameManager.getInterfaz().setRonda(GameManager.getRonda());
+			GameManager.getInterfaz().setRonda();
 			//TODO Aca se para el thread hasta que se le de a algun boton.
 			//TODO O un while.
 		}

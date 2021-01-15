@@ -18,24 +18,29 @@ public class Jugador extends Agente implements Olvidable {
 	}
 	
 	public boolean dameAccion(BotonDeMoverse boton) {
+		
+		System.out.println("Se mueve a "+boton.getLugar().nombre);
+		
 		return GameManager.relocalizar(this, boton.getLugar());
 	}
 	
-	public boolean dameAccion(BotonDeCoger boton) {		//camboi aquí presuponiendo ue querias el nombre del objeto
-		if (boton.getObjeto() == null){
+	public boolean dameAccion(BotonDeCoger boton) {		
+		if (boton.getObjeto() != null){
+			System.out.println("Recoge "+boton.getObjeto().getNombre());
 			return GameManager.cogerObjeto(this, boton.getObjeto());
 		}
 		return GameManager.dejarObjeto(this);
 	}
 	
 	public boolean dameAccion(BotonDePersona boton) {
+		System.out.println("Recoge " + boton.getAgente().getNombre());
 		return GameManager.pedirObjeto(boton.getAgente(), new Peticion(this)); //cambio aqui presuponiendo que querias el nombre del objeto
 	}
 	
 	public boolean dameAccion(boolean dar) {
-		if(dar) {
+		if(dar) {					//acepta la peticion
 			return GameManager.darObjeto(this);
-		}
+		}							//pasa el turno sin hacer nada
 		return GameManager.pasarTurno(this);
 	}
 }

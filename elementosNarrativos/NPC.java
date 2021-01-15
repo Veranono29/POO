@@ -19,7 +19,9 @@ public class NPC extends Agente {
 	//No pueden dejar objetos, puesto que solo pueden cojer el objeto que les interesa.
 	@Override
 	public boolean dameAccion() {
+		System.out.println(this.nombre+ " est· en NPC-DameAccion()");
 		super.dameAccion();
+		
 		if(this.getPeticion() != null  && this.getPeticion().getObjeto() != this.getObjetivo().getObjeto())		//En primer lugar comparamos si tenemos alguna petici√≥n que contenga el objeto que llevamos
 			return GameManager.darObjeto(this);										//Si la tenemos, damos el objeto							
 		else 
